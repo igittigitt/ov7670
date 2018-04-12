@@ -101,7 +101,7 @@
 	while(!(TWCR & (1<<TWINT)));
 
 	//check if Acknowledge Bit is send by slave
-	if((TWSR & 0xF8) != TW_MT_SLA_ACK)	//QUESTION: why do we MASK this with 0xF8 and not with TW_MT_SLA_ACK?
+	if((TWSR & 0xF8) != TW_MT_SLA_ACK)	//Mask with 0xF8 to eliminate the Prescaler Bits
 	{
 		//Error Treatment
 		return false;
@@ -117,7 +117,7 @@
 	while(!(TWCR & (1<<TWINT)));
 
 	//check if Acknowledge Bit is send by slave
-	if((TWSR & 0xF8) != TW_MT_SLA_ACK)	//QUESTION: why do we MASK this with 0xF8 and not with TW_MT_SLA_ACK?
+	if((TWSR & 0xF8) != TW_MT_SLA_ACK)	//Mask with 0xF8 to eliminate the Prescaler Bits
 	{
 		//Error Treatment
 		return false;
