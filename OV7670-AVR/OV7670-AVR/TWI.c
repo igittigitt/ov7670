@@ -14,6 +14,29 @@
  #include <util/twi.h>
  #include <avr/common.h>
 
+ //generate en enumerated operating Mode, which can later easy be checked
+ typedef enum {
+	 Ready,
+	 Initializing,
+	 RepeatedStartSent,
+	 MasterTransmitter,
+	 MasterReceuver,
+	 SlaveTransmitter,
+	 SlaveReciever
+ } TWIMode;
+
+ //generate a struct, which includes important information about the current TWI-Interface
+ typedef struct {
+	TWIMode mode;
+	uint8_t errorCode;
+	uint8_t repStart;
+	uint8_t acknoledExpected;
+ } TWIInfoStruct;
+
+ //create an element of the struct
+ TWIInfoStruct TWI_Info;
+
+
  void init_TWI()
  {
 	/*Set the SCL frequency
@@ -68,8 +91,8 @@
 			//Error treatment
 			return false;
 		}
-	//insert the slave write address into the Two-Wire Data Register and indicate a write transmission by setting the LSB to a logical 1
-	TWDR = (Sla_Address<<1) | (0x01);
+	//insert the slave write address into the Two-Wire Data Register and indicate a write transmission by setting the LSB to a logical 0
+	TWDR = (Sla_Address<<1) & ~(0x01);
 
 	//start the transmission on the bus
 	TWCR = (1<<TWINT) | (1<<TWEN);
