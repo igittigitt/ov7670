@@ -20,10 +20,10 @@
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
     <ProgFlashFromRam>true</ProgFlashFromRam>
-    <RamSnippetAddress />
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
     <UncachedRange />
     <preserveEEPROM>true</preserveEEPROM>
-    <OverrideVtorValue />
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
     <BootSegment>2</BootSegment>
     <eraseonlaunchrule>0</eraseonlaunchrule>
     <AsfFrameworkConfig>
@@ -38,6 +38,22 @@
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.avrdragon</avrtool>
+    <avrtoolserialnumber>00A20006058B</avrtoolserialnumber>
+    <avrdeviceexpectedsignature>0x1E950F</avrdeviceexpectedsignature>
+    <com_atmel_avrdbg_tool_avrdragon>
+      <ToolOptions>
+        <InterfaceProperties>
+          <IspClock>125000</IspClock>
+        </InterfaceProperties>
+        <InterfaceName>ISP</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.avrdragon</ToolType>
+      <ToolNumber>00A20006058B</ToolNumber>
+      <ToolName>AVR Dragon</ToolName>
+    </com_atmel_avrdbg_tool_avrdragon>
+    <avrtoolinterface>ISP</avrtoolinterface>
+    <avrtoolinterfaceclock>125000</avrtoolinterfaceclock>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -127,10 +143,10 @@
     <Compile Include="OV7670_without_Fifo.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="TWI.c">
+    <Compile Include="SCCB.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="TWI.h">
+    <Compile Include="SCCB.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="UART.c">
