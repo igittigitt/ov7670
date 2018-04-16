@@ -26,6 +26,10 @@
  * \return void
  */
 void init_TWI();	
-int write(char Sla_Write_Adress, char data);
-int SCCB_Read(char SubAddress, char* readData);
+
+void sccb_write_3_phase(char SubAddress, char data);
+void sccb_write_2_phase(char SubAddress);
+void sccb_read_2_phase(char* readData);
+void OV7670_read_register (char SubAddress, char* readData);
+void OV7670_write_register (char SubAddress, char data);
 #endif /* SCCB_H_ */

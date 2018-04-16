@@ -73,7 +73,7 @@ unsigned char OwnAddress = 0x10;
   *
   *
   */
- int write(char SubAddress, char data)
+ void sccb_write_3_phase(char SubAddress, char data)
  {
 	/*
 	delete the TWINT by writing a logical 1 to it
@@ -145,69 +145,67 @@ unsigned char OwnAddress = 0x10;
 
 	//send Stop Condition
 	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
-
-	return 1;
  }
 
+ void sccb_write_2_phase(char SubAddress){
+ //To activate the TWI-Interface the Interrupt Flag is cleared by writing a 1 to it, the start condition is send and the 2-Wire Interface is activated
+ TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
 
- int SCCB_Read(char SubAddress, char* readData){
+ //Wait until interrupt Flag is set, which means that the start condition is send
+ while(!(TWCR & (1<<TWINT)));
+
+ //check if the start condition was send correctly
+ //if((TWSR & 0xF8) != TW_START)	//Mask 0xF8 to mask the Prescaler Bits
+ //{
+ ////Error treatment
+ //return false;
+ //}
+
+ //1st-Phase
+ //insert the slave write address into the Two-Wire Data Register and indicate a write transmission by setting the LSB to a logical 0
+ TWDR = (OV7670_Address<<1) & ~(0x01);
+
+ //start the transmission on the bus
+ TWCR = (1<<TWINT) | (1<<TWEN);
+
+ //Wait until interrupt Flag is set, which means that the data is send
+ while(!(TWCR & (1<<TWINT)));
+
+ //check if Acknowledge Bit is send by slave
+ //if((TWSR & 0xF8) != TW_MT_SLA_ACK)	//Mask with 0xF8 to eliminate the Prescaler Bits
+ //{
+ ////Error Treatment
+ //return false;
+ //}
+
+ //2nd-Phase
+ //write the Sub-Address to the Two-Wire Data Register
+ TWDR= SubAddress;
+
+ //start the transmission on the bus
+ TWCR = (1<<TWINT) | (1<<TWEN);
+
+ //Wait until interrupt Flag is set, which means that the data is send
+ while(!(TWCR & (1<<TWINT)));
+
+ //check if Acknowledge Bit is send by slave
+ //if((TWSR & 0xF8) != TW_MT_SLA_ACK)	//Mask with 0xF8 to eliminate the Prescaler Bits
+ //{
+ ////Error Treatment
+ //return false;
+ //}
+
+ //send Stop Condition
+ TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
+ }
+
+ void sccb_read_2_phase(char* readData){
  	/*
 	*	According to the Data sheet of the SCCB-Interface a Read action is 
 	*	fulfilled by a 2-Phase Write transmission followed by a 2-Phase read Transmission
 	*/
 
-	//To activate the TWI-Interface the Interrupt Flag is cleared by writing a 1 to it, the start condition is send and the 2-Wire Interface is activated
-	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN); 
-
-	//Wait until interrupt Flag is set, which means that the start condition is send
-	while(!(TWCR & (1<<TWINT)));
-
-	//check if the start condition was send correctly
-	//if((TWSR & 0xF8) != TW_START)	//Mask 0xF8 to mask the Prescaler Bits
-		//{
-			////Error treatment
-			//return false;
-		//}
-
-	//1st-Phase
-	//insert the slave write address into the Two-Wire Data Register and indicate a write transmission by setting the LSB to a logical 0
-	TWDR = (OV7670_Address<<1) & ~(0x01);
-
-	//start the transmission on the bus
-	TWCR = (1<<TWINT) | (1<<TWEN);
-
-	//Wait until interrupt Flag is set, which means that the data is send
-	while(!(TWCR & (1<<TWINT)));
-
-	//check if Acknowledge Bit is send by slave
-	//if((TWSR & 0xF8) != TW_MT_SLA_ACK)	//Mask with 0xF8 to eliminate the Prescaler Bits
-	//{
-		////Error Treatment
-		//return false;
-	//}
-
-	//2nd-Phase
-	//write the Sub-Address to the Two-Wire Data Register
-	TWDR= SubAddress;
-
-	//start the transmission on the bus
-	TWCR = (1<<TWINT) | (1<<TWEN);
-
-	//Wait until interrupt Flag is set, which means that the data is send
-	while(!(TWCR & (1<<TWINT)));
-
-	//check if Acknowledge Bit is send by slave
-	//if((TWSR & 0xF8) != TW_MT_SLA_ACK)	//Mask with 0xF8 to eliminate the Prescaler Bits
-	//{
-		////Error Treatment
-		//return false;
-	//}
-	//-----------------------------------------------------------//
-
-	/* The 2-Phase write transmission is then followed by a 2-Phase read Transmission
-
-
-	*/
+	//send start Condition
 	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
 
 	//Wait until interrupt Flag is set, which means that the start condition is send
@@ -236,9 +234,13 @@ unsigned char OwnAddress = 0x10;
 		////Error Treatment
 		//return false;
 	//}
-
+	TWCR = (1<<TWINT) | (1<<TWEN);
+	while(!(TWCR & (1<<TWINT)));
 	*readData = TWDR;
-	return 1;
+	
+	
+	//send Stop Condition
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
 
 	/*
 	//old Code should be removed after getting it work
@@ -261,3 +263,11 @@ unsigned char OwnAddress = 0x10;
 	*/
  }
 
+ void OV7670_read_register (char SubAddress, char* readData){
+	sccb_write_2_phase(SubAddress);
+	sccb_read_2_phase(readData);
+ }
+
+ void OV7670_write_register (char SubAddress, char data){
+
+ }

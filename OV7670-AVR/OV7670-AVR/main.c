@@ -11,14 +11,19 @@
 
 #include "SCCB.h"
 
+#ifndef F_CPU
+	#define F_CPU 16000000UL
+#endif
+
 int main(void)
 {
     /* Replace with your application code */
 	char Test;
+	init_TWI();
     while (1) 
     {
-		SCCB_Read(0x0A,&Test);
-		_delay_ms(500);
+		OV7670_read_register(0x0A,&Test);
+				
     }
 }
 

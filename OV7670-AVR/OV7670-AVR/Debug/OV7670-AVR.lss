@@ -3,29 +3,29 @@ OV7670-AVR.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000002  00800100  0000013c  000001b0  2**0
+  0 .data         00000002  00800100  00000178  000001ec  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000013c  00000000  00000000  00000074  2**1
+  1 .text         00000178  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  000001b2  2**0
+  2 .comment      00000030  00000000  00000000  000001ee  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000001e4  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000220  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000050  00000000  00000000  00000224  2**0
+  4 .debug_aranges 00000068  00000000  00000000  00000260  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000866  00000000  00000000  00000274  2**0
+  5 .debug_info   000008a4  00000000  00000000  000002c8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000746  00000000  00000000  00000ada  2**0
+  6 .debug_abbrev 00000747  00000000  00000000  00000b6c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000450  00000000  00000000  00001220  2**0
+  7 .debug_line   000003d4  00000000  00000000  000012b3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000078  00000000  00000000  00001670  2**2
+  8 .debug_frame  000000b4  00000000  00000000  00001688  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000040d  00000000  00000000  000016e8  2**0
+  9 .debug_str    00000415  00000000  00000000  0000173c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000000d4  00000000  00000000  00001af5  2**0
+ 10 .debug_loc    00000150  00000000  00000000  00001b51  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000030  00000000  00000000  00001bc9  2**0
+ 11 .debug_ranges 00000048  00000000  00000000  00001ca1  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -70,7 +70,7 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	ec e3       	ldi	r30, 0x3C	; 60
+  7a:	e8 e7       	ldi	r30, 0x78	; 120
   7c:	f1 e0       	ldi	r31, 0x01	; 1
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
@@ -79,15 +79,15 @@ Disassembly of section .text:
   86:	b1 07       	cpc	r27, r17
   88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
   8a:	0e 94 4b 00 	call	0x96	; 0x96 <main>
-  8e:	0c 94 9c 00 	jmp	0x138	; 0x138 <_exit>
+  8e:	0c 94 ba 00 	jmp	0x174	; 0x174 <_exit>
 
 00000092 <__bad_interrupt>:
   92:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000096 <main>:
-#include "avr/delay.h"
-
-#include "SCCB.h"
+#ifndef F_CPU
+	#define F_CPU 16000000UL
+#endif
 
 int main(void)
 {
@@ -98,150 +98,195 @@ int main(void)
   9e:	de b7       	in	r29, 0x3e	; 62
     /* Replace with your application code */
 	char Test;
+	init_TWI();
+  a0:	0e 94 59 00 	call	0xb2	; 0xb2 <init_TWI>
     while (1) 
     {
-		SCCB_Read(0x0A,&Test);
-  a0:	be 01       	movw	r22, r28
-  a2:	6f 5f       	subi	r22, 0xFF	; 255
-  a4:	7f 4f       	sbci	r23, 0xFF	; 255
-  a6:	8a e0       	ldi	r24, 0x0A	; 10
-  a8:	0e 94 60 00 	call	0xc0	; 0xc0 <SCCB_Read>
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
+		OV7670_read_register(0x0A,&Test);
+  a4:	be 01       	movw	r22, r28
+  a6:	6f 5f       	subi	r22, 0xFF	; 255
+  a8:	7f 4f       	sbci	r23, 0xFF	; 255
+  aa:	8a e0       	ldi	r24, 0x0A	; 10
+  ac:	0e 94 af 00 	call	0x15e	; 0x15e <OV7670_read_register>
+  b0:	f9 cf       	rjmp	.-14     	; 0xa4 <main+0xe>
 
-	__builtin_avr_delay_cycles(__ticks_dc);
-  ac:	2f e9       	ldi	r18, 0x9F	; 159
-  ae:	86 e8       	ldi	r24, 0x86	; 134
-  b0:	91 e0       	ldi	r25, 0x01	; 1
-  b2:	21 50       	subi	r18, 0x01	; 1
-  b4:	80 40       	sbci	r24, 0x00	; 0
-  b6:	90 40       	sbci	r25, 0x00	; 0
-  b8:	e1 f7       	brne	.-8      	; 0xb2 <main+0x1c>
-  ba:	00 c0       	rjmp	.+0      	; 0xbc <main+0x26>
-  bc:	00 00       	nop
-  be:	f0 cf       	rjmp	.-32     	; 0xa0 <main+0xa>
+000000b2 <init_TWI>:
+		//Error Treatment
+		return 0;
+	}
 
-000000c0 <SCCB_Read>:
+	//send Stop Condition
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
+  b2:	89 e0       	ldi	r24, 0x09	; 9
+  b4:	80 93 b8 00 	sts	0x00B8, r24	; 0x8000b8 <__TEXT_REGION_LENGTH__+0x7e00b8>
+  b8:	e9 eb       	ldi	r30, 0xB9	; 185
+  ba:	f0 e0       	ldi	r31, 0x00	; 0
+  bc:	80 81       	ld	r24, Z
+  be:	8c 7f       	andi	r24, 0xFC	; 252
+  c0:	80 83       	st	Z, r24
+  c2:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <OwnAddress>
+  c6:	80 93 ba 00 	sts	0x00BA, r24	; 0x8000ba <__TEXT_REGION_LENGTH__+0x7e00ba>
+  ca:	08 95       	ret
+
+000000cc <sccb_write_2_phase>:
+ }
+
+ void sccb_write_2_phase(char SubAddress){
+ //To activate the TWI-Interface the Interrupt Flag is cleared by writing a 1 to it, the start condition is send and the 2-Wire Interface is activated
+ TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
+  cc:	94 ea       	ldi	r25, 0xA4	; 164
+  ce:	90 93 bc 00 	sts	0x00BC, r25	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+
+ //Wait until interrupt Flag is set, which means that the start condition is send
+ while(!(TWCR & (1<<TWINT)));
+  d2:	ec eb       	ldi	r30, 0xBC	; 188
+  d4:	f0 e0       	ldi	r31, 0x00	; 0
+  d6:	90 81       	ld	r25, Z
+  d8:	99 23       	and	r25, r25
+  da:	ec f7       	brge	.-6      	; 0xd6 <sccb_write_2_phase+0xa>
+ //return false;
+ //}
+
+ //1st-Phase
+ //insert the slave write address into the Two-Wire Data Register and indicate a write transmission by setting the LSB to a logical 0
+ TWDR = (OV7670_Address<<1) & ~(0x01);
+  dc:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <OV7670_Address>
+  e0:	99 0f       	add	r25, r25
+  e2:	90 93 bb 00 	sts	0x00BB, r25	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7e00bb>
+
+ //start the transmission on the bus
+ TWCR = (1<<TWINT) | (1<<TWEN);
+  e6:	94 e8       	ldi	r25, 0x84	; 132
+  e8:	90 93 bc 00 	sts	0x00BC, r25	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+
+ //Wait until interrupt Flag is set, which means that the data is send
+ while(!(TWCR & (1<<TWINT)));
+  ec:	ec eb       	ldi	r30, 0xBC	; 188
+  ee:	f0 e0       	ldi	r31, 0x00	; 0
+  f0:	90 81       	ld	r25, Z
+  f2:	99 23       	and	r25, r25
+  f4:	ec f7       	brge	.-6      	; 0xf0 <sccb_write_2_phase+0x24>
+ //return false;
+ //}
+
+ //2nd-Phase
+ //write the Sub-Address to the Two-Wire Data Register
+ TWDR= SubAddress;
+  f6:	80 93 bb 00 	sts	0x00BB, r24	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7e00bb>
+
+ //start the transmission on the bus
+ TWCR = (1<<TWINT) | (1<<TWEN);
+  fa:	84 e8       	ldi	r24, 0x84	; 132
+  fc:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+
+ //Wait until interrupt Flag is set, which means that the data is send
+ while(!(TWCR & (1<<TWINT)));
+ 100:	ec eb       	ldi	r30, 0xBC	; 188
+ 102:	f0 e0       	ldi	r31, 0x00	; 0
+ 104:	80 81       	ld	r24, Z
+ 106:	88 23       	and	r24, r24
+ 108:	ec f7       	brge	.-6      	; 0x104 <sccb_write_2_phase+0x38>
+ ////Error Treatment
+ //return false;
+ //}
+
+ //send Stop Condition
+ TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
+ 10a:	84 e9       	ldi	r24, 0x94	; 148
+ 10c:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+ 110:	08 95       	ret
+
+00000112 <sccb_read_2_phase>:
+ }
+
+ void sccb_read_2_phase(char* readData){
+ 112:	dc 01       	movw	r26, r24
 	*	According to the Data sheet of the SCCB-Interface a Read action is 
 	*	fulfilled by a 2-Phase Write transmission followed by a 2-Phase read Transmission
 	*/
 
-	//To activate the TWI-Interface the Interrupt Flag is cleared by writing a 1 to it, the start condition is send and the 2-Wire Interface is activated
-	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN); 
-  c0:	94 ea       	ldi	r25, 0xA4	; 164
-  c2:	90 93 bc 00 	sts	0x00BC, r25	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
-
-	//Wait until interrupt Flag is set, which means that the start condition is send
-	while(!(TWCR & (1<<TWINT)));
-  c6:	ec eb       	ldi	r30, 0xBC	; 188
-  c8:	f0 e0       	ldi	r31, 0x00	; 0
-  ca:	90 81       	ld	r25, Z
-  cc:	99 23       	and	r25, r25
-  ce:	ec f7       	brge	.-6      	; 0xca <SCCB_Read+0xa>
-			//return false;
-		//}
-
-	//1st-Phase
-	//insert the slave write address into the Two-Wire Data Register and indicate a write transmission by setting the LSB to a logical 0
-	TWDR = (OV7670_Address<<1) & ~(0x01);
-  d0:	90 91 00 01 	lds	r25, 0x0100	; 0x800100 <OV7670_Address>
-  d4:	99 0f       	add	r25, r25
-  d6:	90 93 bb 00 	sts	0x00BB, r25	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7e00bb>
-
-	//start the transmission on the bus
-	TWCR = (1<<TWINT) | (1<<TWEN);
-  da:	94 e8       	ldi	r25, 0x84	; 132
-  dc:	90 93 bc 00 	sts	0x00BC, r25	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
-
-	//Wait until interrupt Flag is set, which means that the data is send
-	while(!(TWCR & (1<<TWINT)));
-  e0:	ec eb       	ldi	r30, 0xBC	; 188
-  e2:	f0 e0       	ldi	r31, 0x00	; 0
-  e4:	90 81       	ld	r25, Z
-  e6:	99 23       	and	r25, r25
-  e8:	ec f7       	brge	.-6      	; 0xe4 <SCCB_Read+0x24>
-		//return false;
-	//}
-
-	//2nd-Phase
-	//write the Sub-Address to the Two-Wire Data Register
-	TWDR= SubAddress;
-  ea:	80 93 bb 00 	sts	0x00BB, r24	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7e00bb>
-
-	//start the transmission on the bus
-	TWCR = (1<<TWINT) | (1<<TWEN);
-  ee:	84 e8       	ldi	r24, 0x84	; 132
-  f0:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
-
-	//Wait until interrupt Flag is set, which means that the data is send
-	while(!(TWCR & (1<<TWINT)));
-  f4:	ec eb       	ldi	r30, 0xBC	; 188
-  f6:	f0 e0       	ldi	r31, 0x00	; 0
-  f8:	80 81       	ld	r24, Z
-  fa:	88 23       	and	r24, r24
-  fc:	ec f7       	brge	.-6      	; 0xf8 <SCCB_Read+0x38>
-
-	/* The 2-Phase write transmission is then followed by a 2-Phase read Transmission
-
-
-	*/
+	//send start Condition
 	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
-  fe:	84 ea       	ldi	r24, 0xA4	; 164
- 100:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+ 114:	84 ea       	ldi	r24, 0xA4	; 164
+ 116:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
 
 	//Wait until interrupt Flag is set, which means that the start condition is send
 	while(!(TWCR & (1<<TWINT)));
- 104:	ec eb       	ldi	r30, 0xBC	; 188
- 106:	f0 e0       	ldi	r31, 0x00	; 0
- 108:	80 81       	ld	r24, Z
- 10a:	88 23       	and	r24, r24
- 10c:	ec f7       	brge	.-6      	; 0x108 <SCCB_Read+0x48>
+ 11a:	ec eb       	ldi	r30, 0xBC	; 188
+ 11c:	f0 e0       	ldi	r31, 0x00	; 0
+ 11e:	90 81       	ld	r25, Z
+ 120:	99 23       	and	r25, r25
+ 122:	ec f7       	brge	.-6      	; 0x11e <sccb_read_2_phase+0xc>
 		//return false;
 	//}
 
 	//1st-Phase
 	//insert the slave read address into the Two-Wire Data Register and indicate a read transmission by setting the LSB to a logical 1
 	TWDR = (OV7670_Address<<1) | (0x01);
- 10e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <OV7670_Address>
- 112:	88 0f       	add	r24, r24
- 114:	81 60       	ori	r24, 0x01	; 1
- 116:	80 93 bb 00 	sts	0x00BB, r24	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7e00bb>
+ 124:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <OV7670_Address>
+ 128:	99 0f       	add	r25, r25
+ 12a:	91 60       	ori	r25, 0x01	; 1
+ 12c:	90 93 bb 00 	sts	0x00BB, r25	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7e00bb>
 
 	//start the transmission on the bus
 	TWCR = (1<<TWINT) | (1<<TWEN);
- 11a:	84 e8       	ldi	r24, 0x84	; 132
- 11c:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+ 130:	84 e8       	ldi	r24, 0x84	; 132
+ 132:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
 
 	//Wait until interrupt Flag is set, which means that the data is send
 	while(!(TWCR & (1<<TWINT)));
- 120:	ec eb       	ldi	r30, 0xBC	; 188
- 122:	f0 e0       	ldi	r31, 0x00	; 0
- 124:	80 81       	ld	r24, Z
- 126:	88 23       	and	r24, r24
- 128:	ec f7       	brge	.-6      	; 0x124 <SCCB_Read+0x64>
+ 136:	ec eb       	ldi	r30, 0xBC	; 188
+ 138:	f0 e0       	ldi	r31, 0x00	; 0
+ 13a:	90 81       	ld	r25, Z
+ 13c:	99 23       	and	r25, r25
+ 13e:	ec f7       	brge	.-6      	; 0x13a <sccb_read_2_phase+0x28>
+	//if((TWSR & 0xF8) != TW_MT_SLA_ACK)	//Mask with 0xF8 to eliminate the Prescaler Bits
 	//{
 		////Error Treatment
 		//return false;
 	//}
-
+	TWCR = (1<<TWINT) | (1<<TWEN);
+ 140:	84 e8       	ldi	r24, 0x84	; 132
+ 142:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+	while(!(TWCR & (1<<TWINT)));
+ 146:	ec eb       	ldi	r30, 0xBC	; 188
+ 148:	f0 e0       	ldi	r31, 0x00	; 0
+ 14a:	90 81       	ld	r25, Z
+ 14c:	99 23       	and	r25, r25
+ 14e:	ec f7       	brge	.-6      	; 0x14a <sccb_read_2_phase+0x38>
 	*readData = TWDR;
- 12a:	80 91 bb 00 	lds	r24, 0x00BB	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7e00bb>
- 12e:	fb 01       	movw	r30, r22
- 130:	80 83       	st	Z, r24
-	{
-		//Error Treatment
+ 150:	80 91 bb 00 	lds	r24, 0x00BB	; 0x8000bb <__TEXT_REGION_LENGTH__+0x7e00bb>
+ 154:	8c 93       	st	X, r24
+	
+	
+	//send Stop Condition
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
+ 156:	84 e9       	ldi	r24, 0x94	; 148
+ 158:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7e00bc>
+ 15c:	08 95       	ret
+
+0000015e <OV7670_read_register>:
 		return false;
 	}
 	*/
  }
- 132:	81 e0       	ldi	r24, 0x01	; 1
- 134:	90 e0       	ldi	r25, 0x00	; 0
- 136:	08 95       	ret
 
-00000138 <_exit>:
- 138:	f8 94       	cli
+ void OV7670_read_register (char SubAddress, char* readData){
+ 15e:	cf 93       	push	r28
+ 160:	df 93       	push	r29
+ 162:	eb 01       	movw	r28, r22
+	sccb_write_2_phase(SubAddress);
+ 164:	0e 94 66 00 	call	0xcc	; 0xcc <sccb_write_2_phase>
+	sccb_read_2_phase(readData);
+ 168:	ce 01       	movw	r24, r28
+ 16a:	0e 94 89 00 	call	0x112	; 0x112 <sccb_read_2_phase>
+ }
+ 16e:	df 91       	pop	r29
+ 170:	cf 91       	pop	r28
+ 172:	08 95       	ret
 
-0000013a <__stop_program>:
- 13a:	ff cf       	rjmp	.-2      	; 0x13a <__stop_program>
+00000174 <_exit>:
+ 174:	f8 94       	cli
+
+00000176 <__stop_program>:
+ 176:	ff cf       	rjmp	.-2      	; 0x176 <__stop_program>
