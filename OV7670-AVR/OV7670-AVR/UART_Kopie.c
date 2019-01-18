@@ -1,9 +1,18 @@
 /*
+ * UART.c
+ *
+ * Created: 10.04.2018 23:41:36
+ *  Author: David
+ */ 
+
+ /*
  * UART.cpp
  *
  * Created: 06.06.2016 20:52:46
  *  Author: David
  */ 
+
+ 
  #include <avr/io.h>
  #include <avr/interrupt.h>
 
@@ -28,7 +37,7 @@
 #define UART0_rx_size 64					// Nur Werte 2^n zulässig !
 #define UART0_rx_mask (UART0_rx_size-1)
 
-#define UART0_tx_size 512					// Nur Werte 2^n zulässig !
+#define UART0_tx_size 64					// Nur Werte 2^n zulässig !
 #define UART0_tx_mask (UART0_tx_size-1)
 
 #define UART0_Befehl_FiFo 10
@@ -38,22 +47,18 @@
 int temp = 0;	
 struct UART0_rx				//Receive Buffer
 {
-char data[UART0_rx_size];
-char read;
-char write;
+uint8_t data[UART0_rx_size];
+uint8_t read;
+uint8_t write;
 }UART0_rx= {{}, 0, 0};
 	
 struct UART0_tx				//Transmit Buffer
 {
-char data[UART0_tx_size];
-char read;
-char write;
+uint8_t data[UART0_tx_size];
+uint8_t read;
+uint8_t write;
 }UART0_tx= {{}, 0, 0};
 
-//Public declarations
-char receivedAddress =0;
-char receivedData1 =0;
-char receivedData2 =0;
 //------------------------------------------------------------------------------
 
 void UART0_init (void)
@@ -86,15 +91,14 @@ void UART0_init (void)
 
 //-------------------------------------------------- UART senden --------------------------------------------------
 
-int UART0_tx_in (char input)
+int UART0_tx_in (uint8_t input)
 {
-	char next= ((UART0_tx.write+1)&UART0_tx_mask);
+	uint8_t next= ((UART0_tx.write+1)&UART0_tx_mask);
 	if (next==UART0_tx.read)
 	{
-
 		return 0;
 	}
-	UART0_tx.data[UART0_tx.write] = input;
+	UART0_tx.data[UART0_tx.write]=(uint8_t)input;
 	UART0_tx.write =next;
 	return 1;
 }
@@ -125,11 +129,6 @@ void UART0_senden (char input[16])		// Senden mit UART0
 	UCSR0B |= 0b00100000;				// Data Register empty Interrupt anschalten 
 }
 
-void UART0_senden_newLine (){
-	UART0_senden_Byte(13);	//CR
-	UART0_senden_Byte(10);	//LF
-}
-
 void UART0_senden_zahl(long zahl)
 {
 	int input[4];
@@ -145,10 +144,9 @@ void UART0_senden_zahl(long zahl)
 
 	UCSR0B |= 0b00100000;				// Data Register empty Interrupt anschalten 
 }
-void UART0_senden_Byte(char Byte)
+void UART0_senden_Byte(uint8_t Byte)
 {
-UART0_tx_in(Byte);
-UCSR0B |= 0b00100000;				// Data Register empty Interrupt anschalten 
+UART0_tx_in((uint8_t) Byte);
 }
 
 ISR(USART_RX_vect)                    	// Receive Complete Interrupt
@@ -170,14 +168,14 @@ ISR(USART_UDRE_vect)					// Data Register Empty Interupt
 
 //------------------------------------------------------------- empfangen --------------------------------
 
-int UART0_rx_in (char input)
+int UART0_rx_in (uint8_t input)
 {
-	char temp= ((UART0_rx.write+1)&UART0_rx_mask);	//
+	uint8_t temp= ((UART0_rx.write+1)&UART0_rx_mask);	//
 	if (temp==UART0_rx.read)							//FiFo voll ?
 	{	
 		return 0;										//return 0 -> Fifo voll
 	}
-	UART0_rx.data[UART0_rx.write]=(char)input;		//Daten ins Array legen
+	UART0_rx.data[UART0_rx.write]=(uint8_t)input;		//Daten ins Array legen
 	UART0_rx.write = temp;								//write auf nächste Specicherzelle schieben
 	return 1;											//return 1 -> Fifo abspeichern erfolgreich 
 }
@@ -188,7 +186,7 @@ char UART0_rx_out (void)
 		{
 	 		return 0;									//return 0 -> FiFo ist leer
 		}
-	int temp = (int)UART0_rx.data[UART0_rx.read];				//FiFo Inhalt in Data schreiben
+	char temp = UART0_rx.data[UART0_rx.read];				//FiFo Inhalt in Data schreiben
 	UART0_rx.read = (UART0_rx.read +1) & UART0_rx_mask;	//read auf nächste Speicherzelle schreiben
 	return temp;										//return Data
 }
@@ -205,11 +203,15 @@ int UART0_rx_empty(void)								//1 wenn FIFO leer, 0 wenn fifo voll
 	}
 }
 
+
+
+
+//Empfangene Befehle identifizieren
 int UART0_rx_complete(void)
 {
 	//Wenn CR+LF empfangen wird, ist der Befehl vollständig
 	if(UART0_rx.data[(UART0_rx.write -2)&UART0_rx_mask] == 0x0D &&UART0_rx.data[(UART0_rx.write-1)&UART0_rx_mask]==0x0A)
-	{
+	{																						
 		return 1;
 	}
 	else
@@ -220,77 +222,39 @@ int UART0_rx_complete(void)
 
 //-------------------------------------------------------- FiFo Arbeiten--------------------------------
 
-int UART0_rx_work(int* Programmstatus)
+int UART0_rx_work(int Programmstatus)
 {
-	if(UART0_rx_complete())
-	{
-
 	char Befehl[UART0_Befehl_FiFo] = {};			// Hier steht der Befehl
-	volatile int j = 0;
-	volatile int i = 0;
+	int j =0;
+	volatile int i = 0;						
 	do
-	{
-		char temp = UART0_rx_out();
-			
-		Befehl[i] = temp;
+	{	
+		Befehl[i] = UART0_rx_out();		
 		i++;
 
 		//Künstlicher Zähler, um das Abfragen der beiden Bits auch beim ersten zu ermöglichen
 		if(i<2)
-		j=1;
+			j=1;
 		else
-		j=0;
-	}while(((Befehl[i+j-2] != (char)0x0D) || (Befehl[i-1] != (char)0x0A))&&(i<10));				// solange kein CR+LF erkannt wird
+			j=0;
+	}while((Befehl[i+j-2] != 0x0D) || (Befehl[i-1] != 0x0A));				// solange kein CR+LF erkannt wird
 	
-	///////////////-------------------------------------------------------Hier stimmt etwas mit der Befehlsverarbeitung nicht! Der erste Befehl funktioniert nie
+
+	// CR+LF löschen
+	UART0_rx_out();								
+	UART0_rx_out();								
 	//Beginn der Befehlsauswertung
-	if(Befehl[0]==0x01)	//Read Register
+	if(Befehl==0x01)
 	{
-		receivedAddress = Befehl[1];
-		*Programmstatus = 0x01;
-	}
-	if(Befehl[0]==0x02){	//Write Register
-		receivedAddress = Befehl[1];
-		receivedData1 = Befehl[2];
-		*Programmstatus = 0x02;
-	}
-	if(Befehl[0]==0x03){		//Capture Photo
-		*Programmstatus = 0x03;
-	}
-	if(Befehl[0]==0x04){		//set x Resolution
-		receivedData1 = Befehl[1];
-		receivedData2 = Befehl[2];
-		*Programmstatus = 0x04;
-	}
-	if(Befehl[0]==0x05){		//set y resolution
-		receivedData1 = Befehl[1];
-		receivedData2 = Befehl[2];
-		*Programmstatus = 0x05;
-	}
-	if(Befehl[0]==0x06){		//set Bytes per Pixel
-		receivedData1 = Befehl[1];
-		*Programmstatus = 0x06;
-	}
-	
-	if(Befehl[0]==0x0A)		//new Line from Buffer requested by the Terminal
-	{
-		*Programmstatus = 0x0A ;
-	}
-	if(Befehl[0]==0x0B)	//Line repeat from Buffer requeseted by the Terminal
-	{
-		*Programmstatus = 0x0B;
+	UART0_senden("jo");
 	}
 
-	return 1;
-	}
 	return 0;
 }
 
 //---------------------------------------------------- Senden --------
 
-
-
-char UART0_tx_out (void)
+int UART0_tx_out (void)
 {
 	if(UART0_tx.read==UART0_tx.write)
 		{
@@ -300,5 +264,3 @@ char UART0_tx_out (void)
 	UART0_tx.read = (UART0_tx.read +1) & UART0_tx_mask;
 	return temp;
 }
-
-

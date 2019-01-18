@@ -27,9 +27,15 @@
  */
 void init_TWI();	
 
-void sccb_write_3_phase(char SubAddress, char data);
+void TWI_start(void);
+void TWI_stop(void);
+int sccb_write_3_phase(char SubAddress, char data);
 void sccb_write_2_phase(char SubAddress);
-void sccb_read_2_phase(char* readData);
+int sccb_read_2_phase(char* readData);
+
+void scanForI2CDevice (void);
+
+char sccb_readRegister(char RegisterAddress);
 void OV7670_read_register (char SubAddress, char* readData);
 void OV7670_write_register (char SubAddress, char data);
 #endif /* SCCB_H_ */

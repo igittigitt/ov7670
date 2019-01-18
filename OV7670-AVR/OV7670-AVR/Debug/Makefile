@@ -39,7 +39,9 @@ SUBDIRS :=
 C_SRCS +=  \
 ../main.c \
 ../OV7670_without_Fifo.c \
+../OV7670_with_Fifo.c \
 ../SCCB.c \
+../SCCB_Old.c \
 ../UART.c
 
 
@@ -52,25 +54,33 @@ ASM_SRCS +=
 OBJS +=  \
 main.o \
 OV7670_without_Fifo.o \
+OV7670_with_Fifo.o \
 SCCB.o \
+SCCB_Old.o \
 UART.o
 
 OBJS_AS_ARGS +=  \
 main.o \
 OV7670_without_Fifo.o \
+OV7670_with_Fifo.o \
 SCCB.o \
+SCCB_Old.o \
 UART.o
 
 C_DEPS +=  \
 main.d \
 OV7670_without_Fifo.d \
+OV7670_with_Fifo.d \
 SCCB.d \
+SCCB_Old.d \
 UART.d
 
 C_DEPS_AS_ARGS +=  \
 main.d \
 OV7670_without_Fifo.d \
+OV7670_with_Fifo.d \
 SCCB.d \
+SCCB_Old.d \
 UART.d
 
 OUTPUT_FILE_PATH +=OV7670-AVR.elf
@@ -87,6 +97,10 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

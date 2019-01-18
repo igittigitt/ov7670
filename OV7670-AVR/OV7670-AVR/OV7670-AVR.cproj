@@ -54,6 +54,28 @@
     </com_atmel_avrdbg_tool_avrdragon>
     <avrtoolinterface>debugWIRE</avrtoolinterface>
     <avrtoolinterfaceclock>125000</avrtoolinterfaceclock>
+    <custom>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>debugWIRE</InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">custom</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Custom Programming Tool</ToolName>
+    </custom>
+    <com_atmel_avrdbg_tool_simulator>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>debugWIRE</InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Simulator</ToolName>
+    </com_atmel_avrdbg_tool_simulator>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -143,10 +165,22 @@
     <Compile Include="OV7670_without_Fifo.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="OV7670_with_Fifo.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="OV7670_with_Fifo.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="SCCB.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SCCB.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SCCB_Old.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SCCB_Old.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="UART.c">
