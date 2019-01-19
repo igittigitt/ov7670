@@ -119,14 +119,17 @@ int main(void)
 				break;
 			case 4:
 				width = ((receivedData1<<8)|(receivedData2));
+				UART0_senden_Byte(0x04);
 				Programstatus =-1;
 				break;
 			case 5:
 				height = ((receivedData1<<8)|(receivedData2));
+				UART0_senden_Byte(0x05);
 				Programstatus =-1;
 				break;
 			case 6:
 				BytesPerPixel = receivedData1;
+				UART0_senden_Byte(0x06);
 				Programstatus=-1;
 				break;
 

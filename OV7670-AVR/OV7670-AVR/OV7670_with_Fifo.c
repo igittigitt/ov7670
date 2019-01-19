@@ -22,23 +22,24 @@
  {
 	//Preparing the Fifo		
 		//Reset the WritePointer //Low active
-		OV_WRST_PORT |= (1<<OV_WRST_PinNo);		//changed
-		_delay_ms(1);
+
 	while(!getValueOfPin(OV_VSync_PIN,OV_VSync_PinNo));	//Wait for VSync to indicate a new Frame
-	//Enable Write Pointer
-	OV_WRST_PORT &= ~(1<<OV_WRST_PinNo);	  //changed
+		OV_WRST_PORT &= ~(1<<OV_WRST_PinNo);
+		_delay_us(6);	
+		//Enable Write Pointer
+	OV_WRST_PORT |= (1<<OV_WRST_PinNo);
 	//OV_WRST_PORT |= (1<<OV_WRST_PIN);	//Set Write Pointer to 0
 	//OV_WRST_PORT &= ~(1<<OV_WRST_PIN);	
-	OV_WR_PORT |=(1<<OV_WR_PIN);	//Write Enable so that the camera can write on the FrameBuffer
+	OV_WR_PORT &= ~(1<<OV_WR_PinNo);	//Write Enable so that the camera can write on the FrameBuffer
 	while(!getValueOfPin(OV_VSync_PIN,OV_VSync_PinNo)); //Wait for the next VSync Pulse, so the frame is complete
-	OV_WR_PORT &= ~(1<<OV_WR_PIN); //Write Disabled so that the picture is safe in the Framebuffer
+	OV_WR_PORT |= (1<<OV_WR_PinNo); //Write Disabled so that the picture is safe in the Framebuffer
 	_delay_ms(20);
 	}
 
 void OV7670_ResetFifoReadPointer()
 {
 	//Reset the ReadPointer
-	OV_RRST_PORT |= (1<<OV_RRST_PinNo);	//changed
+	OV_RRST_PORT &= ~(1<<OV_RRST_PinNo);	//changed
 	//Pulse two cycles
 	OV_RCK_PORT |= (1<<OV_RCK_PinNo);
 	_delay_ms(1);
@@ -49,7 +50,7 @@ void OV7670_ResetFifoReadPointer()
 	OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
 	_delay_ms(1);
 	//Set RRST again to HIGH
-	OV_RRST_PORT &= ~(1<<OV_RRST_PinNo);		//Changed
+	OV_RRST_PORT |= (1<<OV_RRST_PinNo);		//Changed
 }
 
 
@@ -194,18 +195,21 @@ char OV7670_init (void){
 		OV_D5_DDR		&= ~(1<<OV_D5_PinNo);
 		OV_D6_DDR		&= ~(1<<OV_D6_PinNo);
 		OV_D7_DDR		&= ~(1<<OV_D7_PinNo);
-		OV_RRST_DDR	|= (1<<OV_RRST_PinNo);	
+		OV_RRST_DDR	|= (1<<OV_RRST_PinNo);	//Low active
 		OV_WRST_DDR	|= (1<<OV_WRST_PinNo);	//Low active
-		OV_WR_DDR		|= (1<<OV_WR_PinNo);
+		OV_WR_DDR	|= (1<<OV_WR_PinNo);	//Low active
 		OV_RCK_DDR	|= (1<<OV_RCK_PinNo);
-		OV_OE_DDR		|= (1<<OV_OE_PinNo);
+		OV_OE_DDR	|= (1<<OV_OE_PinNo);
 	
 	//Preparing the Fifo
+		//disable write Enable
+		OV_WR_PORT |= (1<<OV_WR_PinNo); //low active
 		//Reset the WritePointer //Low active
 		OV_WRST_PORT &= ~(1<<OV_WRST_PinNo);
 		_delay_ms(1);
 		OV_WRST_PORT |= (1<<OV_WRST_PinNo);	
 		_delay_ms(1);
+		
 		//Reset the ReadPointer
 		OV_RRST_PORT &= ~(1<<OV_RRST_PinNo);
 		//Pulse two cycles
@@ -219,7 +223,8 @@ char OV7670_init (void){
 		_delay_ms(1);
 		//Set RRST again to HIGH
 		OV_RRST_PORT |= (1<<OV_RRST_PinNo);
-
+		//Set low active OE Output Enable to low
+		OV_OE_PORT &= ~(1<<OV_OE_PinNo);
 
   //Power Down deaktivieren 
   //OV_PWDN_PORT &= ~(1<<OV_PWDN_PinNo);	//can be added when a PWDN Pin is available
