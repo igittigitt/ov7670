@@ -29,10 +29,10 @@
 int main(void)
 {
     //Initial Variables
-	int Programstatus = -1; 
-	int height = 480;
-	int width = 640;
-	int BytesPerPixel = 3;
+volatile	int Programstatus = -1; 
+volatile	int height = 480;
+volatile	int width = 640;
+volatile	int BytesPerPixel = 3;
 	int imageLineToRead = 0;	//Image Line, which will be read out from the FIFO
 
 
@@ -118,12 +118,12 @@ int main(void)
 				Programstatus=-1;
 				break;
 			case 4:
-				width = ((receivedData1<<8)|(receivedData2));
+				width = ((receivedData2<<8)|(receivedData1));
 				UART0_senden_Byte(0x04);
 				Programstatus =-1;
 				break;
 			case 5:
-				height = ((receivedData1<<8)|(receivedData2));
+				height = ((receivedData2<<8)|(receivedData1));
 				UART0_senden_Byte(0x05);
 				Programstatus =-1;
 				break;
