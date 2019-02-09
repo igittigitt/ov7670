@@ -7,7 +7,11 @@
 
 
 #ifndef UART_H_
-#define UART_H_
+	#define UART_H_
+
+#ifndef F_CPU
+ #define F_CPU 16000000UL
+#endif
 
 extern char receivedAddress;
 extern char receivedData1;

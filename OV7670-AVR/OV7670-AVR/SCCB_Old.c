@@ -10,6 +10,14 @@
 #include <util/delay.h>
 #include "UART.h"
 
+
+ /**
+  * \brief 
+  * this function initializes the SCCB and returns an error code if something goes wrong
+  * \return char
+  * 0: success
+  * 100+n: Error, n= Errorcode of subfunctions 
+  */
  char OV_SCCB_Init (void){
 	char ErrorCode;
 
@@ -25,16 +33,16 @@
 		OV7670_read(OV_SCCB_COM7,&temp);
 		//write the Reset Bit
 	if(!(ErrorCode=OV7670_write(OV_SCCB_COM7,0x80))){
-		UART0_senden("init SCCB ...done!");
-		UART0_senden_newLine();
+		//UART0_senden("init SCCB ...done!");
+		//UART0_senden_newLine();
 		_delay_ms(500);	//Delay of 500ms is necessary
 		return ErrorCode;
 	}
 	else{
-		UART0_senden("Reset SCCB... failed, ErrorCode: ");
-		UART0_senden_Byte(ErrorCode);
-		UART0_senden_newLine();
-		return ErrorCode;
+		//UART0_senden("Reset SCCB... failed, ErrorCode: ");
+		//UART0_senden_Byte(ErrorCode);
+		//UART0_senden_newLine();
+		return 10+ErrorCode;
 	}
 }
 
@@ -71,7 +79,7 @@
  char OV_SCCB_Write (char Data){
 	 unsigned char	erf;
 
-	 //Alle 8 Bit des Data Byte übermitteln, MSB zuerst
+	 //Alle 8 Bit des Data Byte ?bermitteln, MSB zuerst
 	 for(int j=7; j>=0;j--){
 		 if((Data>>j)	&	0x01){
 			 OV_SIOD_PORT	|=	(1<<OV_SIOD_PinNo);
@@ -87,7 +95,7 @@
 		 _delay_us(OV_SIO_CLKDELAY);
 	 }
 
-	 // Don't Care Bit übermitteln, SIOD auf LOW ziehen, um einen undefinierten Status zu vermeiden, Außerdem wird der PIN auf eingang gestellt um eine Hohe Impedanz zu bekommen.
+	 // Don't Care Bit ?bermitteln, SIOD auf LOW ziehen, um einen undefinierten Status zu vermeiden, Au?erdem wird der PIN auf eingang gestellt um eine Hohe Impedanz zu bekommen.
 	 //Wenn der Slave das Byte akzeptiert wird SIOD auf low gezogen
 	 OV_SIOD_PORT	&=	~(1<<OV_SIOD_PinNo);
 	 OV_SIOD_DDR		&=	~(1<<OV_SIOD_PinNo);
@@ -96,7 +104,7 @@
 	 OV_SIOC_PORT	|=	(1<<OV_SIOC_PinNo);
 	 _delay_us(OV_SIO_CLKDELAY);
 
-	 //Auslesen ob die Übertragung erfolgreich war
+	 //Auslesen ob die ?bertragung erfolgreich war
 	 if(OV_SIOD_PIN & (1<<OV_SIOD_PinNo)){
 		 UART0_senden("SCCB: Schreiben fehlgeschlagen");
 		 UART0_senden_newLine();
@@ -135,7 +143,7 @@
 	 }
 
 	 //Die ersten 8 Bits wurden gelesen, jetzt folgt das letzte Don't Care Bit
-	 //SIOD muss während dessen auf 1 gehalten werden
+	 //SIOD muss w?hrend dessen auf 1 gehalten werden
 	 OV_SIOD_DDR	|=	(1<<OV_SIOD_PinNo);
 	 OV_SIOD_PORT	|=	(1<<OV_SIOD_PinNo);
 
@@ -145,7 +153,7 @@
 	 OV_SIOC_PORT	&=	~(1<<OV_SIOC_PinNo);
 	 _delay_us(OV_SIO_CLKDELAY);
 
-	 //Aufräumen und SIOD auf null setzten (ist das notwendig? ich weiß es nicht)
+	 //Aufr?umen und SIOD auf null setzten (ist das notwendig? ich wei? es nicht)
 	 OV_SIOD_PORT	&=	~(1<<OV_SIOD_PinNo);
 	 return 1;
  }
@@ -231,7 +239,7 @@
 
 	//Phase 3: Daten in Register schreiben
 	if(OV_SCCB_Write(regData)==0){
-		ErrorCode =0x06;
+		ErrorCode =0x07;
 		OV_SCCB_Stopp();
 		return ErrorCode;
 	}

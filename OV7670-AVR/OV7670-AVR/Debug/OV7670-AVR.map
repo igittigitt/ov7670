@@ -5,7 +5,7 @@ d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/a
 d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_negsi2.o)
                               d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodsi4.o) (__negsi2)
 d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                              D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o (exit)
+                              D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o (exit)
 d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
                               main.o (__tablejump2__)
 d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
@@ -24,8 +24,8 @@ PhotoHeight         0x2               OV7670_with_Fifo.o
 
 Discarded input sections
 
- .data          0x00000000        0x0 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .bss           0x00000000        0x0 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .data          0x00000000        0x0 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .bss           0x00000000        0x0 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
@@ -38,16 +38,12 @@ Discarded input sections
  .text          0x00000000        0x0 OV7670_with_Fifo.o
  .data          0x00000000        0x0 OV7670_with_Fifo.o
  .bss           0x00000000        0x0 OV7670_with_Fifo.o
- .text.sendFrameBufferToUART
-                0x00000000       0xc6 OV7670_with_Fifo.o
  .text.getValueOfPin
                 0x00000000       0x24 OV7670_with_Fifo.o
- .text.init_OV7670WithFifo
-                0x00000000        0x2 OV7670_with_Fifo.o
  .text.OV7670_checkConnection
-                0x00000000       0x4c OV7670_with_Fifo.o
- .text.OV7670_getByte
-                0x00000000       0x56 OV7670_with_Fifo.o
+                0x00000000       0x28 OV7670_with_Fifo.o
+ .text.sendFrameBufferToUART
+                0x00000000       0xba OV7670_with_Fifo.o
  COMMON         0x00000000        0x6 OV7670_with_Fifo.o
  .text          0x00000000        0x0 SCCB.o
  .data          0x00000000        0x0 SCCB.o
@@ -55,7 +51,7 @@ Discarded input sections
  .rodata.str1.1
                 0x00000000       0x32 SCCB.o
  .text.init_TWI
-                0x00000000       0x36 SCCB.o
+                0x00000000       0x3c SCCB.o
  .text.TWI_start
                 0x00000000       0x24 SCCB.o
  .text.TWI_stop
@@ -65,11 +61,11 @@ Discarded input sections
  .text.sccb_write_3_phase
                 0x00000000       0x6e SCCB.o
  .text.sccb_write_2_phase
-                0x00000000       0x76 SCCB.o
+                0x00000000       0x7e SCCB.o
  .text.sccb_read_2_phase
-                0x00000000       0x66 SCCB.o
+                0x00000000       0x6e SCCB.o
  .text.scanForI2CDevice
-                0x00000000       0x1e SCCB.o
+                0x00000000       0x24 SCCB.o
  .text.sccb_readRegister
                 0x00000000       0x20 SCCB.o
  .text.sccb_writeRegister
@@ -78,13 +74,13 @@ Discarded input sections
                 0x00000000        0x1 SCCB.o
  .data.OV7670_Address
                 0x00000000        0x1 SCCB.o
- .debug_info    0x00000000      0x5c8 SCCB.o
- .debug_abbrev  0x00000000      0x27a SCCB.o
- .debug_loc     0x00000000      0x2dd SCCB.o
+ .debug_info    0x00000000      0x521 SCCB.o
+ .debug_abbrev  0x00000000      0x24e SCCB.o
+ .debug_loc     0x00000000      0x32d SCCB.o
  .debug_aranges
                 0x00000000       0x68 SCCB.o
  .debug_ranges  0x00000000       0x58 SCCB.o
- .debug_line    0x00000000      0x3c5 SCCB.o
+ .debug_line    0x00000000      0x3cf SCCB.o
  .debug_str     0x00000000      0x30e SCCB.o
  .comment       0x00000000       0x31 SCCB.o
  .debug_frame   0x00000000       0xd8 SCCB.o
@@ -225,7 +221,7 @@ user_signatures  0x00850000         0x00000400         rw !x
 Linker script and memory map
 
 Address of section .data set to 0x800100
-LOAD D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+LOAD D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
 LOAD main.o
 LOAD OV7670_without_Fifo.o
 LOAD OV7670_with_Fifo.o
@@ -239,7 +235,7 @@ START GROUP
 LOAD d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a
 LOAD d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a
 LOAD d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a
-LOAD D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5\libatmega328p.a
+LOAD D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5\libatmega328p.a
 END GROUP
                 0x00020000                __TEXT_REGION_LENGTH__ = DEFINED (__TEXT_REGION_LENGTH__)?__TEXT_REGION_LENGTH__:0x20000
                 0x0000ffa0                __DATA_REGION_LENGTH__ = DEFINED (__DATA_REGION_LENGTH__)?__DATA_REGION_LENGTH__:0xffa0
@@ -339,9 +335,9 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0xdf2
+.text           0x00000000      0xe22
  *(.vectors)
- .vectors       0x00000000       0x68 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .vectors       0x00000000       0x68 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
                 0x00000000                __vectors
  *(.vectors)
@@ -371,13 +367,13 @@ END GROUP
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x00000080        0x0 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .init0         0x00000080        0x0 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000080                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x00000080        0xc D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .init2         0x00000080        0xc D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
  *(.init2)
  *(.init3)
  *(.init3)
@@ -396,10 +392,10 @@ END GROUP
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x000000b2        0x8 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .init9         0x000000b2        0x8 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
  *(.init9)
  *(.text)
- .text          0x000000ba        0x4 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .text          0x000000ba        0x4 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x000000ba                __vector_22
                 0x000000ba                __vector_1
                 0x000000ba                __vector_24
@@ -426,108 +422,114 @@ END GROUP
                 0x000000ba                __vector_20
                 0x000000be                . = ALIGN (0x2)
  *(.text.*)
- .text.main     0x000000be      0x21a main.o
+ .text.main     0x000000be      0x230 main.o
                 0x000000be                main
- .text.OV7670_captureNewImage
-                0x000002d8       0x24 OV7670_with_Fifo.o
-                0x000002d8                OV7670_captureNewImage
- .text.OV7670_ResetFifoReadPointer
-                0x000002fc       0x3e OV7670_with_Fifo.o
-                0x000002fc                OV7670_ResetFifoReadPointer
- .text.readByte
-                0x0000033a       0x52 OV7670_with_Fifo.o
-                0x0000033a                readByte
- .text.OV7670_sendNextLine
-                0x0000038c       0x90 OV7670_with_Fifo.o
-                0x0000038c                OV7670_sendNextLine
- .text.OV7670_sendLineRepeat
-                0x0000041c       0x8e OV7670_with_Fifo.o
-                0x0000041c                OV7670_sendLineRepeat
+ .text.Ov7670_initPins
+                0x000002ee       0x2e OV7670_with_Fifo.o
+                0x000002ee                Ov7670_initPins
  .text.OV7670_init
-                0x000004aa       0xd8 OV7670_with_Fifo.o
-                0x000004aa                OV7670_init
+                0x0000031c       0x84 OV7670_with_Fifo.o
+                0x0000031c                OV7670_init
+ .text.OV7670_ResetFifoReadPointer
+                0x000003a0       0x3e OV7670_with_Fifo.o
+                0x000003a0                OV7670_ResetFifoReadPointer
+ .text.OV7670_ResetFifoWritePointer
+                0x000003de        0xc OV7670_with_Fifo.o
+                0x000003de                OV7670_ResetFifoWritePointer
+ .text.OV7670_captureNewImage
+                0x000003ea       0x2e OV7670_with_Fifo.o
+                0x000003ea                OV7670_captureNewImage
+ .text.Ov7670_readByte
+                0x00000418       0x52 OV7670_with_Fifo.o
+                0x00000418                Ov7670_readByte
+ .text.OV7670_sendNextLine
+                0x0000046a       0x6c OV7670_with_Fifo.o
+                0x0000046a                OV7670_sendNextLine
+ .text.OV7670_sendLineRepeat
+                0x000004d6       0x8e OV7670_with_Fifo.o
+                0x000004d6                OV7670_sendLineRepeat
  .text.OV_SCCB_Start
-                0x00000582       0x22 SCCB_Old.o
-                0x00000582                OV_SCCB_Start
+                0x00000564       0x2e SCCB_Old.o
+                0x00000564                OV_SCCB_Start
  .text.OV_SCCB_Stopp
-                0x000005a4       0x22 SCCB_Old.o
-                0x000005a4                OV_SCCB_Stopp
+                0x00000592       0x2e SCCB_Old.o
+                0x00000592                OV_SCCB_Stopp
  .text.OV_SCCB_Write
-                0x000005c6       0x7a SCCB_Old.o
-                0x000005c6                OV_SCCB_Write
+                0x000005c0       0x92 SCCB_Old.o
+                0x000005c0                OV_SCCB_Write
  .text.OV_SCCB_Read
-                0x00000640       0x62 SCCB_Old.o
-                0x00000640                OV_SCCB_Read
+                0x00000652       0x7a SCCB_Old.o
+                0x00000652                OV_SCCB_Read
  .text.OV7670_read
-                0x000006a2       0x8c SCCB_Old.o
-                0x000006a2                OV7670_read
+                0x000006cc       0x9c SCCB_Old.o
+                0x000006cc                OV7670_read
  .text.OV7670_write
-                0x0000072e       0x5e SCCB_Old.o
-                0x0000072e                OV7670_write
+                0x00000768       0x66 SCCB_Old.o
+                0x00000768                OV7670_write
  .text.OV_SCCB_Init
-                0x0000078c       0x6c SCCB_Old.o
-                0x0000078c                OV_SCCB_Init
+                0x000007ce       0x4a SCCB_Old.o
+                0x000007ce                OV_SCCB_Init
  .text.OV_SCCB_RegisterToUart
-                0x000007f8       0x3e SCCB_Old.o
-                0x000007f8                OV_SCCB_RegisterToUart
+                0x00000818       0x3e SCCB_Old.o
+                0x00000818                OV_SCCB_RegisterToUart
  .text.OV_SCCB_set_Bit
-                0x00000836       0x7a SCCB_Old.o
-                0x00000836                OV_SCCB_set_Bit
+                0x00000856       0x7a SCCB_Old.o
+                0x00000856                OV_SCCB_set_Bit
  .text.OV_SCCB_setTestPattern
-                0x000008b0       0x64 SCCB_Old.o
-                0x000008b0                OV_SCCB_setTestPattern
+                0x000008d0       0x64 SCCB_Old.o
+                0x000008d0                OV_SCCB_setTestPattern
  .text.OV_SCCB_cle_Bit
-                0x00000914       0x7c SCCB_Old.o
-                0x00000914                OV_SCCB_cle_Bit
+                0x00000934       0x7c SCCB_Old.o
+                0x00000934                OV_SCCB_cle_Bit
  .text.OV_SCCB_setVideoFormat
-                0x00000990       0xd2 SCCB_Old.o
-                0x00000990                OV_SCCB_setVideoFormat
+                0x000009b0       0xd2 SCCB_Old.o
+                0x000009b0                OV_SCCB_setVideoFormat
  .text.UART0_init
-                0x00000a62       0x24 UART.o
-                0x00000a62                UART0_init
+                0x00000a82       0x26 UART.o
+                0x00000a82                UART0_init
  .text.UART0_tx_in
-                0x00000a86       0x28 UART.o
-                0x00000a86                UART0_tx_in
+                0x00000aa8       0x2a UART.o
+                0x00000aa8                UART0_tx_in
  .text.UART0_tx_empty
-                0x00000aae       0x16 UART.o
-                0x00000aae                UART0_tx_empty
+                0x00000ad2       0x16 UART.o
+                0x00000ad2                UART0_tx_empty
  .text.UART0_senden
-                0x00000ac4       0x28 UART.o
-                0x00000ac4                UART0_senden
+                0x00000ae8       0x28 UART.o
+                0x00000ae8                UART0_senden
  .text.UART0_senden_Byte
-                0x00000aec       0x10 UART.o
-                0x00000aec                UART0_senden_Byte
+                0x00000b10       0x10 UART.o
+                0x00000b10                UART0_senden_Byte
  .text.UART0_senden_newLine
-                0x00000afc        0xe UART.o
-                0x00000afc                UART0_senden_newLine
+                0x00000b20        0xe UART.o
+                0x00000b20                UART0_senden_newLine
  .text.UART0_rx_in
-                0x00000b0a       0x2a UART.o
-                0x00000b0a                UART0_rx_in
+                0x00000b2e       0x28 UART.o
+                0x00000b2e                UART0_rx_in
  .text.__vector_18
-                0x00000b34       0x4c UART.o
-                0x00000b34                __vector_18
+                0x00000b56       0x4c UART.o
+                0x00000b56                __vector_18
  .text.UART0_rx_out
-                0x00000b80       0x24 UART.o
-                0x00000b80                UART0_rx_out
+                0x00000ba2       0x22 UART.o
+                0x00000ba2                UART0_rx_out
  .text.UART0_rx_complete
-                0x00000ba4       0x38 UART.o
-                0x00000ba4                UART0_rx_complete
+                0x00000bc4       0x34 UART.o
+                0x00000bc4                UART0_rx_complete
  .text.UART0_rx_work
-                0x00000bdc      0x178 UART.o
-                0x00000bdc                UART0_rx_work
+                0x00000bf8      0x188 UART.o
+                0x00000bf8                UART0_rx_work
  .text.UART0_tx_out
-                0x00000d54       0x2e UART.o
-                0x00000d54                UART0_tx_out
+                0x00000d80       0x32 UART.o
+                0x00000d80                UART0_tx_out
  .text.__vector_19
-                0x00000d82       0x60 UART.o
-                0x00000d82                __vector_19
- .text.libgcc   0x00000de2        0xc d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
-                0x00000de2                __tablejump2__
-                0x00000dee                . = ALIGN (0x2)
+                0x00000db2       0x60 UART.o
+                0x00000db2                __vector_19
+ .text.libgcc   0x00000e12        0xc d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
+                0x00000e12                __tablejump2__
+                0x00000e1e                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000dee        0x0 d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x00000dee                _exit
-                0x00000dee                exit
+ .fini9         0x00000e1e        0x0 d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000e1e                _exit
+                0x00000e1e                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -546,59 +548,56 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000dee        0x4 d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000e1e        0x4 d:/programme/atmel studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000df2                _etext = .
+                0x00000e22                _etext = .
 
-.data           0x00800100      0x168 load address 0x00000df2
+.data           0x00800100       0xb4 load address 0x00000e22
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
+ *(.gnu.linkonce.d*)
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800100       0x72 main.o
-                                 0x78 (size before relaxing)
+                0x00800100       0x78 main.o
  .rodata.str1.1
-                0x00800172       0x85 OV7670_with_Fifo.o
-                                 0x8b (size before relaxing)
- .rodata.str1.1
-                0x008001f7       0x70 SCCB_Old.o
- *(.gnu.linkonce.d*)
-                0x00800268                . = ALIGN (0x2)
- *fill*         0x00800267        0x1 
-                0x00800268                _edata = .
-                0x00800268                PROVIDE (__data_end, .)
+                0x00800178       0x3b SCCB_Old.o
+ *(.gnu.linkonce.r*)
+                0x008001b4                . = ALIGN (0x2)
+ *fill*         0x008001b3        0x1 
+                0x008001b4                _edata = .
+                0x008001b4                PROVIDE (__data_end, .)
 
-.bss            0x00800268      0x249
-                0x00800268                PROVIDE (__bss_start, .)
+.bss            0x008001b4      0x409
+                0x008001b4                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.receivedData2
-                0x00800268        0x1 UART.o
-                0x00800268                receivedData2
+                0x008001b4        0x1 UART.o
+                0x008001b4                receivedData2
  .bss.receivedData1
-                0x00800269        0x1 UART.o
-                0x00800269                receivedData1
+                0x008001b5        0x1 UART.o
+                0x008001b5                receivedData1
  .bss.receivedAddress
-                0x0080026a        0x1 UART.o
-                0x0080026a                receivedAddress
- .bss.UART0_tx  0x0080026b      0x202 UART.o
-                0x0080026b                UART0_tx
- .bss.UART0_rx  0x0080046d       0x42 UART.o
-                0x0080046d                UART0_rx
- .bss.temp      0x008004af        0x2 UART.o
-                0x008004af                temp
+                0x008001b6        0x1 UART.o
+                0x008001b6                receivedAddress
+ .bss.UART0_tx  0x008001b7      0x202 UART.o
+                0x008001b7                UART0_tx
+ .bss.UART0_rx  0x008003b9      0x202 UART.o
+                0x008003b9                UART0_rx
+ .bss.temp      0x008005bb        0x2 UART.o
+                0x008005bb                temp
  *(COMMON)
-                0x008004b1                PROVIDE (__bss_end, .)
-                0x00000df2                __data_load_start = LOADADDR (.data)
-                0x00000f5a                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x008005bd                PROVIDE (__bss_end, .)
+                0x00000e22                __data_load_start = LOADADDR (.data)
+                0x00000ed6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008004b1        0x0
+.noinit         0x008005bd        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x008004b1                _end = .
+                0x008005bd                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -649,7 +648,7 @@ END GROUP
 .note.gnu.avr.deviceinfo
                 0x00000000       0x40
  .note.gnu.avr.deviceinfo
-                0x00000000       0x40 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+                0x00000000       0x40 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
 
 .note.gnu.build-id
  *(.note.gnu.build-id)
@@ -680,55 +679,55 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x29d1
+.debug_info     0x00000000     0x27f1
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0x5f4 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_info    0x000005f4      0x58f main.o
- .debug_info    0x00000b83      0xaf4 OV7670_with_Fifo.o
- .debug_info    0x00001677      0xe89 SCCB_Old.o
- .debug_info    0x00002500      0x4d1 UART.o
+ .debug_info    0x00000000      0x5f4 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .debug_info    0x000005f4      0x5cd main.o
+ .debug_info    0x00000bc1      0x937 OV7670_with_Fifo.o
+ .debug_info    0x000014f8      0xe15 SCCB_Old.o
+ .debug_info    0x0000230d      0x4e4 UART.o
 
-.debug_abbrev   0x00000000      0xd8a
+.debug_abbrev   0x00000000      0xd46
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x5a2 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .debug_abbrev  0x00000000      0x5a2 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_abbrev  0x000005a2      0x140 main.o
- .debug_abbrev  0x000006e2      0x277 OV7670_with_Fifo.o
- .debug_abbrev  0x00000959      0x224 SCCB_Old.o
- .debug_abbrev  0x00000b7d      0x20d UART.o
+ .debug_abbrev  0x000006e2      0x24b OV7670_with_Fifo.o
+ .debug_abbrev  0x0000092d      0x21b SCCB_Old.o
+ .debug_abbrev  0x00000b48      0x1fe UART.o
 
-.debug_line     0x00000000     0x147e
+.debug_line     0x00000000     0x143c
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000      0x133 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000133      0x2f3 main.o
- .debug_line    0x00000426      0x5e6 OV7670_with_Fifo.o
- .debug_line    0x00000a0c      0x655 SCCB_Old.o
- .debug_line    0x00001061      0x41d UART.o
+ .debug_line    0x00000000      0x133 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .debug_line    0x00000133      0x317 main.o
+ .debug_line    0x0000044a      0x580 OV7670_with_Fifo.o
+ .debug_line    0x000009ca      0x63d SCCB_Old.o
+ .debug_line    0x00001007      0x435 UART.o
 
-.debug_frame    0x00000000      0x51c
+.debug_frame    0x00000000      0x50c
  *(.debug_frame)
  .debug_frame   0x00000000       0x34 main.o
- .debug_frame   0x00000034      0x160 OV7670_with_Fifo.o
- .debug_frame   0x00000194      0x180 SCCB_Old.o
- .debug_frame   0x00000314      0x208 UART.o
+ .debug_frame   0x00000034      0x158 OV7670_with_Fifo.o
+ .debug_frame   0x0000018c      0x178 SCCB_Old.o
+ .debug_frame   0x00000304      0x208 UART.o
 
-.debug_str      0x00000000      0x81b
+.debug_str      0x00000000      0x831
  *(.debug_str)
- .debug_str     0x00000000      0x208 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_str     0x00000208      0x31d main.o
-                                0x35b (size before relaxing)
- .debug_str     0x00000525      0x14d OV7670_with_Fifo.o
-                                0x3b1 (size before relaxing)
- .debug_str     0x00000672       0xe2 SCCB_Old.o
+ .debug_str     0x00000000      0x208 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
+ .debug_str     0x00000208      0x356 main.o
+                                0x394 (size before relaxing)
+ .debug_str     0x0000055e      0x12a OV7670_with_Fifo.o
+                                0x3ba (size before relaxing)
+ .debug_str     0x00000688       0xe2 SCCB_Old.o
                                 0x391 (size before relaxing)
- .debug_str     0x00000754       0xc7 UART.o
+ .debug_str     0x0000076a       0xc7 UART.o
                                 0x2f1 (size before relaxing)
 
-.debug_loc      0x00000000     0x2157
+.debug_loc      0x00000000     0x219d
  *(.debug_loc)
- .debug_loc     0x00000000       0xdf main.o
- .debug_loc     0x000000df      0xf20 OV7670_with_Fifo.o
- .debug_loc     0x00000fff      0xc74 SCCB_Old.o
- .debug_loc     0x00001c73      0x4e4 UART.o
+ .debug_loc     0x00000000       0xea main.o
+ .debug_loc     0x000000ea      0xd9e OV7670_with_Fifo.o
+ .debug_loc     0x00000e88      0xe2f SCCB_Old.o
+ .debug_loc     0x00001cb7      0x4e6 UART.o
 
 .debug_macinfo
  *(.debug_macinfo)

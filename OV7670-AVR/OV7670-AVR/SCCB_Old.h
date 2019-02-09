@@ -7,8 +7,11 @@
 
 
 #ifndef SCCB_OLD_H_
-#define SCCB_OLD_H_
+	#define SCCB_OLD_H_
 
+#ifndef F_CPU
+	#define F_CPU 16000000UL
+#endif
 //Register addresses
 
 	#define OV_SCCB_Addr		0x21

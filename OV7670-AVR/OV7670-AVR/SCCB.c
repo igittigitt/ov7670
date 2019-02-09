@@ -14,8 +14,9 @@
  #include <util/twi.h>
  #include <avr/common.h>
 #include <avr/io.h>
-#include <avr/delay.h>
+#include <util/delay.h>
 #include "OV7670_with_Fifo.h"
+#include "UART.h"
 
  //generate en enumerated operating Mode, which can later easy be checked
  typedef enum {
@@ -202,7 +203,7 @@ return '0';
  //Wait until interrupt Flag is set, which means that the data is send
  while(!(TWCR & (1<<TWINT)));
 
-	if((TWSR &0xF8 != 0x20) && (TWSR &0xF8 != 0x18))	//Transmit SLA+W is indicated with TWSR 0x18 (ACK received) or 0x20 (No ACK received) In Case of the SCCB it is not necessary to check the ACK Bit
+	if(((TWSR & 0xF8) != 0x20) && ((TWSR &0xF8) != 0x18))	//Transmit SLA+W is indicated with TWSR 0x18 (ACK received) or 0x20 (No ACK received) In Case of the SCCB it is not necessary to check the ACK Bit
 	 {
 		UART0_senden("Tx Err");
 	 }
@@ -224,7 +225,7 @@ return '0';
 
  //Wait until interrupt Flag is set, which means that the data is send
  while(!(TWCR & (1<<TWINT)));
- if((TWSR &0xF8 != 0x28) && (TWSR &0xF8 != 0x30))	//Transmit Data is indicated with TWSR 0x28 (ACK received) or 0x30 (No ACK received) In Case of the SCCB it is not necessary to check the ACK Bit
+ if(((TWSR &0xF8) != 0x28) && ((TWSR &0xF8) != 0x30))	//Transmit Data is indicated with TWSR 0x28 (ACK received) or 0x30 (No ACK received) In Case of the SCCB it is not necessary to check the ACK Bit
  {
 	UART0_senden("Tx Err");
  }
@@ -251,7 +252,7 @@ return '0';
 	while(!(TWCR & (1<<TWINT)));
 
 
-	if((TWSR &0xF8 != 0x20) && (TWSR &0xF8 != 0x18))	//Transmit SLA+W is indicated with TWSR 0x18 (ACK received) or 0x20 (No ACK received) In Case of the SCCB it is not necessary to check the ACK Bit
+	if(((TWSR &0xF8) != 0x20) && ((TWSR &0xF8) != 0x18))	//Transmit SLA+W is indicated with TWSR 0x18 (ACK received) or 0x20 (No ACK received) In Case of the SCCB it is not necessary to check the ACK Bit
 	 {
 		UART0_senden("Tx Err");
 	 }
@@ -282,6 +283,7 @@ return '0';
 		return false;
 	}
 	*/
+	return 1;
  }
  
 

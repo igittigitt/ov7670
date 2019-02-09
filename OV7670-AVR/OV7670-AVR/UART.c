@@ -25,7 +25,7 @@
 #define RX_Port PORTD
 #define RX_Pin 0
 
-#define UART0_rx_size 64					// Nur Werte 2^n zulässig !
+#define UART0_rx_size 512					// Nur Werte 2^n zulässig !
 #define UART0_rx_mask (UART0_rx_size-1)
 
 #define UART0_tx_size 512					// Nur Werte 2^n zulässig !
@@ -43,9 +43,9 @@ char read;
 char write;
 }UART0_rx= {{}, 0, 0};
 	
-struct UART0_tx				//Transmit Buffer
+volatile struct UART0_tx				//Transmit Buffer
 {
-char data[UART0_tx_size];
+volatile char data[UART0_tx_size];
 char read;
 char write;
 }UART0_tx= {{}, 0, 0};
@@ -63,8 +63,12 @@ void UART0_init (void)
 
 
 	UBRR0H = 0b00000000;			// Setzt Baudrate
-	UBRR0L = 0b00110011;			// dezimal : 103->9600; dez 68->14400;dez 51->19200; dez 8 ->115200
-	
+	//UBRR0L = 0b00110011;			// dezimal : 103->9600; dez 68->14400;dez 51->19200; dez 8 ->115200 
+	//UBRR0L = 0b00011001;	//38400
+	//UBRR0L = 0b00000011;	//230400
+	UBRR0L = 0b00000000;
+	UCSR0A = 0b00000010;
+
 	UCSR0A |=0b00000000;
 				//	 ^---U2X  
 	UCSR0B = 0b10011000;
@@ -91,7 +95,6 @@ int UART0_tx_in (char input)
 	char next= ((UART0_tx.write+1)&UART0_tx_mask);
 	if (next==UART0_tx.read)
 	{
-
 		return 0;
 	}
 	UART0_tx.data[UART0_tx.write] = input;
@@ -270,6 +273,9 @@ int UART0_rx_work(int* Programmstatus)
 	if(Befehl[0]==0x06){		//set Bytes per Pixel
 		receivedData1 = Befehl[1];
 		*Programmstatus = 0x06;
+	}
+	if(Befehl[0]==0x08){
+		*Programmstatus = 0x08;
 	}
 	
 	if(Befehl[0]==0x0A)		//new Line from Buffer requested by the Terminal

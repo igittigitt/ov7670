@@ -9,7 +9,9 @@
 #ifndef OV7670_WITHOUT_FIFO_H_
 #define OV7670_WITHOUT_FIFO_H_
 
-
+#ifndef F_CPU
+ #define F_CPU 16000000UL
+#endif
 
 
 

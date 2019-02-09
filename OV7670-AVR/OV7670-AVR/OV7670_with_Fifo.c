@@ -13,28 +13,114 @@
  #include "UART.h"
  #include <stdbool.h>
 
-
  int PhotoHeight;
  int PhotoWidth;
  int BytesPerPixel;
 
+ 
+ char OV7670_init (void){
+	 char ErrorCode = 0;
+	 
+	 Ov7670_initPins();	//set Data directions of every pin and set default value
+	 //stop and start the OV7670
+	 OV_RST_PORT &= ~(1<<OV_RST_PinNo);
+	 _delay_ms(100);
+	 OV_RST_PORT |= (1<<OV_RST_PinNo);
+	 _delay_ms(1);	//ts of OV7670
+
+	 //Preparing the Fifo
+	 //Initialization From Datasheet: "Apply/WRST and //RRST 0.1ms after power on
+	 _delay_us(100);
+	 OV_WRST_PORT &= ~(1<<OV_WRST_PinNo);
+	 OV_RRST_PORT &= ~(1<<OV_RRST_PinNo);
+	 _delay_ms(1);	//check if this step is really necessary, not written in data sheet.
+
+	 //Pulse to Reset the Read Pointer
+	 OV_RCK_PORT |= (1<<OV_RCK_PinNo);
+	 _delay_ms(1);
+	 OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
+	 _delay_ms(1);
+	 OV_RCK_PORT |= (1<<OV_RCK_PinNo);
+	 _delay_ms(1);
+	 OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
+	 _delay_ms(1);
+
+	 //Initialization of communication bus
+	 ErrorCode=OV_SCCB_Init();
+	 if(ErrorCode){
+		ErrorCode = ErrorCode+100;
+	 }
+
+	 return ErrorCode;
+ }
+
+
+ void Ov7670_initPins(void)
+ {	
+ //Set the Data direction pins
+	//FiFo output
+	OV_D0_DDR		&= ~(1<<OV_D0_PinNo);
+	OV_D1_DDR		&= ~(1<<OV_D1_PinNo);
+	OV_D2_DDR		&= ~(1<<OV_D2_PinNo);
+	OV_D3_DDR		&= ~(1<<OV_D3_PinNo);
+	OV_D4_DDR		&= ~(1<<OV_D4_PinNo);
+	OV_D5_DDR		&= ~(1<<OV_D5_PinNo);
+	OV_D6_DDR		&= ~(1<<OV_D6_PinNo);
+	OV_D7_DDR		&= ~(1<<OV_D7_PinNo);
+	 
+	//Fifo Control
+	OV_VSync_DDR &= ~(1<<OV_VSync_PinNo);
+	OV_HREF_DDR	&= ~(1<<OV_HREF_PinNo);
+	OV_RRST_DDR	|= (1<<OV_RRST_PinNo);	//Low active
+	OV_WRST_DDR	|= (1<<OV_WRST_PinNo);	//Low active
+	OV_WR_DDR	|= (1<<OV_WR_PinNo);
+	OV_RCK_DDR	|= (1<<OV_RCK_PinNo);
+
+	//OV7670 control
+	OV_RST_DDR	|= (1<<OV_RST_PinNo);	//Low active
+	OV_SIOC_DDR |= (1<<OV_SIOC_PinNo);
+	OV_SIOD_DDR |= (1<<OV_SIOD_PinNo);
+
+	//set the default values of the output pins:
+	OV_RRST_PORT |= (1<<OV_RRST_PinNo);	//low active
+	OV_WRST_PORT |= (1<<OV_WRST_PinNo); //low active
+	OV_WR_PORT &= ~(1<<OV_WR_PinNo);
+	OV_RCK_PORT	&= ~(1<<OV_RCK_PinNo);
+	OV_RST_PORT |= (1<<OV_RRST_PinNo);	//low active
+ }
+
+ //Version of igel
+ //void OV7670_captureNewImage (void)
+ //{
+	//OV_WR_PORT |= (1<<OV_WR_PinNo); //Write Disabled (defined start value)
+	//OV_WRST_PORT |= (1<<OV_WRST_PinNo);
+	//while(!getValueOfPin(OV_VSync_PIN,OV_VSync_PinNo));	//Wait for VSync to indicate a new Frame
+	//while(getValueOfPin(OV_VSync_PIN,OV_VSync_PinNo));
+	//OV_WRST_PORT &= ~(1<<OV_WRST_PinNo);
+	//_delay_ms(1);
+	//OV_WRST_PORT |= (1<<OV_WRST_PinNo);
+//while(!getValueOfPin(OV_VSync_PIN,OV_VSync_PinNo)); //Wait for the next VSync Pulse, so the frame is complete
+	//OV_WR_PORT &= ~(1<<OV_WR_PinNo); //Write Disabled that the picture is safe in the Framebuffer
+	//_delay_ms(20);
+//
+	//}
+//my version
  void OV7670_captureNewImage (void)
  {
-	//Preparing the Fifo		
-		//Reset the WritePointer //Low active
+	 OV_WR_PORT &= ~(1<<OV_WR_PinNo); //Write Disabled (defined start value)
+	 while(!getValueOfPin(OV_VSync_PIN,OV_VSync_PinNo));	//Wait for VSync to indicate a new Frame
+	 OV7670_ResetFifoWritePointer();//Enable Write Pointer
+	 while(getValueOfPin(OV_VSync_PIN,OV_VSync_PinNo));
+	 OV_WR_PORT |= (1<<OV_WR_PinNo);	//Write Enable so that the camera can write on the FrameBuffer
+	 while(!getValueOfPin(OV_VSync_PIN,OV_VSync_PinNo)); //Wait for the next VSync Pulse, so the frame is complete
+	 OV_WR_PORT &= ~(1<<OV_WR_PinNo); //Write Disabled that the picture is safe in the Framebuffer
+	 _delay_ms(20);
 
-	while(!getValueOfPin(OV_VSync_PIN,OV_VSync_PinNo));	//Wait for VSync to indicate a new Frame
-		OV_WRST_PORT &= ~(1<<OV_WRST_PinNo);
-		_delay_us(6);	
-		//Enable Write Pointer
-	OV_WRST_PORT |= (1<<OV_WRST_PinNo);
-	//OV_WRST_PORT |= (1<<OV_WRST_PIN);	//Set Write Pointer to 0
-	//OV_WRST_PORT &= ~(1<<OV_WRST_PIN);	
-	OV_WR_PORT &= ~(1<<OV_WR_PinNo);	//Write Enable so that the camera can write on the FrameBuffer
-	while(!getValueOfPin(OV_VSync_PIN,OV_VSync_PinNo)); //Wait for the next VSync Pulse, so the frame is complete
-	OV_WR_PORT |= (1<<OV_WR_PinNo); //Write Disabled so that the picture is safe in the Framebuffer
-	_delay_ms(20);
-	}
+	 //Reset the Write Pointer, (not sure, if that will work)
+	 OV7670_ResetFifoWritePointer();
+	 
+ }
+
 
 void OV7670_ResetFifoReadPointer()
 {
@@ -53,54 +139,40 @@ void OV7670_ResetFifoReadPointer()
 	OV_RRST_PORT |= (1<<OV_RRST_PinNo);		//Changed
 }
 
+void OV7670_ResetFifoWritePointer()
+{
+	OV_WRST_PORT &= ~(1<<OV_WRST_PinNo);
+	_delay_us(6);	
+	OV_WRST_PORT |= (1<<OV_WRST_PinNo);
+}
 
-//Not used at the moment.
- void sendFrameBufferToUART (int ImageWidth, int ImageHeight, int BytesPerPixel)
- {
-		OV7670_ResetFifoReadPointer();
 
-	for(int height = 0; height < ImageHeight;height++)
-	{
-		for(int width =0; width < ImageWidth; width++)
-		{
-			for(int ByteNumber =0; ByteNumber < BytesPerPixel; ByteNumber++)
-			{
-				UART0_senden_Byte(readByte());
-				OV_RCK_PORT |= (1<<OV_RCK_PinNo);
-				_delay_ms(1);
-				OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
-				_delay_ms(1);
-				
-				_delay_ms(10);
-			}
-		}
-		UART0_senden_newLine();
-	}
-	UART0_senden("done!");
-	UART0_senden_newLine();
- }
-
-/**
- * \brief 
- *		This function sends the next Image Line from the Fifo Buffer. 
- *		Therefore the ReadBuffer is clocked as often, as the wdith by BytesPerPixel is overhanded
- * \param width
- *		xResolution of the image
- * \param BytesPerPixel
- *		BytesPerPixel dedicated to the ColorFormat of the IMage (e.g. RGB888, RGB565)
- * \return void
- */
 void OV7670_sendNextLine(int width, int BytesPerPixel){
+	char test =0;
 	for(int i = 0; i < width;i++){
 		for(int j = 0; j< BytesPerPixel;j++){
-			UART0_senden_Byte(readByte());
+			//if(test==0){
+				//UART0_senden_Byte(0xCE);
+				//test=1;
+			//}
+			//else
+			//{
+			//UART0_senden_Byte(0xE2);
+			//test=0;
+			//}
+			UART0_senden_Byte(Ov7670_readByte());
+			//UART0_senden_Byte(test);
 			OV_RCK_PORT |= (1<<OV_RCK_PinNo);
-			_delay_ms(1);
+			//_delay_ms(1);
+			//_delay_us(0.1);
 			OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
-			_delay_ms(1);
+			//_delay_ms(1);
+			//_delay_us(0.1);
 			
 			//Wait due to speed of UART (Avoid errors due to overwrite)
-			_delay_ms(15);
+			//_delay_ms(15);
+
+			
 		}
 	}
 	//Send Line End
@@ -109,18 +181,7 @@ void OV7670_sendNextLine(int width, int BytesPerPixel){
 }
 
 
-/**
- * \brief 
-*		This function resets the ReadPointer of the Fifo and clock the readpointer until it reaches the imageLineToRead.
- *		When reached, this Line is send via UART
- * \param imageLineToRepeat
- *		This is the imageLine which should be repeated. (starting with 0)
- * \param width
- *		The width of the Image (xResolution)
- * \param BytesPerPixel
- *		Bytes per Pixel (dedicated on the imageformat (RGB888,RGB565, etc)
- * \return void
- */
+
 void OV7670_sendLineRepeat(int imageLineToRepeat, int width, int BytesPerPixel){
 	//Reset the ReadCounter
 	OV7670_ResetFifoReadPointer();
@@ -142,8 +203,7 @@ void OV7670_sendLineRepeat(int imageLineToRepeat, int width, int BytesPerPixel){
 	OV7670_sendNextLine(width,BytesPerPixel);
 }
 
-//This function read the Byte from the 8-Bit Kamera/Fifo Port
- char readByte (void)
+ char Ov7670_readByte (void)
  {
 	char newByte;
 	newByte = getValueOfPin(OV_D0_PIN, OV_D0_PinNo);
@@ -158,136 +218,48 @@ void OV7670_sendLineRepeat(int imageLineToRepeat, int width, int BytesPerPixel){
 	return (newByte);
  }
 
- //This function get the Value of a Pin
+
  char getValueOfPin (char thePort, char thePinNo)
  {
 	char tempChar = (thePort & (1<<thePinNo)) >> thePinNo;
 	return (tempChar);
  }
 
- //This function scan the I2C-Bus for connected Devices with the addresses 0...127
- 
-void init_OV7670WithFifo(void)
-{
-	//Start I2C Connection
 
-	//Reset all neccessary camera registers
-
-	//read the registers
-
-	//Setup the camera
-}
-
-char OV7670_init (void){
-  char ErrorCode;
-  
-  UART0_senden("OV7670_init... start");
-  UART0_senden_newLine();
-  
-	//Pins konfigurieren
-		OV_VSync_DDR	&= ~(1<<OV_VSync_PinNo);
-		OV_HREF_DDR	&= ~(1<<OV_HREF_PinNo);
-		OV_D0_DDR		&= ~(1<<OV_D0_PinNo);
-		OV_D1_DDR		&= ~(1<<OV_D1_PinNo);
-		OV_D2_DDR		&= ~(1<<OV_D2_PinNo);
-		OV_D3_DDR		&= ~(1<<OV_D3_PinNo);
-		OV_D4_DDR		&= ~(1<<OV_D4_PinNo);
-		OV_D5_DDR		&= ~(1<<OV_D5_PinNo);
-		OV_D6_DDR		&= ~(1<<OV_D6_PinNo);
-		OV_D7_DDR		&= ~(1<<OV_D7_PinNo);
-		OV_RRST_DDR	|= (1<<OV_RRST_PinNo);	//Low active
-		OV_WRST_DDR	|= (1<<OV_WRST_PinNo);	//Low active
-		OV_WR_DDR	|= (1<<OV_WR_PinNo);	//Low active
-		OV_RCK_DDR	|= (1<<OV_RCK_PinNo);
-		OV_OE_DDR	|= (1<<OV_OE_PinNo);
-	
-	//Preparing the Fifo
-		//disable write Enable
-		OV_WR_PORT |= (1<<OV_WR_PinNo); //low active
-		//Reset the WritePointer //Low active
-		OV_WRST_PORT &= ~(1<<OV_WRST_PinNo);
-		_delay_ms(1);
-		OV_WRST_PORT |= (1<<OV_WRST_PinNo);	
-		_delay_ms(1);
-		
-		//Reset the ReadPointer
-		OV_RRST_PORT &= ~(1<<OV_RRST_PinNo);
-		//Pulse two cycles
-		OV_RCK_PORT |= (1<<OV_RCK_PinNo);
-		_delay_ms(1);
-		OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
-		_delay_ms(1);
-		OV_RCK_PORT |= (1<<OV_RCK_PinNo);
-		_delay_ms(1);
-		OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
-		_delay_ms(1);
-		//Set RRST again to HIGH
-		OV_RRST_PORT |= (1<<OV_RRST_PinNo);
-		//Set low active OE Output Enable to low
-		OV_OE_PORT &= ~(1<<OV_OE_PinNo);
-
-  //Power Down deaktivieren 
-  //OV_PWDN_PORT &= ~(1<<OV_PWDN_PinNo);	//can be added when a PWDN Pin is available
-
-
-  UART0_senden("Hardware Reset");
-  UART0_senden_newLine();
-  //OV_RESET_PORT &= ~(1<<OV_RESET_PinNo);  //Can be activated if a Pin is available
-  _delay_ms(1);
-  //OV_RESET_PORT |= (1<<OV_RESET_PinNo);	//Can be activated if a Pin is available
-  _delay_ms(2);	//just one millisecond necesarry for Bootup
-
-  //Initianilizatioin of communication bus
-	if(!(ErrorCode=OV_SCCB_Init()))
-	{
-		UART0_senden("init Ov7670... done");
-		UART0_senden_newLine();
-	}
-	else
-	{
-		UART0_senden("Fehler bei Initialisierung: ErrorCode: ");
-		UART0_senden_Byte(ErrorCode);
-	}
-	return ErrorCode;
-  }
-
-int OV7670_checkConnection( void )
+char OV7670_checkConnection( void )
 {
 	char querryData;
 	OV7670_read(0x0A,&querryData);
 	if (querryData==0x76){
-		UART0_senden("OV7670 connected");
-		UART0_senden_newLine();
 		return (1);
 	}
 	else {
-		UART0_senden("no device connected");
-		UART0_senden_Byte(querryData);
-		UART0_senden_newLine();
 		return (0);
 	}
 }
 
-char OV7670_getByte (void)
-{
-	char newByte = 0x00;
-	
-	  //Build the newByte
-	  newByte |= (OV_D7_PIN>>OV_D7_PinNo)&(0x01);
-	  newByte = (newByte << 1)|((OV_D6_PIN>>OV_D6_PinNo)&(0x01));
-	  newByte = (newByte << 1)|((OV_D5_PIN>>OV_D5_PinNo)&(0x01));
-	  newByte = (newByte << 1)|((OV_D4_PIN>>OV_D4_PinNo)&(0x01));
-	  newByte = (newByte << 1)|((OV_D3_PIN>>OV_D3_PinNo)&(0x01));
-	  newByte = (newByte << 1)|((OV_D2_PIN>>OV_D2_PinNo)&(0x01));
-	  newByte = (newByte << 1)|((OV_D1_PIN>>OV_D1_PinNo)&(0x01));
-	  newByte = (newByte << 1)|((OV_D0_PIN>>OV_D0_PinNo)&(0x01));
-	
-	  return newByte;
+ void sendFrameBufferToUART (int ImageWidth, int ImageHeight, int BytesPerPixel)
+ {
+	OV7670_ResetFifoReadPointer();
 
-}
-
-
-
+	for(int height = 0; height < ImageHeight;height++)
+	{
+		for(int width =0; width < ImageWidth; width++)
+		{
+			for(int ByteNumber =0; ByteNumber < BytesPerPixel; ByteNumber++)
+			{
+				UART0_senden_Byte(Ov7670_readByte());
+				OV_RCK_PORT |= (1<<OV_RCK_PinNo);
+				_delay_ms(1);
+				OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
+				_delay_ms(1);
+				
+				_delay_ms(10);
+			}
+		}
+		UART0_senden_newLine();
+	}
+ }
 
 
 
