@@ -286,6 +286,10 @@ int UART0_rx_work(int* Programmstatus)
 	{
 		*Programmstatus = 0x0B;
 	}
+	if(Befehl[0]==0x0C) //send complete Picture to terminal
+	{
+		*Programmstatus = 0x0C;
+	}
 
 	return 1;
 	}

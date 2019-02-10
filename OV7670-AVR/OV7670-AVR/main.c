@@ -110,17 +110,17 @@ while (1)
 			imageLineToRead = 0;	//resets the Line to read from the Buffer
 			Programstatus=-1;
 			break;
-		case 4:
+		case 4:	//set width
 			width = ((receivedData2<<8)|(receivedData1));
 			UART0_senden_Byte(0x04);
 			Programstatus =-1;
 			break;
-		case 5:
+		case 5:	//set height
 			height = ((receivedData2<<8)|(receivedData1));
 			UART0_senden_Byte(0x05);
 			Programstatus =-1;
 			break;
-		case 6:
+		case 6: //set Byte per Pixel
 			BytesPerPixel = receivedData1;
 			UART0_senden_Byte(0x06);
 			Programstatus =-1;
@@ -141,6 +141,12 @@ while (1)
 			imageLineToRead++;
 			Programstatus=-1;
 				break;
+		case 0x0C:	//send whole Imageframe
+			OV7670_captureNewImage();
+			OV7670_ResetFifoReadPointer();
+			 sendFrameBufferToUART (width, height, BytesPerPixel);
+			 Programstatus=-1;
+			 break;
 		default:
 				if(UART0_rx_complete()){
 					UART0_rx_work(&Programstatus);

@@ -128,13 +128,13 @@ void OV7670_ResetFifoReadPointer()
 	OV_RRST_PORT &= ~(1<<OV_RRST_PinNo);	//changed
 	//Pulse two cycles
 	OV_RCK_PORT |= (1<<OV_RCK_PinNo);
-	_delay_ms(1);
+	_delay_us(20);
 	OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
-	_delay_ms(1);
+	_delay_us(20);
 	OV_RCK_PORT |= (1<<OV_RCK_PinNo);
-	_delay_ms(1);
+	_delay_us(20);
 	OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
-	_delay_ms(1);
+	_delay_us(20);
 	//Set RRST again to HIGH
 	OV_RRST_PORT |= (1<<OV_RRST_PinNo);		//Changed
 }
@@ -142,8 +142,10 @@ void OV7670_ResetFifoReadPointer()
 void OV7670_ResetFifoWritePointer()
 {
 	OV_WRST_PORT &= ~(1<<OV_WRST_PinNo);
-	_delay_us(6);	
+	_delay_ms(1);	
+	
 	OV_WRST_PORT |= (1<<OV_WRST_PinNo);
+
 }
 
 
@@ -248,16 +250,14 @@ char OV7670_checkConnection( void )
 		{
 			for(int ByteNumber =0; ByteNumber < BytesPerPixel; ByteNumber++)
 			{
-				UART0_senden_Byte(Ov7670_readByte());
 				OV_RCK_PORT |= (1<<OV_RCK_PinNo);
-				_delay_ms(1);
-				OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
-				_delay_ms(1);
+
+				UART0_senden_Byte(Ov7670_readByte());
 				
-				_delay_ms(10);
+				
+				OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
 			}
 		}
-		UART0_senden_newLine();
 	}
  }
 
