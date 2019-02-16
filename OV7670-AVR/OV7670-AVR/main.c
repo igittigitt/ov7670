@@ -27,9 +27,9 @@ int main(void)
 {
 //Initial Variables
 volatile int Programstatus = -1; 
-volatile int height = 480;
-volatile int width = 640;
-volatile int BytesPerPixel = 3;
+volatile int height = 315;
+volatile int width = 240;
+volatile int BytesPerPixel = 2;
 volatile char Byte=0;
 char Errorcode;
 int imageLineToRead = 0;	//Image Line, which will be read out from the FIFO
@@ -40,6 +40,11 @@ sei();
 
 while (1) 
 {
+			OV7670_captureNewImage();
+			OV7670_ResetFifoReadPointer();
+			sendFrameBufferToUART (width, height, BytesPerPixel);
+			_delay_ms(10000);
+
 	switch (Programstatus){
 		case 0:  // Testing
 			//read RegID	
