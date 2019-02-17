@@ -114,30 +114,41 @@
 	 OV_WR_PORT |= (1<<OV_WR_PinNo);	//Write Enable so that the camera can write on the FrameBuffer
 	 while(!getValueOfPin(OV_VSync_PIN,OV_VSync_PinNo)); //Wait for the next VSync Pulse, so the frame is complete
 	 OV_WR_PORT &= ~(1<<OV_WR_PinNo); //Write Disabled that the picture is safe in the Framebuffer
-	 _delay_ms(20);
+	// _delay_ms(20);
 
 	 //Reset the Write Pointer, (not sure, if that will work)
-	 OV7670_ResetFifoWritePointer();
+	 //OV7670_ResetFifoWritePointer();
 	 
  }
 
 
 void OV7670_ResetFifoReadPointer()
 {
+	OV_RRST_PORT |= (1<<OV_RRST_PinNo);		//Changed
+	OV_RCK_PORT |= (1<<OV_RCK_PinNo);
+	_delay_us(20);
+	OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
+	OV_RCK_PORT |= (1<<OV_RCK_PinNo);
 	//Reset the ReadPointer
 	OV_RRST_PORT &= ~(1<<OV_RRST_PinNo);	//changed
-	//Pulse two cycles
-	OV_RCK_PORT |= (1<<OV_RCK_PinNo);
-	_delay_us(20);
+	//Pulse first cycles
 	OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
 	_delay_us(20);
 	OV_RCK_PORT |= (1<<OV_RCK_PinNo);
-	_delay_us(20);
+	//Pulse second cycle
 	OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
 	_delay_us(20);
+	OV_RCK_PORT |= (1<<OV_RCK_PinNo);
+	//pulse 3rd cycle down
+	OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
 	//Set RRST again to HIGH
 	OV_RRST_PORT |= (1<<OV_RRST_PinNo);		//Changed
-}
+	_delay_us(20);
+	//Pulse 3rd cycle up
+	OV_RCK_PORT |= (1<<OV_RCK_PinNo);
+	//pulse 3rd cycle down
+	OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
+	}
 
 void OV7670_ResetFifoWritePointer()
 {
@@ -253,7 +264,6 @@ char OV7670_checkConnection( void )
 				OV_RCK_PORT |= (1<<OV_RCK_PinNo);
 
 				UART0_senden_Byte(Ov7670_readByte());
-				
 				
 				OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
 			}
