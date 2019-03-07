@@ -26,11 +26,10 @@ int main(void)
 
 {
 //Initial Variables
-volatile int Programstatus = -1; 
-volatile int height = 315;
-volatile int width = 240;
-volatile int BytesPerPixel = 2;
-volatile char Byte=0;
+int Programstatus = -1; 
+int height = 315;
+int width = 240;
+int BytesPerPixel = 2;
 char Errorcode;
 int imageLineToRead = 0;	//Image Line, which will be read out from the FIFO
 

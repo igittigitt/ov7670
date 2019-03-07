@@ -161,31 +161,18 @@ void OV7670_ResetFifoWritePointer()
 
 
 void OV7670_sendNextLine(int width, int BytesPerPixel){
-	char test =0;
 	for(int i = 0; i < width;i++){
 		for(int j = 0; j< BytesPerPixel;j++){
-			//if(test==0){
-				//UART0_senden_Byte(0xCE);
-				//test=1;
-			//}
-			//else
-			//{
-			//UART0_senden_Byte(0xE2);
-			//test=0;
-			//}
 			UART0_senden_Byte(Ov7670_readByte());
-			//UART0_senden_Byte(test);
 			OV_RCK_PORT |= (1<<OV_RCK_PinNo);
-			//_delay_ms(1);
+			_delay_ms(1);
 			//_delay_us(0.1);
 			OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
-			//_delay_ms(1);
+			_delay_ms(1);
 			//_delay_us(0.1);
 			
 			//Wait due to speed of UART (Avoid errors due to overwrite)
-			//_delay_ms(15);
-
-			
+			//_delay_ms(15);			
 		}
 	}
 	//Send Line End
@@ -261,11 +248,11 @@ char OV7670_checkConnection( void )
 		{
 			for(int ByteNumber =0; ByteNumber < BytesPerPixel; ByteNumber++)
 			{
-				OV_RCK_PORT |= (1<<OV_RCK_PinNo);
-
-				UART0_senden_Byte(Ov7670_readByte());
-				
 				OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
+				_delay_us(85);
+				UART0_senden_Byte(Ov7670_readByte());
+				OV_RCK_PORT |= (1<<OV_RCK_PinNo);
+				_delay_us(85);
 			}
 		}
 	}

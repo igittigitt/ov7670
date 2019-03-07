@@ -314,29 +314,34 @@ void OV_SCCB_RegisterToUart(char RegisterAddress){
 
 char OV_SCCB_setVideoFormat(char Resolution, char ColorFormat){
 
-volatile char writeData = (Resolution | ColorFormat);
-volatile char ErrorCode=0;
-volatile char temp;
+char writeData = (Resolution | ColorFormat);
+char ErrorCode=0;
+char temp;
 
 //enable scaling. For Scaling COM3 and COM14 must be modified!
 //in COM3 the Scaling Bit [3] must be set to 1
-if(ErrorCode=OV_SCCB_set_Bit(3,OV_SCCB_COM3))
+ErrorCode=OV_SCCB_set_Bit(3,OV_SCCB_COM3);
+if(ErrorCode)
 	return ErrorCode;
 //if(ErrorCode=OV_SCCB_set_Bit(2,OV_SCCB_COM3))		//dcw Enable... no Idea what that is
 	//return ErrorCode;
 
 temp=0x00;
 //Also COM14 Bit 3 must be set to 1 to enable manual adjustment of the format
-if(ErrorCode=OV7670_read(OV_SCCB_COM14,&temp)){
+ErrorCode=OV7670_read(OV_SCCB_COM14,&temp);
+if(ErrorCode){
 	return ErrorCode;
 }
 temp |= 0x08;
-if(ErrorCode=OV7670_write(OV_SCCB_COM14,temp)){
+
+ErrorCode = OV7670_write(OV_SCCB_COM14,temp);
+if(ErrorCode){
 	return ErrorCode;
 }
 temp=0x00;
 //Set the video format
-if(ErrorCode=OV7670_read(OV_SCCB_COM7,&temp))
+ErrorCode = OV7670_read(OV_SCCB_COM7,&temp);
+if(ErrorCode)
 	{
 	UART0_senden("Fehler! Errorcode: ");
 	UART0_senden_Byte(ErrorCode);
@@ -346,7 +351,8 @@ if(ErrorCode=OV7670_read(OV_SCCB_COM7,&temp))
 temp &= (writeData | 0xC2);
 temp |= (writeData & ~(0xC2));
 
-if(ErrorCode=OV7670_write(OV_SCCB_COM7,temp))
+ErrorCode = OV7670_write(OV_SCCB_COM7,temp);
+if(ErrorCode)
 	{
 		return ErrorCode;
 		UART0_senden("Fehler! Errorcode: ");
@@ -354,9 +360,12 @@ if(ErrorCode=OV7670_write(OV_SCCB_COM7,temp))
 	}
 
 //set RGB to RGB 565	(COM 15 Bit[5:4]: 01)
-if(ErrorCode=OV_SCCB_cle_Bit(5,OV_SCCB_COM15))
+ErrorCode = OV_SCCB_cle_Bit(5,OV_SCCB_COM15);
+if(ErrorCode)
 	return ErrorCode;
-if(ErrorCode=OV_SCCB_set_Bit(4,OV_SCCB_COM15))
+
+ErrorCode = OV_SCCB_set_Bit(4,OV_SCCB_COM15);
+if(ErrorCode)
 	return ErrorCode;
 return ErrorCode;
 }
@@ -377,16 +386,19 @@ char OV_SCCB_set_Bit(char BitNo, char RegisterAddress)
 	char ErrorCode=0;
 
 	//read the current SCCB-Register Value
-	if(ErrorCode = OV7670_read(RegisterAddress,&readData))
+	ErrorCode = OV7670_read(RegisterAddress,&readData);
+	if(ErrorCode)
 		return ErrorCode;
 	//Add the Bit which should be set (Param. BitNo)
 	WriteData = (readData | (1<<BitNo));
 
 	//Write the new Register Value
-	if(ErrorCode = OV7670_write(RegisterAddress,WriteData))
+	ErrorCode = OV7670_write(RegisterAddress,WriteData);
+	if(ErrorCode)
 		return ErrorCode;
 	//Read the RegisterValue again
-	if(ErrorCode = OV7670_read(RegisterAddress,&readData))
+	ErrorCode = OV7670_read(RegisterAddress,&readData);
+	if(ErrorCode)
 		return ErrorCode;
 	//Check if the change is fullfilled
 	if(!readData == WriteData)
@@ -410,17 +422,20 @@ char OV_SCCB_cle_Bit(char BitNo, char RegisterAddress)
 	char ErrorCode=0;
 
 	//read the current SCCB-Register Value
-	if(ErrorCode = OV7670_read(RegisterAddress,&readData))
+	ErrorCode = OV7670_read(RegisterAddress,&readData);
+	if(ErrorCode)
 		return ErrorCode;
 	//Clear the Bit which should be cleared (Param. BitNo)
 	WriteData = (readData & ~(1<<BitNo));
 
 	//Write the new Register Value
-	if(ErrorCode = OV7670_write(RegisterAddress,WriteData))
+	ErrorCode = OV7670_write(RegisterAddress,WriteData);
+	if(ErrorCode)
 		return ErrorCode;
 
 	//Read the RegisterValue again
-	if(ErrorCode = OV7670_read(RegisterAddress,&readData))
+	ErrorCode = OV7670_read(RegisterAddress,&readData);
+	if(ErrorCode)
 		return ErrorCode;
 	//Check if the change is fullfilled
 	if(!readData == WriteData)

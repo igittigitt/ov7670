@@ -39,15 +39,15 @@ int temp = 0;
 struct UART0_rx				//Receive Buffer
 {
 char data[UART0_rx_size];
-char read;
-char write;
+uint16_t read;
+uint16_t write;
 }UART0_rx= {{}, 0, 0};
 	
-volatile struct UART0_tx				//Transmit Buffer
+struct UART0_tx				//Transmit Buffer
 {
-volatile char data[UART0_tx_size];
-char read;
-char write;
+char data[UART0_tx_size];
+uint16_t read;
+uint16_t write;
 }UART0_tx= {{}, 0, 0};
 
 //Public declarations
@@ -66,11 +66,13 @@ void UART0_init (void)
 	//UBRR0L = 0b00110011;			// dezimal : 103->9600; dez 68->14400;dez 51->19200; dez 8 ->115200 
 	//UBRR0L = 0b00011001;	//38400
 	//UBRR0L = 0b00000011;	//230400
-	UBRR0L = 0b00000000;
+	UBRR0L = 0b00010000;
+	
+	//UBRR0L = 103;
 	UCSR0A = 0b00000010;
-
 	UCSR0A |=0b00000000;
-				//	 ^---U2X  
+	//				  ^---U2X  
+			
 	UCSR0B = 0b10011000;
 			/* ^||||||| Einschalten	Interrupt Receive Complete
 				^|||||| Einschalten Interrupt Transmit Complete
@@ -81,18 +83,18 @@ void UART0_init (void)
 					 ^| Receive Data Bit 8
 					  ^ Transmit Data Bit  8		*/
 	UCSR0C = 0b00001110;
-			/*  ^^|||||| USART Mode Select
-				  ^^|||| Parity Mode Bits
-				    ^||| STOP Bit Select
-				     ^^| Character Size     11 -> 8Bit
-					   ^ Clock Polarity 			*/
+		   /*  ^^|||||| USART Mode Select
+			     ^^|||| Parity Mode Bits
+				   ^||| STOP Bit Select
+				    ^^| Character Size     11 -> 8Bit
+					  ^ Clock Polarity 			*/
 }
 
 //-------------------------------------------------- UART senden --------------------------------------------------
 
 int UART0_tx_in (char input)
 {
-	char next= ((UART0_tx.write+1)&UART0_tx_mask);
+	uint16_t next= ((UART0_tx.write+1)&UART0_tx_mask);
 	if (next==UART0_tx.read)
 	{
 		return 0;
@@ -117,7 +119,7 @@ int UART0_tx_empty(void)
 
 void UART0_senden (char input[16])		// Senden mit UART0	
 {
-	int a=0;
+	uint16_t a=0;
 	while(input[a] != 0)				// Solange Daten nicht ASCII 'NULL'
 	{	
 		UART0_tx_in(input[a]);			// Daten in FiFo_tx 
@@ -150,7 +152,7 @@ void UART0_senden_zahl(long zahl)
 }
 void UART0_senden_Byte(char Byte)
 {
-UART0_tx_in(Byte);
+while(!(UART0_tx_in(Byte))){}
 UCSR0B |= 0b00100000;				// Data Register empty Interrupt anschalten 
 }
 
@@ -175,7 +177,7 @@ ISR(USART_UDRE_vect)					// Data Register Empty Interupt
 
 int UART0_rx_in (char input)
 {
-	char temp= ((UART0_rx.write+1)&UART0_rx_mask);	//
+	uint16_t temp= ((UART0_rx.write+1)&UART0_rx_mask);	//
 	if (temp==UART0_rx.read)							//FiFo voll ?
 	{	
 		return 0;										//return 0 -> Fifo voll
@@ -191,7 +193,7 @@ char UART0_rx_out (void)
 		{
 	 		return 0;									//return 0 -> FiFo ist leer
 		}
-	int temp = (int)UART0_rx.data[UART0_rx.read];				//FiFo Inhalt in Data schreiben
+	char temp = UART0_rx.data[UART0_rx.read];				//FiFo Inhalt in Data schreiben
 	UART0_rx.read = (UART0_rx.read +1) & UART0_rx_mask;	//read auf nächste Speicherzelle schreiben
 	return temp;										//return Data
 }
@@ -211,7 +213,7 @@ int UART0_rx_empty(void)								//1 wenn FIFO leer, 0 wenn fifo voll
 int UART0_rx_complete(void)
 {
 	//Wenn CR+LF empfangen wird, ist der Befehl vollständig
-	if(UART0_rx.data[(UART0_rx.write -2)&UART0_rx_mask] == 0x0D &&UART0_rx.data[(UART0_rx.write-1)&UART0_rx_mask]==0x0A)
+	if(UART0_rx.data[(UART0_rx.write -2)&UART0_rx_mask] == 0x0D && UART0_rx.data[(UART0_rx.write-1)&UART0_rx_mask]==0x0A)
 	{
 		return 1;
 	}
@@ -243,7 +245,7 @@ int UART0_rx_work(int* Programmstatus)
 		j=1;
 		else
 		j=0;
-	}while(((Befehl[i+j-2] != (char)0x0D) || (Befehl[i-1] != (char)0x0A))&&(i<10));				// solange kein CR+LF erkannt wird
+	}while(((Befehl[i+j-2] != (char)0x0D) || (Befehl[i-1] != (char)0x0A))&&(i<UART0_Befehl_FiFo));				// solange kein CR+LF erkannt wird
 	
 	///////////////-------------------------------------------------------Hier stimmt etwas mit der Befehlsverarbeitung nicht! Der erste Befehl funktioniert nie
 	//Beginn der Befehlsauswertung
@@ -306,7 +308,7 @@ char UART0_tx_out (void)
 		{
 		 return 0;
 		}
-	temp=UART0_tx.data[UART0_tx.read];
+	char temp=UART0_tx.data[UART0_tx.read];
 	UART0_tx.read = (UART0_tx.read +1) & UART0_tx_mask;
 	return temp;
 }
