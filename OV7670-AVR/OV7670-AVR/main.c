@@ -95,13 +95,11 @@ while (1)
 		case 0x0C:	//send whole Imageframe
 			OV7670_captureNewImage();
 			OV7670_ResetFifoReadPointer();
-			 sendFrameBufferToUART (width, height, BytesPerPixel);
-			 Programstatus=-1;
-			 break;
+			sendFrameBufferToUART (width, height, BytesPerPixel);
+			Programstatus=-1;
+			break;
 		default:
-				if(UART0_rx_complete()){
-					UART0_rx_work(&Programstatus);
-				}
+			UART0_rx_work(&Programstatus);
 			break;
 		}
 		_delay_ms(5);

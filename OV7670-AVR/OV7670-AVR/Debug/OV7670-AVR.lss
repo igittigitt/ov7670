@@ -3,31 +3,31 @@ OV7670-AVR.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000003c  00800100  00000c20  00000cb4  2**0
+  0 .data         0000003c  00800100  00000c18  00000cac  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000c20  00000000  00000000  00000094  2**1
+  1 .text         00000c18  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000040b  0080013c  0080013c  00000cf0  2**0
+  2 .bss          0000040b  0080013c  0080013c  00000ce8  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000cf0  2**0
+  3 .comment      00000030  00000000  00000000  00000ce8  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000d20  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000d18  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000198  00000000  00000000  00000d60  2**0
+  5 .debug_aranges 00000198  00000000  00000000  00000d58  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00002599  00000000  00000000  00000ef8  2**0
+  6 .debug_info   00002583  00000000  00000000  00000ef0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000d06  00000000  00000000  00003491  2**0
+  7 .debug_abbrev 00000d06  00000000  00000000  00003473  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000013dd  00000000  00000000  00004197  2**0
+  8 .debug_line   000013d7  00000000  00000000  00004179  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000524  00000000  00000000  00005574  2**2
+  9 .debug_frame  00000524  00000000  00000000  00005550  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000835  00000000  00000000  00005a98  2**0
+ 10 .debug_str    00000835  00000000  00000000  00005a74  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00002356  00000000  00000000  000062cd  2**0
+ 11 .debug_loc    00002356  00000000  00000000  000062a9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000001d0  00000000  00000000  00008623  2**0
+ 12 .debug_ranges 000001d0  00000000  00000000  000085ff  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -51,8 +51,8 @@ Disassembly of section .text:
   3c:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
   40:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
   44:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
-  48:	0c 94 99 04 	jmp	0x932	; 0x932 <__vector_18>
-  4c:	0c 94 d8 05 	jmp	0xbb0	; 0xbb0 <__vector_19>
+  48:	0c 94 95 04 	jmp	0x92a	; 0x92a <__vector_18>
+  4c:	0c 94 d4 05 	jmp	0xba8	; 0xba8 <__vector_19>
   50:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
   54:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
   58:	0c 94 5d 00 	jmp	0xba	; 0xba <__bad_interrupt>
@@ -84,7 +84,7 @@ Disassembly of section .text:
   8c:	11 e0       	ldi	r17, 0x01	; 1
   8e:	a0 e0       	ldi	r26, 0x00	; 0
   90:	b1 e0       	ldi	r27, 0x01	; 1
-  92:	e0 e2       	ldi	r30, 0x20	; 32
+  92:	e8 e1       	ldi	r30, 0x18	; 24
   94:	fc e0       	ldi	r31, 0x0C	; 12
   96:	02 c0       	rjmp	.+4      	; 0x9c <__do_copy_data+0x10>
   98:	05 90       	lpm	r0, Z+
@@ -107,7 +107,7 @@ Disassembly of section .text:
   ae:	b2 07       	cpc	r27, r18
   b0:	e1 f7       	brne	.-8      	; 0xaa <.do_clear_bss_loop>
   b2:	0e 94 5f 00 	call	0xbe	; 0xbe <main>
-  b6:	0c 94 0e 06 	jmp	0xc1c	; 0xc1c <_exit>
+  b6:	0c 94 0a 06 	jmp	0xc14	; 0xc14 <_exit>
 
 000000ba <__bad_interrupt>:
   ba:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -136,9 +136,9 @@ char Errorcode;
 int imageLineToRead = 0;	//Image Line, which will be read out from the FIFO
 
 UART0_init();
-  d0:	0e 94 12 04 	call	0x824	; 0x824 <UART0_init>
+  d0:	0e 94 0e 04 	call	0x81c	; 0x81c <UART0_init>
 OV7670_init();
-  d4:	0e 94 1d 01 	call	0x23a	; 0x23a <OV7670_init>
+  d4:	0e 94 19 01 	call	0x232	; 0x232 <OV7670_init>
 sei();
   d8:	78 94       	sei
 int Programstatus = -1; 
@@ -183,8 +183,8 @@ int height = 315;
 		case 0x0C:	//send whole Imageframe
 			OV7670_captureNewImage();
 			OV7670_ResetFifoReadPointer();
-			 sendFrameBufferToUART (width, height, BytesPerPixel);
-			 Programstatus=-1;
+			sendFrameBufferToUART (width, height, BytesPerPixel);
+			Programstatus=-1;
   f6:	ee 24       	eor	r14, r14
   f8:	ea 94       	dec	r14
   fa:	fe 2c       	mov	r15, r14
@@ -203,43 +203,43 @@ while (1)
  108:	72 c0       	rjmp	.+228    	; 0x1ee <main+0x130>
  10a:	ec 5c       	subi	r30, 0xCC	; 204
  10c:	ff 4f       	sbci	r31, 0xFF	; 255
- 10e:	0c 94 08 06 	jmp	0xc10	; 0xc10 <__tablejump2__>
+ 10e:	0c 94 04 06 	jmp	0xc08	; 0xc08 <__tablejump2__>
 		case 1: //ReadRegister and sent it to Uart
 				UART0_senden_Byte(receivedAddress);
  112:	80 91 3e 01 	lds	r24, 0x013E	; 0x80013e <receivedAddress>
- 116:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
+ 116:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
 				OV_SCCB_RegisterToUart(receivedAddress);
  11a:	80 91 3e 01 	lds	r24, 0x013E	; 0x80013e <receivedAddress>
- 11e:	0e 94 f3 03 	call	0x7e6	; 0x7e6 <OV_SCCB_RegisterToUart>
+ 11e:	0e 94 ef 03 	call	0x7de	; 0x7de <OV_SCCB_RegisterToUart>
 				Programstatus=-1;
  122:	fa 82       	std	Y+2, r15	; 0x02
  124:	e9 82       	std	Y+1, r14	; 0x01
 
 			break;
- 126:	6b c0       	rjmp	.+214    	; 0x1fe <main+0x140>
+ 126:	67 c0       	rjmp	.+206    	; 0x1f6 <main+0x138>
 		case 2: //Change Register Value
 				Errorcode = OV7670_write(receivedAddress,receivedData1);
  128:	60 91 3d 01 	lds	r22, 0x013D	; 0x80013d <receivedData1>
  12c:	80 91 3e 01 	lds	r24, 0x013E	; 0x80013e <receivedAddress>
- 130:	0e 94 9b 03 	call	0x736	; 0x736 <OV7670_write>
+ 130:	0e 94 97 03 	call	0x72e	; 0x72e <OV7670_write>
 				UART0_senden_Byte(Errorcode);
- 134:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
+ 134:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
 					
 				Programstatus =-1;
  138:	fa 82       	std	Y+2, r15	; 0x02
  13a:	e9 82       	std	Y+1, r14	; 0x01
 				break;
- 13c:	60 c0       	rjmp	.+192    	; 0x1fe <main+0x140>
+ 13c:	5c c0       	rjmp	.+184    	; 0x1f6 <main+0x138>
 		case 3:		//Capture Image
 			OV7670_captureNewImage();
- 13e:	0e 94 86 01 	call	0x30c	; 0x30c <OV7670_captureNewImage>
+ 13e:	0e 94 82 01 	call	0x304	; 0x304 <OV7670_captureNewImage>
 			//OV7670_ResetFifoWritePointer();
 			OV7670_ResetFifoReadPointer();
- 142:	0e 94 5f 01 	call	0x2be	; 0x2be <OV7670_ResetFifoReadPointer>
+ 142:	0e 94 5b 01 	call	0x2b6	; 0x2b6 <OV7670_ResetFifoReadPointer>
 			OV7670_sendNextLine(width,BytesPerPixel);	//send the first Picture Row and wait for feedback
  146:	b5 01       	movw	r22, r10
  148:	c8 01       	movw	r24, r16
- 14a:	0e 94 bb 01 	call	0x376	; 0x376 <OV7670_sendNextLine>
+ 14a:	0e 94 b7 01 	call	0x36e	; 0x36e <OV7670_sendNextLine>
 			imageLineToRead = 0;	//resets the Line to read from the Buffer
 			Programstatus=-1;
  14e:	fa 82       	std	Y+2, r15	; 0x02
@@ -254,7 +254,7 @@ while (1)
  154:	91 2c       	mov	r9, r1
 			Programstatus=-1;
 			break;
- 156:	53 c0       	rjmp	.+166    	; 0x1fe <main+0x140>
+ 156:	4f c0       	rjmp	.+158    	; 0x1f6 <main+0x138>
 		case 4:	//set width
 			width = ((receivedData2<<8)|(receivedData1));
  158:	00 91 3c 01 	lds	r16, 0x013C	; 0x80013c <__data_end>
@@ -265,12 +265,12 @@ while (1)
  166:	08 2b       	or	r16, r24
 			UART0_senden_Byte(0x04);
  168:	84 e0       	ldi	r24, 0x04	; 4
- 16a:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
+ 16a:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
 			Programstatus =-1;
  16e:	fa 82       	std	Y+2, r15	; 0x02
  170:	e9 82       	std	Y+1, r14	; 0x01
 			break;
- 172:	45 c0       	rjmp	.+138    	; 0x1fe <main+0x140>
+ 172:	41 c0       	rjmp	.+130    	; 0x1f6 <main+0x138>
 		case 5:	//set height
 			height = ((receivedData2<<8)|(receivedData1));
  174:	c0 90 3c 01 	lds	r12, 0x013C	; 0x80013c <__data_end>
@@ -281,39 +281,39 @@ while (1)
  182:	c8 2a       	or	r12, r24
 			UART0_senden_Byte(0x05);
  184:	85 e0       	ldi	r24, 0x05	; 5
- 186:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
+ 186:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
 			Programstatus =-1;
  18a:	fa 82       	std	Y+2, r15	; 0x02
  18c:	e9 82       	std	Y+1, r14	; 0x01
 			break;
- 18e:	37 c0       	rjmp	.+110    	; 0x1fe <main+0x140>
+ 18e:	33 c0       	rjmp	.+102    	; 0x1f6 <main+0x138>
 		case 6: //set Byte per Pixel
 			BytesPerPixel = receivedData1;
  190:	a0 90 3d 01 	lds	r10, 0x013D	; 0x80013d <receivedData1>
  194:	b1 2c       	mov	r11, r1
 			UART0_senden_Byte(0x06);
  196:	86 e0       	ldi	r24, 0x06	; 6
- 198:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
+ 198:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
 			Programstatus =-1;
  19c:	fa 82       	std	Y+2, r15	; 0x02
  19e:	e9 82       	std	Y+1, r14	; 0x01
 			break;
- 1a0:	2e c0       	rjmp	.+92     	; 0x1fe <main+0x140>
+ 1a0:	2a c0       	rjmp	.+84     	; 0x1f6 <main+0x138>
 		case 0x08:
 			Errorcode = OV7670_init();
- 1a2:	0e 94 1d 01 	call	0x23a	; 0x23a <OV7670_init>
+ 1a2:	0e 94 19 01 	call	0x232	; 0x232 <OV7670_init>
 			UART0_senden_Byte(Errorcode);
- 1a6:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
+ 1a6:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
 			Programstatus = -1;
  1aa:	fa 82       	std	Y+2, r15	; 0x02
  1ac:	e9 82       	std	Y+1, r14	; 0x01
 			break;
- 1ae:	27 c0       	rjmp	.+78     	; 0x1fe <main+0x140>
+ 1ae:	23 c0       	rjmp	.+70     	; 0x1f6 <main+0x138>
 		case 0x0A:	//next Line of Imagebuffer requested
 			OV7670_sendNextLine(width,BytesPerPixel);
  1b0:	b5 01       	movw	r22, r10
  1b2:	c8 01       	movw	r24, r16
- 1b4:	0e 94 bb 01 	call	0x376	; 0x376 <OV7670_sendNextLine>
+ 1b4:	0e 94 b7 01 	call	0x36e	; 0x36e <OV7670_sendNextLine>
 			imageLineToRead++;
  1b8:	8f ef       	ldi	r24, 0xFF	; 255
  1ba:	88 1a       	sub	r8, r24
@@ -322,7 +322,7 @@ while (1)
  1be:	fa 82       	std	Y+2, r15	; 0x02
  1c0:	e9 82       	std	Y+1, r14	; 0x01
 			break;
- 1c2:	1d c0       	rjmp	.+58     	; 0x1fe <main+0x140>
+ 1c2:	19 c0       	rjmp	.+50     	; 0x1f6 <main+0x138>
 		case 0x0B:	//repeat of Line of Imagebuffer requested
 			imageLineToRead--;
 			OV7670_sendLineRepeat(imageLineToRead,width, BytesPerPixel);
@@ -330,1768 +330,1764 @@ while (1)
  1c6:	b8 01       	movw	r22, r16
  1c8:	c4 01       	movw	r24, r8
  1ca:	01 97       	sbiw	r24, 0x01	; 1
- 1cc:	0e 94 fd 01 	call	0x3fa	; 0x3fa <OV7670_sendLineRepeat>
+ 1cc:	0e 94 f9 01 	call	0x3f2	; 0x3f2 <OV7670_sendLineRepeat>
 			imageLineToRead++;
 			Programstatus=-1;
  1d0:	fa 82       	std	Y+2, r15	; 0x02
  1d2:	e9 82       	std	Y+1, r14	; 0x01
 				break;
- 1d4:	14 c0       	rjmp	.+40     	; 0x1fe <main+0x140>
+ 1d4:	10 c0       	rjmp	.+32     	; 0x1f6 <main+0x138>
 		case 0x0C:	//send whole Imageframe
 			OV7670_captureNewImage();
- 1d6:	0e 94 86 01 	call	0x30c	; 0x30c <OV7670_captureNewImage>
+ 1d6:	0e 94 82 01 	call	0x304	; 0x304 <OV7670_captureNewImage>
 			OV7670_ResetFifoReadPointer();
- 1da:	0e 94 5f 01 	call	0x2be	; 0x2be <OV7670_ResetFifoReadPointer>
-			 sendFrameBufferToUART (width, height, BytesPerPixel);
+ 1da:	0e 94 5b 01 	call	0x2b6	; 0x2b6 <OV7670_ResetFifoReadPointer>
+			sendFrameBufferToUART (width, height, BytesPerPixel);
  1de:	a5 01       	movw	r20, r10
  1e0:	b6 01       	movw	r22, r12
  1e2:	c8 01       	movw	r24, r16
- 1e4:	0e 94 44 02 	call	0x488	; 0x488 <sendFrameBufferToUART>
-			 Programstatus=-1;
+ 1e4:	0e 94 40 02 	call	0x480	; 0x480 <sendFrameBufferToUART>
+			Programstatus=-1;
  1e8:	fa 82       	std	Y+2, r15	; 0x02
  1ea:	e9 82       	std	Y+1, r14	; 0x01
-			 break;
- 1ec:	08 c0       	rjmp	.+16     	; 0x1fe <main+0x140>
+			break;
+ 1ec:	04 c0       	rjmp	.+8      	; 0x1f6 <main+0x138>
 		default:
-				if(UART0_rx_complete()){
- 1ee:	0e 94 d8 04 	call	0x9b0	; 0x9b0 <UART0_rx_complete>
- 1f2:	89 2b       	or	r24, r25
- 1f4:	21 f0       	breq	.+8      	; 0x1fe <main+0x140>
-					UART0_rx_work(&Programstatus);
- 1f6:	ce 01       	movw	r24, r28
- 1f8:	01 96       	adiw	r24, 0x01	; 1
- 1fa:	0e 94 f3 04 	call	0x9e6	; 0x9e6 <UART0_rx_work>
+			UART0_rx_work(&Programstatus);
+ 1ee:	ce 01       	movw	r24, r28
+ 1f0:	01 96       	adiw	r24, 0x01	; 1
+ 1f2:	0e 94 ef 04 	call	0x9de	; 0x9de <UART0_rx_work>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 1fe:	8f e1       	ldi	r24, 0x1F	; 31
- 200:	9e e4       	ldi	r25, 0x4E	; 78
- 202:	01 97       	sbiw	r24, 0x01	; 1
- 204:	f1 f7       	brne	.-4      	; 0x202 <main+0x144>
- 206:	00 c0       	rjmp	.+0      	; 0x208 <main+0x14a>
- 208:	00 00       	nop
- 20a:	78 cf       	rjmp	.-272    	; 0xfc <main+0x3e>
+ 1f6:	8f e1       	ldi	r24, 0x1F	; 31
+ 1f8:	9e e4       	ldi	r25, 0x4E	; 78
+ 1fa:	01 97       	sbiw	r24, 0x01	; 1
+ 1fc:	f1 f7       	brne	.-4      	; 0x1fa <main+0x13c>
+ 1fe:	00 c0       	rjmp	.+0      	; 0x200 <main+0x142>
+ 200:	00 00       	nop
+ 202:	7c cf       	rjmp	.-264    	; 0xfc <main+0x3e>
 
-0000020c <Ov7670_initPins>:
+00000204 <Ov7670_initPins>:
 		return (1);
 	}
 	else {
 		return (0);
 	}
 }
- 20c:	20 98       	cbi	0x04, 0	; 4
- 20e:	21 98       	cbi	0x04, 1	; 4
- 210:	22 98       	cbi	0x04, 2	; 4
- 212:	23 98       	cbi	0x04, 3	; 4
- 214:	54 98       	cbi	0x0a, 4	; 10
- 216:	55 98       	cbi	0x0a, 5	; 10
- 218:	56 98       	cbi	0x0a, 6	; 10
- 21a:	57 98       	cbi	0x0a, 7	; 10
- 21c:	39 98       	cbi	0x07, 1	; 7
- 21e:	38 98       	cbi	0x07, 0	; 7
- 220:	3a 9a       	sbi	0x07, 2	; 7
- 222:	3b 9a       	sbi	0x07, 3	; 7
- 224:	24 9a       	sbi	0x04, 4	; 4
- 226:	52 9a       	sbi	0x0a, 2	; 10
- 228:	25 9a       	sbi	0x04, 5	; 4
- 22a:	3d 9a       	sbi	0x07, 5	; 7
- 22c:	3c 9a       	sbi	0x07, 4	; 7
- 22e:	42 9a       	sbi	0x08, 2	; 8
- 230:	43 9a       	sbi	0x08, 3	; 8
- 232:	2c 98       	cbi	0x05, 4	; 5
- 234:	5a 98       	cbi	0x0b, 2	; 11
- 236:	2a 9a       	sbi	0x05, 2	; 5
- 238:	08 95       	ret
+ 204:	20 98       	cbi	0x04, 0	; 4
+ 206:	21 98       	cbi	0x04, 1	; 4
+ 208:	22 98       	cbi	0x04, 2	; 4
+ 20a:	23 98       	cbi	0x04, 3	; 4
+ 20c:	54 98       	cbi	0x0a, 4	; 10
+ 20e:	55 98       	cbi	0x0a, 5	; 10
+ 210:	56 98       	cbi	0x0a, 6	; 10
+ 212:	57 98       	cbi	0x0a, 7	; 10
+ 214:	39 98       	cbi	0x07, 1	; 7
+ 216:	38 98       	cbi	0x07, 0	; 7
+ 218:	3a 9a       	sbi	0x07, 2	; 7
+ 21a:	3b 9a       	sbi	0x07, 3	; 7
+ 21c:	24 9a       	sbi	0x04, 4	; 4
+ 21e:	52 9a       	sbi	0x0a, 2	; 10
+ 220:	25 9a       	sbi	0x04, 5	; 4
+ 222:	3d 9a       	sbi	0x07, 5	; 7
+ 224:	3c 9a       	sbi	0x07, 4	; 7
+ 226:	42 9a       	sbi	0x08, 2	; 8
+ 228:	43 9a       	sbi	0x08, 3	; 8
+ 22a:	2c 98       	cbi	0x05, 4	; 5
+ 22c:	5a 98       	cbi	0x0b, 2	; 11
+ 22e:	2a 9a       	sbi	0x05, 2	; 5
+ 230:	08 95       	ret
 
-0000023a <OV7670_init>:
- 23a:	0e 94 06 01 	call	0x20c	; 0x20c <Ov7670_initPins>
- 23e:	2d 98       	cbi	0x05, 5	; 5
- 240:	2f ef       	ldi	r18, 0xFF	; 255
- 242:	81 ee       	ldi	r24, 0xE1	; 225
- 244:	94 e0       	ldi	r25, 0x04	; 4
- 246:	21 50       	subi	r18, 0x01	; 1
- 248:	80 40       	sbci	r24, 0x00	; 0
- 24a:	90 40       	sbci	r25, 0x00	; 0
- 24c:	e1 f7       	brne	.-8      	; 0x246 <OV7670_init+0xc>
- 24e:	00 c0       	rjmp	.+0      	; 0x250 <OV7670_init+0x16>
- 250:	00 00       	nop
- 252:	2d 9a       	sbi	0x05, 5	; 5
- 254:	8f e9       	ldi	r24, 0x9F	; 159
- 256:	9f e0       	ldi	r25, 0x0F	; 15
- 258:	01 97       	sbiw	r24, 0x01	; 1
- 25a:	f1 f7       	brne	.-4      	; 0x258 <OV7670_init+0x1e>
- 25c:	00 c0       	rjmp	.+0      	; 0x25e <OV7670_init+0x24>
- 25e:	00 00       	nop
- 260:	8f e8       	ldi	r24, 0x8F	; 143
- 262:	91 e0       	ldi	r25, 0x01	; 1
- 264:	01 97       	sbiw	r24, 0x01	; 1
- 266:	f1 f7       	brne	.-4      	; 0x264 <OV7670_init+0x2a>
- 268:	00 c0       	rjmp	.+0      	; 0x26a <OV7670_init+0x30>
- 26a:	00 00       	nop
- 26c:	43 98       	cbi	0x08, 3	; 8
- 26e:	42 98       	cbi	0x08, 2	; 8
- 270:	8f e9       	ldi	r24, 0x9F	; 159
- 272:	9f e0       	ldi	r25, 0x0F	; 15
- 274:	01 97       	sbiw	r24, 0x01	; 1
- 276:	f1 f7       	brne	.-4      	; 0x274 <OV7670_init+0x3a>
- 278:	00 c0       	rjmp	.+0      	; 0x27a <OV7670_init+0x40>
- 27a:	00 00       	nop
- 27c:	5a 9a       	sbi	0x0b, 2	; 11
- 27e:	8f e9       	ldi	r24, 0x9F	; 159
- 280:	9f e0       	ldi	r25, 0x0F	; 15
- 282:	01 97       	sbiw	r24, 0x01	; 1
- 284:	f1 f7       	brne	.-4      	; 0x282 <OV7670_init+0x48>
- 286:	00 c0       	rjmp	.+0      	; 0x288 <OV7670_init+0x4e>
- 288:	00 00       	nop
- 28a:	5a 98       	cbi	0x0b, 2	; 11
- 28c:	8f e9       	ldi	r24, 0x9F	; 159
- 28e:	9f e0       	ldi	r25, 0x0F	; 15
- 290:	01 97       	sbiw	r24, 0x01	; 1
- 292:	f1 f7       	brne	.-4      	; 0x290 <OV7670_init+0x56>
- 294:	00 c0       	rjmp	.+0      	; 0x296 <OV7670_init+0x5c>
- 296:	00 00       	nop
- 298:	5a 9a       	sbi	0x0b, 2	; 11
- 29a:	8f e9       	ldi	r24, 0x9F	; 159
- 29c:	9f e0       	ldi	r25, 0x0F	; 15
- 29e:	01 97       	sbiw	r24, 0x01	; 1
- 2a0:	f1 f7       	brne	.-4      	; 0x29e <OV7670_init+0x64>
- 2a2:	00 c0       	rjmp	.+0      	; 0x2a4 <OV7670_init+0x6a>
- 2a4:	00 00       	nop
- 2a6:	5a 98       	cbi	0x0b, 2	; 11
- 2a8:	8f e9       	ldi	r24, 0x9F	; 159
- 2aa:	9f e0       	ldi	r25, 0x0F	; 15
- 2ac:	01 97       	sbiw	r24, 0x01	; 1
- 2ae:	f1 f7       	brne	.-4      	; 0x2ac <OV7670_init+0x72>
- 2b0:	00 c0       	rjmp	.+0      	; 0x2b2 <OV7670_init+0x78>
- 2b2:	00 00       	nop
- 2b4:	0e 94 ce 03 	call	0x79c	; 0x79c <OV_SCCB_Init>
- 2b8:	81 11       	cpse	r24, r1
- 2ba:	8c 59       	subi	r24, 0x9C	; 156
- 2bc:	08 95       	ret
+00000232 <OV7670_init>:
+ 232:	0e 94 02 01 	call	0x204	; 0x204 <Ov7670_initPins>
+ 236:	2d 98       	cbi	0x05, 5	; 5
+ 238:	2f ef       	ldi	r18, 0xFF	; 255
+ 23a:	81 ee       	ldi	r24, 0xE1	; 225
+ 23c:	94 e0       	ldi	r25, 0x04	; 4
+ 23e:	21 50       	subi	r18, 0x01	; 1
+ 240:	80 40       	sbci	r24, 0x00	; 0
+ 242:	90 40       	sbci	r25, 0x00	; 0
+ 244:	e1 f7       	brne	.-8      	; 0x23e <OV7670_init+0xc>
+ 246:	00 c0       	rjmp	.+0      	; 0x248 <OV7670_init+0x16>
+ 248:	00 00       	nop
+ 24a:	2d 9a       	sbi	0x05, 5	; 5
+ 24c:	8f e9       	ldi	r24, 0x9F	; 159
+ 24e:	9f e0       	ldi	r25, 0x0F	; 15
+ 250:	01 97       	sbiw	r24, 0x01	; 1
+ 252:	f1 f7       	brne	.-4      	; 0x250 <OV7670_init+0x1e>
+ 254:	00 c0       	rjmp	.+0      	; 0x256 <OV7670_init+0x24>
+ 256:	00 00       	nop
+ 258:	8f e8       	ldi	r24, 0x8F	; 143
+ 25a:	91 e0       	ldi	r25, 0x01	; 1
+ 25c:	01 97       	sbiw	r24, 0x01	; 1
+ 25e:	f1 f7       	brne	.-4      	; 0x25c <OV7670_init+0x2a>
+ 260:	00 c0       	rjmp	.+0      	; 0x262 <OV7670_init+0x30>
+ 262:	00 00       	nop
+ 264:	43 98       	cbi	0x08, 3	; 8
+ 266:	42 98       	cbi	0x08, 2	; 8
+ 268:	8f e9       	ldi	r24, 0x9F	; 159
+ 26a:	9f e0       	ldi	r25, 0x0F	; 15
+ 26c:	01 97       	sbiw	r24, 0x01	; 1
+ 26e:	f1 f7       	brne	.-4      	; 0x26c <OV7670_init+0x3a>
+ 270:	00 c0       	rjmp	.+0      	; 0x272 <OV7670_init+0x40>
+ 272:	00 00       	nop
+ 274:	5a 9a       	sbi	0x0b, 2	; 11
+ 276:	8f e9       	ldi	r24, 0x9F	; 159
+ 278:	9f e0       	ldi	r25, 0x0F	; 15
+ 27a:	01 97       	sbiw	r24, 0x01	; 1
+ 27c:	f1 f7       	brne	.-4      	; 0x27a <OV7670_init+0x48>
+ 27e:	00 c0       	rjmp	.+0      	; 0x280 <OV7670_init+0x4e>
+ 280:	00 00       	nop
+ 282:	5a 98       	cbi	0x0b, 2	; 11
+ 284:	8f e9       	ldi	r24, 0x9F	; 159
+ 286:	9f e0       	ldi	r25, 0x0F	; 15
+ 288:	01 97       	sbiw	r24, 0x01	; 1
+ 28a:	f1 f7       	brne	.-4      	; 0x288 <OV7670_init+0x56>
+ 28c:	00 c0       	rjmp	.+0      	; 0x28e <OV7670_init+0x5c>
+ 28e:	00 00       	nop
+ 290:	5a 9a       	sbi	0x0b, 2	; 11
+ 292:	8f e9       	ldi	r24, 0x9F	; 159
+ 294:	9f e0       	ldi	r25, 0x0F	; 15
+ 296:	01 97       	sbiw	r24, 0x01	; 1
+ 298:	f1 f7       	brne	.-4      	; 0x296 <OV7670_init+0x64>
+ 29a:	00 c0       	rjmp	.+0      	; 0x29c <OV7670_init+0x6a>
+ 29c:	00 00       	nop
+ 29e:	5a 98       	cbi	0x0b, 2	; 11
+ 2a0:	8f e9       	ldi	r24, 0x9F	; 159
+ 2a2:	9f e0       	ldi	r25, 0x0F	; 15
+ 2a4:	01 97       	sbiw	r24, 0x01	; 1
+ 2a6:	f1 f7       	brne	.-4      	; 0x2a4 <OV7670_init+0x72>
+ 2a8:	00 c0       	rjmp	.+0      	; 0x2aa <OV7670_init+0x78>
+ 2aa:	00 00       	nop
+ 2ac:	0e 94 ca 03 	call	0x794	; 0x794 <OV_SCCB_Init>
+ 2b0:	81 11       	cpse	r24, r1
+ 2b2:	8c 59       	subi	r24, 0x9C	; 156
+ 2b4:	08 95       	ret
 
-000002be <OV7670_ResetFifoReadPointer>:
- 2be:	42 9a       	sbi	0x08, 2	; 8
- 2c0:	5a 9a       	sbi	0x0b, 2	; 11
- 2c2:	8a e6       	ldi	r24, 0x6A	; 106
- 2c4:	8a 95       	dec	r24
- 2c6:	f1 f7       	brne	.-4      	; 0x2c4 <OV7670_ResetFifoReadPointer+0x6>
- 2c8:	00 c0       	rjmp	.+0      	; 0x2ca <OV7670_ResetFifoReadPointer+0xc>
- 2ca:	5a 98       	cbi	0x0b, 2	; 11
- 2cc:	5a 9a       	sbi	0x0b, 2	; 11
- 2ce:	42 98       	cbi	0x08, 2	; 8
- 2d0:	5a 98       	cbi	0x0b, 2	; 11
- 2d2:	8a e6       	ldi	r24, 0x6A	; 106
- 2d4:	8a 95       	dec	r24
- 2d6:	f1 f7       	brne	.-4      	; 0x2d4 <OV7670_ResetFifoReadPointer+0x16>
- 2d8:	00 c0       	rjmp	.+0      	; 0x2da <OV7670_ResetFifoReadPointer+0x1c>
- 2da:	5a 9a       	sbi	0x0b, 2	; 11
- 2dc:	5a 98       	cbi	0x0b, 2	; 11
- 2de:	8a e6       	ldi	r24, 0x6A	; 106
- 2e0:	8a 95       	dec	r24
- 2e2:	f1 f7       	brne	.-4      	; 0x2e0 <OV7670_ResetFifoReadPointer+0x22>
- 2e4:	00 c0       	rjmp	.+0      	; 0x2e6 <OV7670_ResetFifoReadPointer+0x28>
- 2e6:	5a 9a       	sbi	0x0b, 2	; 11
- 2e8:	5a 98       	cbi	0x0b, 2	; 11
- 2ea:	42 9a       	sbi	0x08, 2	; 8
- 2ec:	8a e6       	ldi	r24, 0x6A	; 106
- 2ee:	8a 95       	dec	r24
- 2f0:	f1 f7       	brne	.-4      	; 0x2ee <OV7670_ResetFifoReadPointer+0x30>
- 2f2:	00 c0       	rjmp	.+0      	; 0x2f4 <OV7670_ResetFifoReadPointer+0x36>
- 2f4:	5a 9a       	sbi	0x0b, 2	; 11
- 2f6:	5a 98       	cbi	0x0b, 2	; 11
- 2f8:	08 95       	ret
+000002b6 <OV7670_ResetFifoReadPointer>:
+ 2b6:	42 9a       	sbi	0x08, 2	; 8
+ 2b8:	5a 9a       	sbi	0x0b, 2	; 11
+ 2ba:	8a e6       	ldi	r24, 0x6A	; 106
+ 2bc:	8a 95       	dec	r24
+ 2be:	f1 f7       	brne	.-4      	; 0x2bc <OV7670_ResetFifoReadPointer+0x6>
+ 2c0:	00 c0       	rjmp	.+0      	; 0x2c2 <OV7670_ResetFifoReadPointer+0xc>
+ 2c2:	5a 98       	cbi	0x0b, 2	; 11
+ 2c4:	5a 9a       	sbi	0x0b, 2	; 11
+ 2c6:	42 98       	cbi	0x08, 2	; 8
+ 2c8:	5a 98       	cbi	0x0b, 2	; 11
+ 2ca:	8a e6       	ldi	r24, 0x6A	; 106
+ 2cc:	8a 95       	dec	r24
+ 2ce:	f1 f7       	brne	.-4      	; 0x2cc <OV7670_ResetFifoReadPointer+0x16>
+ 2d0:	00 c0       	rjmp	.+0      	; 0x2d2 <OV7670_ResetFifoReadPointer+0x1c>
+ 2d2:	5a 9a       	sbi	0x0b, 2	; 11
+ 2d4:	5a 98       	cbi	0x0b, 2	; 11
+ 2d6:	8a e6       	ldi	r24, 0x6A	; 106
+ 2d8:	8a 95       	dec	r24
+ 2da:	f1 f7       	brne	.-4      	; 0x2d8 <OV7670_ResetFifoReadPointer+0x22>
+ 2dc:	00 c0       	rjmp	.+0      	; 0x2de <OV7670_ResetFifoReadPointer+0x28>
+ 2de:	5a 9a       	sbi	0x0b, 2	; 11
+ 2e0:	5a 98       	cbi	0x0b, 2	; 11
+ 2e2:	42 9a       	sbi	0x08, 2	; 8
+ 2e4:	8a e6       	ldi	r24, 0x6A	; 106
+ 2e6:	8a 95       	dec	r24
+ 2e8:	f1 f7       	brne	.-4      	; 0x2e6 <OV7670_ResetFifoReadPointer+0x30>
+ 2ea:	00 c0       	rjmp	.+0      	; 0x2ec <OV7670_ResetFifoReadPointer+0x36>
+ 2ec:	5a 9a       	sbi	0x0b, 2	; 11
+ 2ee:	5a 98       	cbi	0x0b, 2	; 11
+ 2f0:	08 95       	ret
 
-000002fa <OV7670_ResetFifoWritePointer>:
- 2fa:	43 98       	cbi	0x08, 3	; 8
- 2fc:	8f e9       	ldi	r24, 0x9F	; 159
- 2fe:	9f e0       	ldi	r25, 0x0F	; 15
- 300:	01 97       	sbiw	r24, 0x01	; 1
- 302:	f1 f7       	brne	.-4      	; 0x300 <OV7670_ResetFifoWritePointer+0x6>
- 304:	00 c0       	rjmp	.+0      	; 0x306 <OV7670_ResetFifoWritePointer+0xc>
- 306:	00 00       	nop
- 308:	43 9a       	sbi	0x08, 3	; 8
- 30a:	08 95       	ret
+000002f2 <OV7670_ResetFifoWritePointer>:
+ 2f2:	43 98       	cbi	0x08, 3	; 8
+ 2f4:	8f e9       	ldi	r24, 0x9F	; 159
+ 2f6:	9f e0       	ldi	r25, 0x0F	; 15
+ 2f8:	01 97       	sbiw	r24, 0x01	; 1
+ 2fa:	f1 f7       	brne	.-4      	; 0x2f8 <OV7670_ResetFifoWritePointer+0x6>
+ 2fc:	00 c0       	rjmp	.+0      	; 0x2fe <OV7670_ResetFifoWritePointer+0xc>
+ 2fe:	00 00       	nop
+ 300:	43 9a       	sbi	0x08, 3	; 8
+ 302:	08 95       	ret
 
-0000030c <OV7670_captureNewImage>:
- 30c:	2c 98       	cbi	0x05, 4	; 5
- 30e:	31 9b       	sbis	0x06, 1	; 6
- 310:	fe cf       	rjmp	.-4      	; 0x30e <OV7670_captureNewImage+0x2>
- 312:	0e 94 7d 01 	call	0x2fa	; 0x2fa <OV7670_ResetFifoWritePointer>
- 316:	31 99       	sbic	0x06, 1	; 6
- 318:	fe cf       	rjmp	.-4      	; 0x316 <OV7670_captureNewImage+0xa>
- 31a:	2c 9a       	sbi	0x05, 4	; 5
- 31c:	31 9b       	sbis	0x06, 1	; 6
- 31e:	fe cf       	rjmp	.-4      	; 0x31c <OV7670_captureNewImage+0x10>
- 320:	2c 98       	cbi	0x05, 4	; 5
- 322:	08 95       	ret
+00000304 <OV7670_captureNewImage>:
+ 304:	2c 98       	cbi	0x05, 4	; 5
+ 306:	31 9b       	sbis	0x06, 1	; 6
+ 308:	fe cf       	rjmp	.-4      	; 0x306 <OV7670_captureNewImage+0x2>
+ 30a:	0e 94 79 01 	call	0x2f2	; 0x2f2 <OV7670_ResetFifoWritePointer>
+ 30e:	31 99       	sbic	0x06, 1	; 6
+ 310:	fe cf       	rjmp	.-4      	; 0x30e <OV7670_captureNewImage+0xa>
+ 312:	2c 9a       	sbi	0x05, 4	; 5
+ 314:	31 9b       	sbis	0x06, 1	; 6
+ 316:	fe cf       	rjmp	.-4      	; 0x314 <OV7670_captureNewImage+0x10>
+ 318:	2c 98       	cbi	0x05, 4	; 5
+ 31a:	08 95       	ret
 
-00000324 <Ov7670_readByte>:
- 324:	63 b1       	in	r22, 0x03	; 3
- 326:	e3 b1       	in	r30, 0x03	; 3
- 328:	53 b1       	in	r21, 0x03	; 3
- 32a:	33 b1       	in	r19, 0x03	; 3
- 32c:	29 b1       	in	r18, 0x09	; 9
- 32e:	99 b1       	in	r25, 0x09	; 9
- 330:	f9 b1       	in	r31, 0x09	; 9
- 332:	79 b1       	in	r23, 0x09	; 9
- 334:	e2 70       	andi	r30, 0x02	; 2
- 336:	54 70       	andi	r21, 0x04	; 4
- 338:	5e 2b       	or	r21, r30
- 33a:	61 70       	andi	r22, 0x01	; 1
- 33c:	56 2b       	or	r21, r22
- 33e:	38 70       	andi	r19, 0x08	; 8
- 340:	43 2f       	mov	r20, r19
- 342:	45 2b       	or	r20, r21
- 344:	20 71       	andi	r18, 0x10	; 16
- 346:	32 2f       	mov	r19, r18
- 348:	34 2b       	or	r19, r20
- 34a:	90 72       	andi	r25, 0x20	; 32
- 34c:	29 2f       	mov	r18, r25
- 34e:	23 2b       	or	r18, r19
- 350:	9f 2f       	mov	r25, r31
- 352:	90 74       	andi	r25, 0x40	; 64
- 354:	89 2f       	mov	r24, r25
- 356:	82 2b       	or	r24, r18
- 358:	27 2f       	mov	r18, r23
- 35a:	20 78       	andi	r18, 0x80	; 128
- 35c:	30 e0       	ldi	r19, 0x00	; 0
- 35e:	22 0f       	add	r18, r18
- 360:	23 2f       	mov	r18, r19
- 362:	22 1f       	adc	r18, r18
- 364:	33 0b       	sbc	r19, r19
- 366:	33 27       	eor	r19, r19
- 368:	36 95       	lsr	r19
- 36a:	32 2f       	mov	r19, r18
- 36c:	22 27       	eor	r18, r18
- 36e:	37 95       	ror	r19
- 370:	27 95       	ror	r18
- 372:	82 2b       	or	r24, r18
- 374:	08 95       	ret
+0000031c <Ov7670_readByte>:
+ 31c:	63 b1       	in	r22, 0x03	; 3
+ 31e:	e3 b1       	in	r30, 0x03	; 3
+ 320:	53 b1       	in	r21, 0x03	; 3
+ 322:	33 b1       	in	r19, 0x03	; 3
+ 324:	29 b1       	in	r18, 0x09	; 9
+ 326:	99 b1       	in	r25, 0x09	; 9
+ 328:	f9 b1       	in	r31, 0x09	; 9
+ 32a:	79 b1       	in	r23, 0x09	; 9
+ 32c:	e2 70       	andi	r30, 0x02	; 2
+ 32e:	54 70       	andi	r21, 0x04	; 4
+ 330:	5e 2b       	or	r21, r30
+ 332:	61 70       	andi	r22, 0x01	; 1
+ 334:	56 2b       	or	r21, r22
+ 336:	38 70       	andi	r19, 0x08	; 8
+ 338:	43 2f       	mov	r20, r19
+ 33a:	45 2b       	or	r20, r21
+ 33c:	20 71       	andi	r18, 0x10	; 16
+ 33e:	32 2f       	mov	r19, r18
+ 340:	34 2b       	or	r19, r20
+ 342:	90 72       	andi	r25, 0x20	; 32
+ 344:	29 2f       	mov	r18, r25
+ 346:	23 2b       	or	r18, r19
+ 348:	9f 2f       	mov	r25, r31
+ 34a:	90 74       	andi	r25, 0x40	; 64
+ 34c:	89 2f       	mov	r24, r25
+ 34e:	82 2b       	or	r24, r18
+ 350:	27 2f       	mov	r18, r23
+ 352:	20 78       	andi	r18, 0x80	; 128
+ 354:	30 e0       	ldi	r19, 0x00	; 0
+ 356:	22 0f       	add	r18, r18
+ 358:	23 2f       	mov	r18, r19
+ 35a:	22 1f       	adc	r18, r18
+ 35c:	33 0b       	sbc	r19, r19
+ 35e:	33 27       	eor	r19, r19
+ 360:	36 95       	lsr	r19
+ 362:	32 2f       	mov	r19, r18
+ 364:	22 27       	eor	r18, r18
+ 366:	37 95       	ror	r19
+ 368:	27 95       	ror	r18
+ 36a:	82 2b       	or	r24, r18
+ 36c:	08 95       	ret
 
-00000376 <OV7670_sendNextLine>:
- 376:	cf 92       	push	r12
- 378:	df 92       	push	r13
- 37a:	ef 92       	push	r14
- 37c:	ff 92       	push	r15
- 37e:	0f 93       	push	r16
- 380:	1f 93       	push	r17
- 382:	cf 93       	push	r28
- 384:	df 93       	push	r29
- 386:	6c 01       	movw	r12, r24
- 388:	8b 01       	movw	r16, r22
- 38a:	18 16       	cp	r1, r24
- 38c:	19 06       	cpc	r1, r25
- 38e:	04 f1       	brlt	.+64     	; 0x3d0 <OV7670_sendNextLine+0x5a>
- 390:	25 c0       	rjmp	.+74     	; 0x3dc <OV7670_sendNextLine+0x66>
- 392:	c0 e0       	ldi	r28, 0x00	; 0
- 394:	d0 e0       	ldi	r29, 0x00	; 0
- 396:	0e 94 92 01 	call	0x324	; 0x324 <Ov7670_readByte>
- 39a:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
- 39e:	5a 9a       	sbi	0x0b, 2	; 11
- 3a0:	8f e9       	ldi	r24, 0x9F	; 159
- 3a2:	9f e0       	ldi	r25, 0x0F	; 15
- 3a4:	01 97       	sbiw	r24, 0x01	; 1
- 3a6:	f1 f7       	brne	.-4      	; 0x3a4 <OV7670_sendNextLine+0x2e>
- 3a8:	00 c0       	rjmp	.+0      	; 0x3aa <OV7670_sendNextLine+0x34>
- 3aa:	00 00       	nop
- 3ac:	5a 98       	cbi	0x0b, 2	; 11
- 3ae:	8f e9       	ldi	r24, 0x9F	; 159
- 3b0:	9f e0       	ldi	r25, 0x0F	; 15
- 3b2:	01 97       	sbiw	r24, 0x01	; 1
- 3b4:	f1 f7       	brne	.-4      	; 0x3b2 <OV7670_sendNextLine+0x3c>
- 3b6:	00 c0       	rjmp	.+0      	; 0x3b8 <OV7670_sendNextLine+0x42>
- 3b8:	00 00       	nop
- 3ba:	21 96       	adiw	r28, 0x01	; 1
- 3bc:	0c 17       	cp	r16, r28
- 3be:	1d 07       	cpc	r17, r29
- 3c0:	51 f7       	brne	.-44     	; 0x396 <OV7670_sendNextLine+0x20>
- 3c2:	9f ef       	ldi	r25, 0xFF	; 255
- 3c4:	e9 1a       	sub	r14, r25
- 3c6:	f9 0a       	sbc	r15, r25
- 3c8:	ce 14       	cp	r12, r14
- 3ca:	df 04       	cpc	r13, r15
- 3cc:	19 f4       	brne	.+6      	; 0x3d4 <OV7670_sendNextLine+0x5e>
- 3ce:	06 c0       	rjmp	.+12     	; 0x3dc <OV7670_sendNextLine+0x66>
- 3d0:	e1 2c       	mov	r14, r1
- 3d2:	f1 2c       	mov	r15, r1
- 3d4:	10 16       	cp	r1, r16
- 3d6:	11 06       	cpc	r1, r17
- 3d8:	e4 f2       	brlt	.-72     	; 0x392 <OV7670_sendNextLine+0x1c>
- 3da:	f3 cf       	rjmp	.-26     	; 0x3c2 <OV7670_sendNextLine+0x4c>
- 3dc:	8d e0       	ldi	r24, 0x0D	; 13
- 3de:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
- 3e2:	8a e0       	ldi	r24, 0x0A	; 10
- 3e4:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
- 3e8:	df 91       	pop	r29
- 3ea:	cf 91       	pop	r28
- 3ec:	1f 91       	pop	r17
- 3ee:	0f 91       	pop	r16
- 3f0:	ff 90       	pop	r15
- 3f2:	ef 90       	pop	r14
- 3f4:	df 90       	pop	r13
- 3f6:	cf 90       	pop	r12
- 3f8:	08 95       	ret
+0000036e <OV7670_sendNextLine>:
+ 36e:	cf 92       	push	r12
+ 370:	df 92       	push	r13
+ 372:	ef 92       	push	r14
+ 374:	ff 92       	push	r15
+ 376:	0f 93       	push	r16
+ 378:	1f 93       	push	r17
+ 37a:	cf 93       	push	r28
+ 37c:	df 93       	push	r29
+ 37e:	6c 01       	movw	r12, r24
+ 380:	8b 01       	movw	r16, r22
+ 382:	18 16       	cp	r1, r24
+ 384:	19 06       	cpc	r1, r25
+ 386:	04 f1       	brlt	.+64     	; 0x3c8 <OV7670_sendNextLine+0x5a>
+ 388:	25 c0       	rjmp	.+74     	; 0x3d4 <OV7670_sendNextLine+0x66>
+ 38a:	c0 e0       	ldi	r28, 0x00	; 0
+ 38c:	d0 e0       	ldi	r29, 0x00	; 0
+ 38e:	0e 94 8e 01 	call	0x31c	; 0x31c <Ov7670_readByte>
+ 392:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
+ 396:	5a 9a       	sbi	0x0b, 2	; 11
+ 398:	8f e9       	ldi	r24, 0x9F	; 159
+ 39a:	9f e0       	ldi	r25, 0x0F	; 15
+ 39c:	01 97       	sbiw	r24, 0x01	; 1
+ 39e:	f1 f7       	brne	.-4      	; 0x39c <OV7670_sendNextLine+0x2e>
+ 3a0:	00 c0       	rjmp	.+0      	; 0x3a2 <OV7670_sendNextLine+0x34>
+ 3a2:	00 00       	nop
+ 3a4:	5a 98       	cbi	0x0b, 2	; 11
+ 3a6:	8f e9       	ldi	r24, 0x9F	; 159
+ 3a8:	9f e0       	ldi	r25, 0x0F	; 15
+ 3aa:	01 97       	sbiw	r24, 0x01	; 1
+ 3ac:	f1 f7       	brne	.-4      	; 0x3aa <OV7670_sendNextLine+0x3c>
+ 3ae:	00 c0       	rjmp	.+0      	; 0x3b0 <OV7670_sendNextLine+0x42>
+ 3b0:	00 00       	nop
+ 3b2:	21 96       	adiw	r28, 0x01	; 1
+ 3b4:	0c 17       	cp	r16, r28
+ 3b6:	1d 07       	cpc	r17, r29
+ 3b8:	51 f7       	brne	.-44     	; 0x38e <OV7670_sendNextLine+0x20>
+ 3ba:	9f ef       	ldi	r25, 0xFF	; 255
+ 3bc:	e9 1a       	sub	r14, r25
+ 3be:	f9 0a       	sbc	r15, r25
+ 3c0:	ce 14       	cp	r12, r14
+ 3c2:	df 04       	cpc	r13, r15
+ 3c4:	19 f4       	brne	.+6      	; 0x3cc <OV7670_sendNextLine+0x5e>
+ 3c6:	06 c0       	rjmp	.+12     	; 0x3d4 <OV7670_sendNextLine+0x66>
+ 3c8:	e1 2c       	mov	r14, r1
+ 3ca:	f1 2c       	mov	r15, r1
+ 3cc:	10 16       	cp	r1, r16
+ 3ce:	11 06       	cpc	r1, r17
+ 3d0:	e4 f2       	brlt	.-72     	; 0x38a <OV7670_sendNextLine+0x1c>
+ 3d2:	f3 cf       	rjmp	.-26     	; 0x3ba <OV7670_sendNextLine+0x4c>
+ 3d4:	8d e0       	ldi	r24, 0x0D	; 13
+ 3d6:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
+ 3da:	8a e0       	ldi	r24, 0x0A	; 10
+ 3dc:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
+ 3e0:	df 91       	pop	r29
+ 3e2:	cf 91       	pop	r28
+ 3e4:	1f 91       	pop	r17
+ 3e6:	0f 91       	pop	r16
+ 3e8:	ff 90       	pop	r15
+ 3ea:	ef 90       	pop	r14
+ 3ec:	df 90       	pop	r13
+ 3ee:	cf 90       	pop	r12
+ 3f0:	08 95       	ret
 
-000003fa <OV7670_sendLineRepeat>:
- 3fa:	ef 92       	push	r14
- 3fc:	ff 92       	push	r15
- 3fe:	0f 93       	push	r16
- 400:	1f 93       	push	r17
- 402:	cf 93       	push	r28
- 404:	df 93       	push	r29
- 406:	7c 01       	movw	r14, r24
- 408:	8b 01       	movw	r16, r22
- 40a:	ea 01       	movw	r28, r20
- 40c:	0e 94 5f 01 	call	0x2be	; 0x2be <OV7670_ResetFifoReadPointer>
- 410:	82 e0       	ldi	r24, 0x02	; 2
- 412:	e8 16       	cp	r14, r24
- 414:	f1 04       	cpc	r15, r1
- 416:	3c f5       	brge	.+78     	; 0x466 <__LOCK_REGION_LENGTH__+0x66>
- 418:	2c c0       	rjmp	.+88     	; 0x472 <__LOCK_REGION_LENGTH__+0x72>
- 41a:	80 e0       	ldi	r24, 0x00	; 0
- 41c:	90 e0       	ldi	r25, 0x00	; 0
- 41e:	5a 9a       	sbi	0x0b, 2	; 11
- 420:	ef e9       	ldi	r30, 0x9F	; 159
- 422:	ff e0       	ldi	r31, 0x0F	; 15
- 424:	31 97       	sbiw	r30, 0x01	; 1
- 426:	f1 f7       	brne	.-4      	; 0x424 <__LOCK_REGION_LENGTH__+0x24>
- 428:	00 c0       	rjmp	.+0      	; 0x42a <__LOCK_REGION_LENGTH__+0x2a>
- 42a:	00 00       	nop
- 42c:	5a 98       	cbi	0x0b, 2	; 11
- 42e:	ef e9       	ldi	r30, 0x9F	; 159
- 430:	ff e0       	ldi	r31, 0x0F	; 15
- 432:	31 97       	sbiw	r30, 0x01	; 1
- 434:	f1 f7       	brne	.-4      	; 0x432 <__LOCK_REGION_LENGTH__+0x32>
- 436:	00 c0       	rjmp	.+0      	; 0x438 <__LOCK_REGION_LENGTH__+0x38>
- 438:	00 00       	nop
- 43a:	01 96       	adiw	r24, 0x01	; 1
- 43c:	c8 17       	cp	r28, r24
- 43e:	d9 07       	cpc	r29, r25
- 440:	71 f7       	brne	.-36     	; 0x41e <__LOCK_REGION_LENGTH__+0x1e>
- 442:	2f 5f       	subi	r18, 0xFF	; 255
- 444:	3f 4f       	sbci	r19, 0xFF	; 255
- 446:	02 17       	cp	r16, r18
- 448:	13 07       	cpc	r17, r19
- 44a:	19 f4       	brne	.+6      	; 0x452 <__LOCK_REGION_LENGTH__+0x52>
- 44c:	06 c0       	rjmp	.+12     	; 0x45a <__LOCK_REGION_LENGTH__+0x5a>
- 44e:	20 e0       	ldi	r18, 0x00	; 0
- 450:	30 e0       	ldi	r19, 0x00	; 0
- 452:	1c 16       	cp	r1, r28
- 454:	1d 06       	cpc	r1, r29
- 456:	0c f3       	brlt	.-62     	; 0x41a <__LOCK_REGION_LENGTH__+0x1a>
- 458:	f4 cf       	rjmp	.-24     	; 0x442 <__LOCK_REGION_LENGTH__+0x42>
- 45a:	4f 5f       	subi	r20, 0xFF	; 255
- 45c:	5f 4f       	sbci	r21, 0xFF	; 255
- 45e:	e4 16       	cp	r14, r20
- 460:	f5 06       	cpc	r15, r21
- 462:	19 f4       	brne	.+6      	; 0x46a <__LOCK_REGION_LENGTH__+0x6a>
- 464:	06 c0       	rjmp	.+12     	; 0x472 <__LOCK_REGION_LENGTH__+0x72>
- 466:	41 e0       	ldi	r20, 0x01	; 1
- 468:	50 e0       	ldi	r21, 0x00	; 0
- 46a:	10 16       	cp	r1, r16
- 46c:	11 06       	cpc	r1, r17
- 46e:	7c f3       	brlt	.-34     	; 0x44e <__LOCK_REGION_LENGTH__+0x4e>
- 470:	f4 cf       	rjmp	.-24     	; 0x45a <__LOCK_REGION_LENGTH__+0x5a>
- 472:	be 01       	movw	r22, r28
- 474:	c8 01       	movw	r24, r16
- 476:	0e 94 bb 01 	call	0x376	; 0x376 <OV7670_sendNextLine>
- 47a:	df 91       	pop	r29
- 47c:	cf 91       	pop	r28
- 47e:	1f 91       	pop	r17
- 480:	0f 91       	pop	r16
- 482:	ff 90       	pop	r15
- 484:	ef 90       	pop	r14
- 486:	08 95       	ret
+000003f2 <OV7670_sendLineRepeat>:
+ 3f2:	ef 92       	push	r14
+ 3f4:	ff 92       	push	r15
+ 3f6:	0f 93       	push	r16
+ 3f8:	1f 93       	push	r17
+ 3fa:	cf 93       	push	r28
+ 3fc:	df 93       	push	r29
+ 3fe:	7c 01       	movw	r14, r24
+ 400:	8b 01       	movw	r16, r22
+ 402:	ea 01       	movw	r28, r20
+ 404:	0e 94 5b 01 	call	0x2b6	; 0x2b6 <OV7670_ResetFifoReadPointer>
+ 408:	82 e0       	ldi	r24, 0x02	; 2
+ 40a:	e8 16       	cp	r14, r24
+ 40c:	f1 04       	cpc	r15, r1
+ 40e:	3c f5       	brge	.+78     	; 0x45e <__LOCK_REGION_LENGTH__+0x5e>
+ 410:	2c c0       	rjmp	.+88     	; 0x46a <__LOCK_REGION_LENGTH__+0x6a>
+ 412:	80 e0       	ldi	r24, 0x00	; 0
+ 414:	90 e0       	ldi	r25, 0x00	; 0
+ 416:	5a 9a       	sbi	0x0b, 2	; 11
+ 418:	ef e9       	ldi	r30, 0x9F	; 159
+ 41a:	ff e0       	ldi	r31, 0x0F	; 15
+ 41c:	31 97       	sbiw	r30, 0x01	; 1
+ 41e:	f1 f7       	brne	.-4      	; 0x41c <__LOCK_REGION_LENGTH__+0x1c>
+ 420:	00 c0       	rjmp	.+0      	; 0x422 <__LOCK_REGION_LENGTH__+0x22>
+ 422:	00 00       	nop
+ 424:	5a 98       	cbi	0x0b, 2	; 11
+ 426:	ef e9       	ldi	r30, 0x9F	; 159
+ 428:	ff e0       	ldi	r31, 0x0F	; 15
+ 42a:	31 97       	sbiw	r30, 0x01	; 1
+ 42c:	f1 f7       	brne	.-4      	; 0x42a <__LOCK_REGION_LENGTH__+0x2a>
+ 42e:	00 c0       	rjmp	.+0      	; 0x430 <__LOCK_REGION_LENGTH__+0x30>
+ 430:	00 00       	nop
+ 432:	01 96       	adiw	r24, 0x01	; 1
+ 434:	c8 17       	cp	r28, r24
+ 436:	d9 07       	cpc	r29, r25
+ 438:	71 f7       	brne	.-36     	; 0x416 <__LOCK_REGION_LENGTH__+0x16>
+ 43a:	2f 5f       	subi	r18, 0xFF	; 255
+ 43c:	3f 4f       	sbci	r19, 0xFF	; 255
+ 43e:	02 17       	cp	r16, r18
+ 440:	13 07       	cpc	r17, r19
+ 442:	19 f4       	brne	.+6      	; 0x44a <__LOCK_REGION_LENGTH__+0x4a>
+ 444:	06 c0       	rjmp	.+12     	; 0x452 <__LOCK_REGION_LENGTH__+0x52>
+ 446:	20 e0       	ldi	r18, 0x00	; 0
+ 448:	30 e0       	ldi	r19, 0x00	; 0
+ 44a:	1c 16       	cp	r1, r28
+ 44c:	1d 06       	cpc	r1, r29
+ 44e:	0c f3       	brlt	.-62     	; 0x412 <__LOCK_REGION_LENGTH__+0x12>
+ 450:	f4 cf       	rjmp	.-24     	; 0x43a <__LOCK_REGION_LENGTH__+0x3a>
+ 452:	4f 5f       	subi	r20, 0xFF	; 255
+ 454:	5f 4f       	sbci	r21, 0xFF	; 255
+ 456:	e4 16       	cp	r14, r20
+ 458:	f5 06       	cpc	r15, r21
+ 45a:	19 f4       	brne	.+6      	; 0x462 <__LOCK_REGION_LENGTH__+0x62>
+ 45c:	06 c0       	rjmp	.+12     	; 0x46a <__LOCK_REGION_LENGTH__+0x6a>
+ 45e:	41 e0       	ldi	r20, 0x01	; 1
+ 460:	50 e0       	ldi	r21, 0x00	; 0
+ 462:	10 16       	cp	r1, r16
+ 464:	11 06       	cpc	r1, r17
+ 466:	7c f3       	brlt	.-34     	; 0x446 <__LOCK_REGION_LENGTH__+0x46>
+ 468:	f4 cf       	rjmp	.-24     	; 0x452 <__LOCK_REGION_LENGTH__+0x52>
+ 46a:	be 01       	movw	r22, r28
+ 46c:	c8 01       	movw	r24, r16
+ 46e:	0e 94 b7 01 	call	0x36e	; 0x36e <OV7670_sendNextLine>
+ 472:	df 91       	pop	r29
+ 474:	cf 91       	pop	r28
+ 476:	1f 91       	pop	r17
+ 478:	0f 91       	pop	r16
+ 47a:	ff 90       	pop	r15
+ 47c:	ef 90       	pop	r14
+ 47e:	08 95       	ret
 
-00000488 <sendFrameBufferToUART>:
+00000480 <sendFrameBufferToUART>:
 
  void sendFrameBufferToUART (int ImageWidth, int ImageHeight, int BytesPerPixel)
  {
- 488:	8f 92       	push	r8
- 48a:	9f 92       	push	r9
- 48c:	af 92       	push	r10
- 48e:	bf 92       	push	r11
- 490:	cf 92       	push	r12
- 492:	df 92       	push	r13
- 494:	ef 92       	push	r14
- 496:	ff 92       	push	r15
- 498:	0f 93       	push	r16
- 49a:	1f 93       	push	r17
- 49c:	cf 93       	push	r28
- 49e:	df 93       	push	r29
- 4a0:	7c 01       	movw	r14, r24
- 4a2:	5b 01       	movw	r10, r22
- 4a4:	ea 01       	movw	r28, r20
+ 480:	8f 92       	push	r8
+ 482:	9f 92       	push	r9
+ 484:	af 92       	push	r10
+ 486:	bf 92       	push	r11
+ 488:	cf 92       	push	r12
+ 48a:	df 92       	push	r13
+ 48c:	ef 92       	push	r14
+ 48e:	ff 92       	push	r15
+ 490:	0f 93       	push	r16
+ 492:	1f 93       	push	r17
+ 494:	cf 93       	push	r28
+ 496:	df 93       	push	r29
+ 498:	7c 01       	movw	r14, r24
+ 49a:	5b 01       	movw	r10, r22
+ 49c:	ea 01       	movw	r28, r20
 	OV7670_ResetFifoReadPointer();
- 4a6:	0e 94 5f 01 	call	0x2be	; 0x2be <OV7670_ResetFifoReadPointer>
+ 49e:	0e 94 5b 01 	call	0x2b6	; 0x2b6 <OV7670_ResetFifoReadPointer>
 
 	for(int height = 0; height < ImageHeight;height++)
- 4aa:	1a 14       	cp	r1, r10
- 4ac:	1b 04       	cpc	r1, r11
- 4ae:	74 f1       	brlt	.+92     	; 0x50c <sendFrameBufferToUART+0x84>
- 4b0:	33 c0       	rjmp	.+102    	; 0x518 <sendFrameBufferToUART+0x90>
+ 4a2:	1a 14       	cp	r1, r10
+ 4a4:	1b 04       	cpc	r1, r11
+ 4a6:	74 f1       	brlt	.+92     	; 0x504 <sendFrameBufferToUART+0x84>
+ 4a8:	33 c0       	rjmp	.+102    	; 0x510 <sendFrameBufferToUART+0x90>
 	{
 		for(int width =0; width < ImageWidth; width++)
 		{
 			for(int ByteNumber =0; ByteNumber < BytesPerPixel; ByteNumber++)
- 4b2:	81 2c       	mov	r8, r1
- 4b4:	91 2c       	mov	r9, r1
+ 4aa:	81 2c       	mov	r8, r1
+ 4ac:	91 2c       	mov	r9, r1
 			{
 				OV_RCK_PORT &= ~(1<<OV_RCK_PinNo);
- 4b6:	5a 98       	cbi	0x0b, 2	; 11
+ 4ae:	5a 98       	cbi	0x0b, 2	; 11
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 4b8:	83 e5       	ldi	r24, 0x53	; 83
- 4ba:	91 e0       	ldi	r25, 0x01	; 1
- 4bc:	01 97       	sbiw	r24, 0x01	; 1
- 4be:	f1 f7       	brne	.-4      	; 0x4bc <sendFrameBufferToUART+0x34>
- 4c0:	00 c0       	rjmp	.+0      	; 0x4c2 <sendFrameBufferToUART+0x3a>
- 4c2:	00 00       	nop
+ 4b0:	83 e5       	ldi	r24, 0x53	; 83
+ 4b2:	91 e0       	ldi	r25, 0x01	; 1
+ 4b4:	01 97       	sbiw	r24, 0x01	; 1
+ 4b6:	f1 f7       	brne	.-4      	; 0x4b4 <sendFrameBufferToUART+0x34>
+ 4b8:	00 c0       	rjmp	.+0      	; 0x4ba <sendFrameBufferToUART+0x3a>
+ 4ba:	00 00       	nop
 				_delay_us(85);
 				UART0_senden_Byte(Ov7670_readByte());
- 4c4:	0e 94 92 01 	call	0x324	; 0x324 <Ov7670_readByte>
- 4c8:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
+ 4bc:	0e 94 8e 01 	call	0x31c	; 0x31c <Ov7670_readByte>
+ 4c0:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
 				OV_RCK_PORT |= (1<<OV_RCK_PinNo);
- 4cc:	5a 9a       	sbi	0x0b, 2	; 11
- 4ce:	83 e5       	ldi	r24, 0x53	; 83
- 4d0:	91 e0       	ldi	r25, 0x01	; 1
- 4d2:	01 97       	sbiw	r24, 0x01	; 1
- 4d4:	f1 f7       	brne	.-4      	; 0x4d2 <sendFrameBufferToUART+0x4a>
- 4d6:	00 c0       	rjmp	.+0      	; 0x4d8 <sendFrameBufferToUART+0x50>
- 4d8:	00 00       	nop
+ 4c4:	5a 9a       	sbi	0x0b, 2	; 11
+ 4c6:	83 e5       	ldi	r24, 0x53	; 83
+ 4c8:	91 e0       	ldi	r25, 0x01	; 1
+ 4ca:	01 97       	sbiw	r24, 0x01	; 1
+ 4cc:	f1 f7       	brne	.-4      	; 0x4ca <sendFrameBufferToUART+0x4a>
+ 4ce:	00 c0       	rjmp	.+0      	; 0x4d0 <sendFrameBufferToUART+0x50>
+ 4d0:	00 00       	nop
 
 	for(int height = 0; height < ImageHeight;height++)
 	{
 		for(int width =0; width < ImageWidth; width++)
 		{
 			for(int ByteNumber =0; ByteNumber < BytesPerPixel; ByteNumber++)
- 4da:	9f ef       	ldi	r25, 0xFF	; 255
- 4dc:	89 1a       	sub	r8, r25
- 4de:	99 0a       	sbc	r9, r25
- 4e0:	c8 15       	cp	r28, r8
- 4e2:	d9 05       	cpc	r29, r9
- 4e4:	41 f7       	brne	.-48     	; 0x4b6 <sendFrameBufferToUART+0x2e>
+ 4d2:	9f ef       	ldi	r25, 0xFF	; 255
+ 4d4:	89 1a       	sub	r8, r25
+ 4d6:	99 0a       	sbc	r9, r25
+ 4d8:	c8 15       	cp	r28, r8
+ 4da:	d9 05       	cpc	r29, r9
+ 4dc:	41 f7       	brne	.-48     	; 0x4ae <sendFrameBufferToUART+0x2e>
  {
 	OV7670_ResetFifoReadPointer();
 
 	for(int height = 0; height < ImageHeight;height++)
 	{
 		for(int width =0; width < ImageWidth; width++)
- 4e6:	0f 5f       	subi	r16, 0xFF	; 255
- 4e8:	1f 4f       	sbci	r17, 0xFF	; 255
- 4ea:	e0 16       	cp	r14, r16
- 4ec:	f1 06       	cpc	r15, r17
- 4ee:	19 f4       	brne	.+6      	; 0x4f6 <sendFrameBufferToUART+0x6e>
- 4f0:	06 c0       	rjmp	.+12     	; 0x4fe <sendFrameBufferToUART+0x76>
- 4f2:	00 e0       	ldi	r16, 0x00	; 0
- 4f4:	10 e0       	ldi	r17, 0x00	; 0
+ 4de:	0f 5f       	subi	r16, 0xFF	; 255
+ 4e0:	1f 4f       	sbci	r17, 0xFF	; 255
+ 4e2:	e0 16       	cp	r14, r16
+ 4e4:	f1 06       	cpc	r15, r17
+ 4e6:	19 f4       	brne	.+6      	; 0x4ee <sendFrameBufferToUART+0x6e>
+ 4e8:	06 c0       	rjmp	.+12     	; 0x4f6 <sendFrameBufferToUART+0x76>
+ 4ea:	00 e0       	ldi	r16, 0x00	; 0
+ 4ec:	10 e0       	ldi	r17, 0x00	; 0
 		{
 			for(int ByteNumber =0; ByteNumber < BytesPerPixel; ByteNumber++)
- 4f6:	1c 16       	cp	r1, r28
- 4f8:	1d 06       	cpc	r1, r29
- 4fa:	dc f2       	brlt	.-74     	; 0x4b2 <sendFrameBufferToUART+0x2a>
- 4fc:	f4 cf       	rjmp	.-24     	; 0x4e6 <sendFrameBufferToUART+0x5e>
+ 4ee:	1c 16       	cp	r1, r28
+ 4f0:	1d 06       	cpc	r1, r29
+ 4f2:	dc f2       	brlt	.-74     	; 0x4aa <sendFrameBufferToUART+0x2a>
+ 4f4:	f4 cf       	rjmp	.-24     	; 0x4de <sendFrameBufferToUART+0x5e>
 
  void sendFrameBufferToUART (int ImageWidth, int ImageHeight, int BytesPerPixel)
  {
 	OV7670_ResetFifoReadPointer();
 
 	for(int height = 0; height < ImageHeight;height++)
- 4fe:	8f ef       	ldi	r24, 0xFF	; 255
- 500:	c8 1a       	sub	r12, r24
- 502:	d8 0a       	sbc	r13, r24
- 504:	ac 14       	cp	r10, r12
- 506:	bd 04       	cpc	r11, r13
- 508:	19 f4       	brne	.+6      	; 0x510 <sendFrameBufferToUART+0x88>
- 50a:	06 c0       	rjmp	.+12     	; 0x518 <sendFrameBufferToUART+0x90>
- 50c:	c1 2c       	mov	r12, r1
- 50e:	d1 2c       	mov	r13, r1
+ 4f6:	8f ef       	ldi	r24, 0xFF	; 255
+ 4f8:	c8 1a       	sub	r12, r24
+ 4fa:	d8 0a       	sbc	r13, r24
+ 4fc:	ac 14       	cp	r10, r12
+ 4fe:	bd 04       	cpc	r11, r13
+ 500:	19 f4       	brne	.+6      	; 0x508 <sendFrameBufferToUART+0x88>
+ 502:	06 c0       	rjmp	.+12     	; 0x510 <sendFrameBufferToUART+0x90>
+ 504:	c1 2c       	mov	r12, r1
+ 506:	d1 2c       	mov	r13, r1
 	{
 		for(int width =0; width < ImageWidth; width++)
- 510:	1e 14       	cp	r1, r14
- 512:	1f 04       	cpc	r1, r15
- 514:	74 f3       	brlt	.-36     	; 0x4f2 <sendFrameBufferToUART+0x6a>
- 516:	f3 cf       	rjmp	.-26     	; 0x4fe <sendFrameBufferToUART+0x76>
+ 508:	1e 14       	cp	r1, r14
+ 50a:	1f 04       	cpc	r1, r15
+ 50c:	74 f3       	brlt	.-36     	; 0x4ea <sendFrameBufferToUART+0x6a>
+ 50e:	f3 cf       	rjmp	.-26     	; 0x4f6 <sendFrameBufferToUART+0x76>
 				OV_RCK_PORT |= (1<<OV_RCK_PinNo);
 				_delay_us(85);
 			}
 		}
 	}
  }
- 518:	df 91       	pop	r29
- 51a:	cf 91       	pop	r28
- 51c:	1f 91       	pop	r17
- 51e:	0f 91       	pop	r16
- 520:	ff 90       	pop	r15
- 522:	ef 90       	pop	r14
- 524:	df 90       	pop	r13
- 526:	cf 90       	pop	r12
- 528:	bf 90       	pop	r11
- 52a:	af 90       	pop	r10
- 52c:	9f 90       	pop	r9
- 52e:	8f 90       	pop	r8
- 530:	08 95       	ret
+ 510:	df 91       	pop	r29
+ 512:	cf 91       	pop	r28
+ 514:	1f 91       	pop	r17
+ 516:	0f 91       	pop	r16
+ 518:	ff 90       	pop	r15
+ 51a:	ef 90       	pop	r14
+ 51c:	df 90       	pop	r13
+ 51e:	cf 90       	pop	r12
+ 520:	bf 90       	pop	r11
+ 522:	af 90       	pop	r10
+ 524:	9f 90       	pop	r9
+ 526:	8f 90       	pop	r8
+ 528:	08 95       	ret
 
-00000532 <OV_SCCB_Start>:
+0000052a <OV_SCCB_Start>:
 }
 
  void OV_SCCB_Start (void){
 	 
 	 //Sicherstellen, dass beide Pins auf HIGH sind
 	 OV_SIOD_PORT	|=	(1<<OV_SIOD_PinNo);
- 532:	44 9a       	sbi	0x08, 4	; 8
- 534:	8f e1       	ldi	r24, 0x1F	; 31
- 536:	93 e0       	ldi	r25, 0x03	; 3
- 538:	01 97       	sbiw	r24, 0x01	; 1
- 53a:	f1 f7       	brne	.-4      	; 0x538 <OV_SCCB_Start+0x6>
- 53c:	00 c0       	rjmp	.+0      	; 0x53e <OV_SCCB_Start+0xc>
- 53e:	00 00       	nop
+ 52a:	44 9a       	sbi	0x08, 4	; 8
+ 52c:	8f e1       	ldi	r24, 0x1F	; 31
+ 52e:	93 e0       	ldi	r25, 0x03	; 3
+ 530:	01 97       	sbiw	r24, 0x01	; 1
+ 532:	f1 f7       	brne	.-4      	; 0x530 <OV_SCCB_Start+0x6>
+ 534:	00 c0       	rjmp	.+0      	; 0x536 <OV_SCCB_Start+0xc>
+ 536:	00 00       	nop
 	 _delay_us(OV_SIO_CLKDELAY);
 	 OV_SIOC_PORT	|=	(1<<OV_SIOC_PinNo);
- 540:	45 9a       	sbi	0x08, 5	; 8
- 542:	8f e1       	ldi	r24, 0x1F	; 31
- 544:	93 e0       	ldi	r25, 0x03	; 3
- 546:	01 97       	sbiw	r24, 0x01	; 1
- 548:	f1 f7       	brne	.-4      	; 0x546 <OV_SCCB_Start+0x14>
- 54a:	00 c0       	rjmp	.+0      	; 0x54c <OV_SCCB_Start+0x1a>
- 54c:	00 00       	nop
+ 538:	45 9a       	sbi	0x08, 5	; 8
+ 53a:	8f e1       	ldi	r24, 0x1F	; 31
+ 53c:	93 e0       	ldi	r25, 0x03	; 3
+ 53e:	01 97       	sbiw	r24, 0x01	; 1
+ 540:	f1 f7       	brne	.-4      	; 0x53e <OV_SCCB_Start+0x14>
+ 542:	00 c0       	rjmp	.+0      	; 0x544 <OV_SCCB_Start+0x1a>
+ 544:	00 00       	nop
 	 _delay_us(OV_SIO_CLKDELAY);
 
 	 //Starten das Start-Prozesses laut Datenblatt
 	 OV_SIOD_PORT	&= ~(1<<OV_SIOD_PinNo);
- 54e:	44 98       	cbi	0x08, 4	; 8
- 550:	8f e1       	ldi	r24, 0x1F	; 31
- 552:	93 e0       	ldi	r25, 0x03	; 3
- 554:	01 97       	sbiw	r24, 0x01	; 1
- 556:	f1 f7       	brne	.-4      	; 0x554 <OV_SCCB_Start+0x22>
- 558:	00 c0       	rjmp	.+0      	; 0x55a <OV_SCCB_Start+0x28>
- 55a:	00 00       	nop
+ 546:	44 98       	cbi	0x08, 4	; 8
+ 548:	8f e1       	ldi	r24, 0x1F	; 31
+ 54a:	93 e0       	ldi	r25, 0x03	; 3
+ 54c:	01 97       	sbiw	r24, 0x01	; 1
+ 54e:	f1 f7       	brne	.-4      	; 0x54c <OV_SCCB_Start+0x22>
+ 550:	00 c0       	rjmp	.+0      	; 0x552 <OV_SCCB_Start+0x28>
+ 552:	00 00       	nop
 	 _delay_us(OV_SIO_CLKDELAY);
 	 OV_SIOC_PORT	&=	~(1<<OV_SIOC_PinNo);
- 55c:	45 98       	cbi	0x08, 5	; 8
- 55e:	08 95       	ret
+ 554:	45 98       	cbi	0x08, 5	; 8
+ 556:	08 95       	ret
 
-00000560 <OV_SCCB_Stopp>:
+00000558 <OV_SCCB_Stopp>:
 
  void OV_SCCB_Stopp (void){
 	 
 
 	 //Sicherstellen, dass beide Pins auf LOW sind
 	 OV_SIOC_PORT	&= ~(1<<OV_SIOC_PinNo);
- 560:	45 98       	cbi	0x08, 5	; 8
+ 558:	45 98       	cbi	0x08, 5	; 8
 	 OV_SIOD_PORT	&= ~(1<<OV_SIOD_PinNo);
- 562:	44 98       	cbi	0x08, 4	; 8
- 564:	8f e1       	ldi	r24, 0x1F	; 31
- 566:	93 e0       	ldi	r25, 0x03	; 3
- 568:	01 97       	sbiw	r24, 0x01	; 1
- 56a:	f1 f7       	brne	.-4      	; 0x568 <OV_SCCB_Stopp+0x8>
- 56c:	00 c0       	rjmp	.+0      	; 0x56e <OV_SCCB_Stopp+0xe>
- 56e:	00 00       	nop
+ 55a:	44 98       	cbi	0x08, 4	; 8
+ 55c:	8f e1       	ldi	r24, 0x1F	; 31
+ 55e:	93 e0       	ldi	r25, 0x03	; 3
+ 560:	01 97       	sbiw	r24, 0x01	; 1
+ 562:	f1 f7       	brne	.-4      	; 0x560 <OV_SCCB_Stopp+0x8>
+ 564:	00 c0       	rjmp	.+0      	; 0x566 <OV_SCCB_Stopp+0xe>
+ 566:	00 00       	nop
 	 _delay_us(OV_SIO_CLKDELAY);
 	 //Starten des Stop Prozesses laut Datenblatt
 	 OV_SIOC_PORT	|=	(1<<OV_SIOC_PinNo);
- 570:	45 9a       	sbi	0x08, 5	; 8
- 572:	8f e1       	ldi	r24, 0x1F	; 31
- 574:	93 e0       	ldi	r25, 0x03	; 3
- 576:	01 97       	sbiw	r24, 0x01	; 1
- 578:	f1 f7       	brne	.-4      	; 0x576 <OV_SCCB_Stopp+0x16>
- 57a:	00 c0       	rjmp	.+0      	; 0x57c <OV_SCCB_Stopp+0x1c>
- 57c:	00 00       	nop
+ 568:	45 9a       	sbi	0x08, 5	; 8
+ 56a:	8f e1       	ldi	r24, 0x1F	; 31
+ 56c:	93 e0       	ldi	r25, 0x03	; 3
+ 56e:	01 97       	sbiw	r24, 0x01	; 1
+ 570:	f1 f7       	brne	.-4      	; 0x56e <OV_SCCB_Stopp+0x16>
+ 572:	00 c0       	rjmp	.+0      	; 0x574 <OV_SCCB_Stopp+0x1c>
+ 574:	00 00       	nop
 	 _delay_us(OV_SIO_CLKDELAY);
 	 OV_SIOD_PORT	|=	(1<<OV_SIOD_PinNo);
- 57e:	44 9a       	sbi	0x08, 4	; 8
- 580:	8f e1       	ldi	r24, 0x1F	; 31
- 582:	93 e0       	ldi	r25, 0x03	; 3
- 584:	01 97       	sbiw	r24, 0x01	; 1
- 586:	f1 f7       	brne	.-4      	; 0x584 <OV_SCCB_Stopp+0x24>
- 588:	00 c0       	rjmp	.+0      	; 0x58a <OV_SCCB_Stopp+0x2a>
- 58a:	00 00       	nop
- 58c:	08 95       	ret
+ 576:	44 9a       	sbi	0x08, 4	; 8
+ 578:	8f e1       	ldi	r24, 0x1F	; 31
+ 57a:	93 e0       	ldi	r25, 0x03	; 3
+ 57c:	01 97       	sbiw	r24, 0x01	; 1
+ 57e:	f1 f7       	brne	.-4      	; 0x57c <OV_SCCB_Stopp+0x24>
+ 580:	00 c0       	rjmp	.+0      	; 0x582 <OV_SCCB_Stopp+0x2a>
+ 582:	00 00       	nop
+ 584:	08 95       	ret
 
-0000058e <OV_SCCB_Write>:
+00000586 <OV_SCCB_Write>:
 
  char OV_SCCB_Write (char Data){
 	 unsigned char	erf;
 
 	 //Alle 8 Bit des Data Byte ?bermitteln, MSB zuerst
 	 for(int j=7; j>=0;j--){
- 58e:	27 e0       	ldi	r18, 0x07	; 7
- 590:	30 e0       	ldi	r19, 0x00	; 0
+ 586:	27 e0       	ldi	r18, 0x07	; 7
+ 588:	30 e0       	ldi	r19, 0x00	; 0
 		 if((Data>>j)	&	0x01){
- 592:	90 e0       	ldi	r25, 0x00	; 0
- 594:	ac 01       	movw	r20, r24
- 596:	02 2e       	mov	r0, r18
- 598:	02 c0       	rjmp	.+4      	; 0x59e <OV_SCCB_Write+0x10>
- 59a:	55 95       	asr	r21
- 59c:	47 95       	ror	r20
- 59e:	0a 94       	dec	r0
- 5a0:	e2 f7       	brpl	.-8      	; 0x59a <OV_SCCB_Write+0xc>
- 5a2:	40 ff       	sbrs	r20, 0
- 5a4:	02 c0       	rjmp	.+4      	; 0x5aa <OV_SCCB_Write+0x1c>
+ 58a:	90 e0       	ldi	r25, 0x00	; 0
+ 58c:	ac 01       	movw	r20, r24
+ 58e:	02 2e       	mov	r0, r18
+ 590:	02 c0       	rjmp	.+4      	; 0x596 <OV_SCCB_Write+0x10>
+ 592:	55 95       	asr	r21
+ 594:	47 95       	ror	r20
+ 596:	0a 94       	dec	r0
+ 598:	e2 f7       	brpl	.-8      	; 0x592 <OV_SCCB_Write+0xc>
+ 59a:	40 ff       	sbrs	r20, 0
+ 59c:	02 c0       	rjmp	.+4      	; 0x5a2 <OV_SCCB_Write+0x1c>
 			 OV_SIOD_PORT	|=	(1<<OV_SIOD_PinNo);
- 5a6:	44 9a       	sbi	0x08, 4	; 8
- 5a8:	01 c0       	rjmp	.+2      	; 0x5ac <OV_SCCB_Write+0x1e>
+ 59e:	44 9a       	sbi	0x08, 4	; 8
+ 5a0:	01 c0       	rjmp	.+2      	; 0x5a4 <OV_SCCB_Write+0x1e>
 		 }
 		 
 		 else{
 			 OV_SIOD_PORT	&=	~(1<<OV_SIOD_PinNo);
- 5aa:	44 98       	cbi	0x08, 4	; 8
- 5ac:	ef e1       	ldi	r30, 0x1F	; 31
- 5ae:	f3 e0       	ldi	r31, 0x03	; 3
- 5b0:	31 97       	sbiw	r30, 0x01	; 1
- 5b2:	f1 f7       	brne	.-4      	; 0x5b0 <OV_SCCB_Write+0x22>
- 5b4:	00 c0       	rjmp	.+0      	; 0x5b6 <OV_SCCB_Write+0x28>
- 5b6:	00 00       	nop
+ 5a2:	44 98       	cbi	0x08, 4	; 8
+ 5a4:	ef e1       	ldi	r30, 0x1F	; 31
+ 5a6:	f3 e0       	ldi	r31, 0x03	; 3
+ 5a8:	31 97       	sbiw	r30, 0x01	; 1
+ 5aa:	f1 f7       	brne	.-4      	; 0x5a8 <OV_SCCB_Write+0x22>
+ 5ac:	00 c0       	rjmp	.+0      	; 0x5ae <OV_SCCB_Write+0x28>
+ 5ae:	00 00       	nop
 		 }
 		 _delay_us(OV_SIO_CLKDELAY);
 		 OV_SIOC_PORT |=	(1<<OV_SIOC_PinNo);
- 5b8:	45 9a       	sbi	0x08, 5	; 8
- 5ba:	ef e1       	ldi	r30, 0x1F	; 31
- 5bc:	f3 e0       	ldi	r31, 0x03	; 3
- 5be:	31 97       	sbiw	r30, 0x01	; 1
- 5c0:	f1 f7       	brne	.-4      	; 0x5be <OV_SCCB_Write+0x30>
- 5c2:	00 c0       	rjmp	.+0      	; 0x5c4 <OV_SCCB_Write+0x36>
- 5c4:	00 00       	nop
+ 5b0:	45 9a       	sbi	0x08, 5	; 8
+ 5b2:	ef e1       	ldi	r30, 0x1F	; 31
+ 5b4:	f3 e0       	ldi	r31, 0x03	; 3
+ 5b6:	31 97       	sbiw	r30, 0x01	; 1
+ 5b8:	f1 f7       	brne	.-4      	; 0x5b6 <OV_SCCB_Write+0x30>
+ 5ba:	00 c0       	rjmp	.+0      	; 0x5bc <OV_SCCB_Write+0x36>
+ 5bc:	00 00       	nop
 		 _delay_us(OV_SIO_CLKDELAY);
 		 OV_SIOC_PORT &=	~(1<<OV_SIOC_PinNo);
- 5c6:	45 98       	cbi	0x08, 5	; 8
- 5c8:	ef e1       	ldi	r30, 0x1F	; 31
- 5ca:	f3 e0       	ldi	r31, 0x03	; 3
- 5cc:	31 97       	sbiw	r30, 0x01	; 1
- 5ce:	f1 f7       	brne	.-4      	; 0x5cc <OV_SCCB_Write+0x3e>
- 5d0:	00 c0       	rjmp	.+0      	; 0x5d2 <OV_SCCB_Write+0x44>
- 5d2:	00 00       	nop
+ 5be:	45 98       	cbi	0x08, 5	; 8
+ 5c0:	ef e1       	ldi	r30, 0x1F	; 31
+ 5c2:	f3 e0       	ldi	r31, 0x03	; 3
+ 5c4:	31 97       	sbiw	r30, 0x01	; 1
+ 5c6:	f1 f7       	brne	.-4      	; 0x5c4 <OV_SCCB_Write+0x3e>
+ 5c8:	00 c0       	rjmp	.+0      	; 0x5ca <OV_SCCB_Write+0x44>
+ 5ca:	00 00       	nop
 
  char OV_SCCB_Write (char Data){
 	 unsigned char	erf;
 
 	 //Alle 8 Bit des Data Byte ?bermitteln, MSB zuerst
 	 for(int j=7; j>=0;j--){
- 5d4:	21 50       	subi	r18, 0x01	; 1
- 5d6:	31 09       	sbc	r19, r1
- 5d8:	e8 f6       	brcc	.-70     	; 0x594 <OV_SCCB_Write+0x6>
+ 5cc:	21 50       	subi	r18, 0x01	; 1
+ 5ce:	31 09       	sbc	r19, r1
+ 5d0:	e8 f6       	brcc	.-70     	; 0x58c <OV_SCCB_Write+0x6>
 		 _delay_us(OV_SIO_CLKDELAY);
 	 }
 
 	 // Don't Care Bit ?bermitteln, SIOD auf LOW ziehen, um einen undefinierten Status zu vermeiden, Au?erdem wird der PIN auf eingang gestellt um eine Hohe Impedanz zu bekommen.
 	 //Wenn der Slave das Byte akzeptiert wird SIOD auf low gezogen
 	 OV_SIOD_PORT	&=	~(1<<OV_SIOD_PinNo);
- 5da:	44 98       	cbi	0x08, 4	; 8
+ 5d2:	44 98       	cbi	0x08, 4	; 8
 	 OV_SIOD_DDR		&=	~(1<<OV_SIOD_PinNo);
- 5dc:	3c 98       	cbi	0x07, 4	; 7
- 5de:	8f e1       	ldi	r24, 0x1F	; 31
- 5e0:	93 e0       	ldi	r25, 0x03	; 3
- 5e2:	01 97       	sbiw	r24, 0x01	; 1
- 5e4:	f1 f7       	brne	.-4      	; 0x5e2 <OV_SCCB_Write+0x54>
- 5e6:	00 c0       	rjmp	.+0      	; 0x5e8 <OV_SCCB_Write+0x5a>
- 5e8:	00 00       	nop
+ 5d4:	3c 98       	cbi	0x07, 4	; 7
+ 5d6:	8f e1       	ldi	r24, 0x1F	; 31
+ 5d8:	93 e0       	ldi	r25, 0x03	; 3
+ 5da:	01 97       	sbiw	r24, 0x01	; 1
+ 5dc:	f1 f7       	brne	.-4      	; 0x5da <OV_SCCB_Write+0x54>
+ 5de:	00 c0       	rjmp	.+0      	; 0x5e0 <OV_SCCB_Write+0x5a>
+ 5e0:	00 00       	nop
 
 	 _delay_us(OV_SIO_CLKDELAY);
 	 OV_SIOC_PORT	|=	(1<<OV_SIOC_PinNo);
- 5ea:	45 9a       	sbi	0x08, 5	; 8
- 5ec:	ef e1       	ldi	r30, 0x1F	; 31
- 5ee:	f3 e0       	ldi	r31, 0x03	; 3
- 5f0:	31 97       	sbiw	r30, 0x01	; 1
- 5f2:	f1 f7       	brne	.-4      	; 0x5f0 <OV_SCCB_Write+0x62>
- 5f4:	00 c0       	rjmp	.+0      	; 0x5f6 <OV_SCCB_Write+0x68>
- 5f6:	00 00       	nop
+ 5e2:	45 9a       	sbi	0x08, 5	; 8
+ 5e4:	ef e1       	ldi	r30, 0x1F	; 31
+ 5e6:	f3 e0       	ldi	r31, 0x03	; 3
+ 5e8:	31 97       	sbiw	r30, 0x01	; 1
+ 5ea:	f1 f7       	brne	.-4      	; 0x5e8 <OV_SCCB_Write+0x62>
+ 5ec:	00 c0       	rjmp	.+0      	; 0x5ee <OV_SCCB_Write+0x68>
+ 5ee:	00 00       	nop
 	 _delay_us(OV_SIO_CLKDELAY);
 
 	 //Auslesen ob die ?bertragung erfolgreich war
 	 if(OV_SIOD_PIN & (1<<OV_SIOD_PinNo)){
- 5f8:	34 9b       	sbis	0x06, 4	; 6
- 5fa:	08 c0       	rjmp	.+16     	; 0x60c <OV_SCCB_Write+0x7e>
+ 5f0:	34 9b       	sbis	0x06, 4	; 6
+ 5f2:	08 c0       	rjmp	.+16     	; 0x604 <OV_SCCB_Write+0x7e>
 		 UART0_senden("SCCB: Schreiben fehlgeschlagen");
- 5fc:	80 e0       	ldi	r24, 0x00	; 0
- 5fe:	91 e0       	ldi	r25, 0x01	; 1
- 600:	0e 94 53 04 	call	0x8a6	; 0x8a6 <UART0_senden>
+ 5f4:	80 e0       	ldi	r24, 0x00	; 0
+ 5f6:	91 e0       	ldi	r25, 0x01	; 1
+ 5f8:	0e 94 4f 04 	call	0x89e	; 0x89e <UART0_senden>
 		 UART0_senden_newLine();
- 604:	0e 94 75 04 	call	0x8ea	; 0x8ea <UART0_senden_newLine>
+ 5fc:	0e 94 71 04 	call	0x8e2	; 0x8e2 <UART0_senden_newLine>
 		 erf=0;
- 608:	80 e0       	ldi	r24, 0x00	; 0
- 60a:	01 c0       	rjmp	.+2      	; 0x60e <OV_SCCB_Write+0x80>
+ 600:	80 e0       	ldi	r24, 0x00	; 0
+ 602:	01 c0       	rjmp	.+2      	; 0x606 <OV_SCCB_Write+0x80>
 	 }
 	 else{
 		 erf=1;
- 60c:	81 e0       	ldi	r24, 0x01	; 1
+ 604:	81 e0       	ldi	r24, 0x01	; 1
 	 }
 
 	 OV_SIOC_PORT	&=	~(1<<OV_SIOC_PinNo);
- 60e:	45 98       	cbi	0x08, 5	; 8
- 610:	ef e1       	ldi	r30, 0x1F	; 31
- 612:	f3 e0       	ldi	r31, 0x03	; 3
- 614:	31 97       	sbiw	r30, 0x01	; 1
- 616:	f1 f7       	brne	.-4      	; 0x614 <OV_SCCB_Write+0x86>
- 618:	00 c0       	rjmp	.+0      	; 0x61a <OV_SCCB_Write+0x8c>
- 61a:	00 00       	nop
+ 606:	45 98       	cbi	0x08, 5	; 8
+ 608:	ef e1       	ldi	r30, 0x1F	; 31
+ 60a:	f3 e0       	ldi	r31, 0x03	; 3
+ 60c:	31 97       	sbiw	r30, 0x01	; 1
+ 60e:	f1 f7       	brne	.-4      	; 0x60c <OV_SCCB_Write+0x86>
+ 610:	00 c0       	rjmp	.+0      	; 0x612 <OV_SCCB_Write+0x8c>
+ 612:	00 00       	nop
 	 _delay_us(OV_SIO_CLKDELAY);
 	 OV_SIOD_DDR		|=	(1<<OV_SIOD_PinNo);
- 61c:	3c 9a       	sbi	0x07, 4	; 7
+ 614:	3c 9a       	sbi	0x07, 4	; 7
 
 	 return erf;
  }
- 61e:	08 95       	ret
+ 616:	08 95       	ret
 
-00000620 <OV_SCCB_Read>:
+00000618 <OV_SCCB_Read>:
 
  char OV_SCCB_Read	(char* Data){
- 620:	fc 01       	movw	r30, r24
+ 618:	fc 01       	movw	r30, r24
 
 	 //DDR auf Eingang schalten
 	 OV_SIOD_DDR		&=	~(1<<OV_SIOD_PinNo);
- 622:	3c 98       	cbi	0x07, 4	; 7
+ 61a:	3c 98       	cbi	0x07, 4	; 7
 	 OV_SIOD_PORT	&=	~(1<<OV_SIOD_PinNo);	//Pull-Up Deaktivieren
- 624:	44 98       	cbi	0x08, 4	; 8
- 626:	98 e0       	ldi	r25, 0x08	; 8
- 628:	af e1       	ldi	r26, 0x1F	; 31
- 62a:	b3 e0       	ldi	r27, 0x03	; 3
- 62c:	11 97       	sbiw	r26, 0x01	; 1
- 62e:	f1 f7       	brne	.-4      	; 0x62c <OV_SCCB_Read+0xc>
- 630:	00 c0       	rjmp	.+0      	; 0x632 <OV_SCCB_Read+0x12>
- 632:	00 00       	nop
+ 61c:	44 98       	cbi	0x08, 4	; 8
+ 61e:	98 e0       	ldi	r25, 0x08	; 8
+ 620:	af e1       	ldi	r26, 0x1F	; 31
+ 622:	b3 e0       	ldi	r27, 0x03	; 3
+ 624:	11 97       	sbiw	r26, 0x01	; 1
+ 626:	f1 f7       	brne	.-4      	; 0x624 <OV_SCCB_Read+0xc>
+ 628:	00 c0       	rjmp	.+0      	; 0x62a <OV_SCCB_Read+0x12>
+ 62a:	00 00       	nop
 
 	 for(unsigned char j=0; j<8;j++){
 		 _delay_us(OV_SIO_CLKDELAY);
 		 OV_SIOC_PORT	|=	(1<<OV_SIOC_PinNo);
- 634:	45 9a       	sbi	0x08, 5	; 8
+ 62c:	45 9a       	sbi	0x08, 5	; 8
 		 
 		 if(OV_SIOD_PIN & (1<<OV_SIOD_PinNo)){
- 636:	34 9b       	sbis	0x06, 4	; 6
- 638:	05 c0       	rjmp	.+10     	; 0x644 <OV_SCCB_Read+0x24>
+ 62e:	34 9b       	sbis	0x06, 4	; 6
+ 630:	05 c0       	rjmp	.+10     	; 0x63c <OV_SCCB_Read+0x24>
 			 *Data = (*Data<<1)	|	0x01;
- 63a:	20 81       	ld	r18, Z
- 63c:	22 0f       	add	r18, r18
- 63e:	21 60       	ori	r18, 0x01	; 1
- 640:	20 83       	st	Z, r18
- 642:	03 c0       	rjmp	.+6      	; 0x64a <OV_SCCB_Read+0x2a>
+ 632:	20 81       	ld	r18, Z
+ 634:	22 0f       	add	r18, r18
+ 636:	21 60       	ori	r18, 0x01	; 1
+ 638:	20 83       	st	Z, r18
+ 63a:	03 c0       	rjmp	.+6      	; 0x642 <OV_SCCB_Read+0x2a>
 		 }
 		 else{
 			 *Data = (*Data<<1) & ~(0x01);
- 644:	80 81       	ld	r24, Z
- 646:	88 0f       	add	r24, r24
- 648:	80 83       	st	Z, r24
- 64a:	af e1       	ldi	r26, 0x1F	; 31
- 64c:	b3 e0       	ldi	r27, 0x03	; 3
- 64e:	11 97       	sbiw	r26, 0x01	; 1
- 650:	f1 f7       	brne	.-4      	; 0x64e <OV_SCCB_Read+0x2e>
- 652:	00 c0       	rjmp	.+0      	; 0x654 <OV_SCCB_Read+0x34>
- 654:	00 00       	nop
+ 63c:	80 81       	ld	r24, Z
+ 63e:	88 0f       	add	r24, r24
+ 640:	80 83       	st	Z, r24
+ 642:	af e1       	ldi	r26, 0x1F	; 31
+ 644:	b3 e0       	ldi	r27, 0x03	; 3
+ 646:	11 97       	sbiw	r26, 0x01	; 1
+ 648:	f1 f7       	brne	.-4      	; 0x646 <OV_SCCB_Read+0x2e>
+ 64a:	00 c0       	rjmp	.+0      	; 0x64c <OV_SCCB_Read+0x34>
+ 64c:	00 00       	nop
 		 }
 		 _delay_us(OV_SIO_CLKDELAY);
 		 OV_SIOC_PORT	&=	~(1<<OV_SIOC_PinNo);
- 656:	45 98       	cbi	0x08, 5	; 8
- 658:	af e1       	ldi	r26, 0x1F	; 31
- 65a:	b3 e0       	ldi	r27, 0x03	; 3
- 65c:	11 97       	sbiw	r26, 0x01	; 1
- 65e:	f1 f7       	brne	.-4      	; 0x65c <OV_SCCB_Read+0x3c>
- 660:	00 c0       	rjmp	.+0      	; 0x662 <OV_SCCB_Read+0x42>
- 662:	00 00       	nop
- 664:	91 50       	subi	r25, 0x01	; 1
+ 64e:	45 98       	cbi	0x08, 5	; 8
+ 650:	af e1       	ldi	r26, 0x1F	; 31
+ 652:	b3 e0       	ldi	r27, 0x03	; 3
+ 654:	11 97       	sbiw	r26, 0x01	; 1
+ 656:	f1 f7       	brne	.-4      	; 0x654 <OV_SCCB_Read+0x3c>
+ 658:	00 c0       	rjmp	.+0      	; 0x65a <OV_SCCB_Read+0x42>
+ 65a:	00 00       	nop
+ 65c:	91 50       	subi	r25, 0x01	; 1
 
 	 //DDR auf Eingang schalten
 	 OV_SIOD_DDR		&=	~(1<<OV_SIOD_PinNo);
 	 OV_SIOD_PORT	&=	~(1<<OV_SIOD_PinNo);	//Pull-Up Deaktivieren
 
 	 for(unsigned char j=0; j<8;j++){
- 666:	01 f7       	brne	.-64     	; 0x628 <OV_SCCB_Read+0x8>
+ 65e:	01 f7       	brne	.-64     	; 0x620 <OV_SCCB_Read+0x8>
 		 _delay_us(OV_SIO_CLKDELAY);
 	 }
 
 	 //Die ersten 8 Bits wurden gelesen, jetzt folgt das letzte Don't Care Bit
 	 //SIOD muss w?hrend dessen auf 1 gehalten werden
 	 OV_SIOD_DDR	|=	(1<<OV_SIOD_PinNo);
- 668:	3c 9a       	sbi	0x07, 4	; 7
+ 660:	3c 9a       	sbi	0x07, 4	; 7
 	 OV_SIOD_PORT	|=	(1<<OV_SIOD_PinNo);
- 66a:	44 9a       	sbi	0x08, 4	; 8
- 66c:	8f e1       	ldi	r24, 0x1F	; 31
- 66e:	93 e0       	ldi	r25, 0x03	; 3
- 670:	01 97       	sbiw	r24, 0x01	; 1
- 672:	f1 f7       	brne	.-4      	; 0x670 <OV_SCCB_Read+0x50>
- 674:	00 c0       	rjmp	.+0      	; 0x676 <OV_SCCB_Read+0x56>
- 676:	00 00       	nop
+ 662:	44 9a       	sbi	0x08, 4	; 8
+ 664:	8f e1       	ldi	r24, 0x1F	; 31
+ 666:	93 e0       	ldi	r25, 0x03	; 3
+ 668:	01 97       	sbiw	r24, 0x01	; 1
+ 66a:	f1 f7       	brne	.-4      	; 0x668 <OV_SCCB_Read+0x50>
+ 66c:	00 c0       	rjmp	.+0      	; 0x66e <OV_SCCB_Read+0x56>
+ 66e:	00 00       	nop
 
 	 _delay_us(OV_SIO_CLKDELAY);
 	 OV_SIOC_PORT	|=	(1<<OV_SIOC_PinNo);
- 678:	45 9a       	sbi	0x08, 5	; 8
- 67a:	af e1       	ldi	r26, 0x1F	; 31
- 67c:	b3 e0       	ldi	r27, 0x03	; 3
- 67e:	11 97       	sbiw	r26, 0x01	; 1
- 680:	f1 f7       	brne	.-4      	; 0x67e <OV_SCCB_Read+0x5e>
- 682:	00 c0       	rjmp	.+0      	; 0x684 <OV_SCCB_Read+0x64>
- 684:	00 00       	nop
+ 670:	45 9a       	sbi	0x08, 5	; 8
+ 672:	af e1       	ldi	r26, 0x1F	; 31
+ 674:	b3 e0       	ldi	r27, 0x03	; 3
+ 676:	11 97       	sbiw	r26, 0x01	; 1
+ 678:	f1 f7       	brne	.-4      	; 0x676 <OV_SCCB_Read+0x5e>
+ 67a:	00 c0       	rjmp	.+0      	; 0x67c <OV_SCCB_Read+0x64>
+ 67c:	00 00       	nop
 	 _delay_us(OV_SIO_CLKDELAY);
 	 OV_SIOC_PORT	&=	~(1<<OV_SIOC_PinNo);
- 686:	45 98       	cbi	0x08, 5	; 8
- 688:	8f e1       	ldi	r24, 0x1F	; 31
- 68a:	93 e0       	ldi	r25, 0x03	; 3
- 68c:	01 97       	sbiw	r24, 0x01	; 1
- 68e:	f1 f7       	brne	.-4      	; 0x68c <OV_SCCB_Read+0x6c>
- 690:	00 c0       	rjmp	.+0      	; 0x692 <OV_SCCB_Read+0x72>
- 692:	00 00       	nop
+ 67e:	45 98       	cbi	0x08, 5	; 8
+ 680:	8f e1       	ldi	r24, 0x1F	; 31
+ 682:	93 e0       	ldi	r25, 0x03	; 3
+ 684:	01 97       	sbiw	r24, 0x01	; 1
+ 686:	f1 f7       	brne	.-4      	; 0x684 <OV_SCCB_Read+0x6c>
+ 688:	00 c0       	rjmp	.+0      	; 0x68a <OV_SCCB_Read+0x72>
+ 68a:	00 00       	nop
 	 _delay_us(OV_SIO_CLKDELAY);
 
 	 //Aufr?umen und SIOD auf null setzten (ist das notwendig? ich wei? es nicht)
 	 OV_SIOD_PORT	&=	~(1<<OV_SIOD_PinNo);
- 694:	44 98       	cbi	0x08, 4	; 8
+ 68c:	44 98       	cbi	0x08, 4	; 8
 	 return 1;
  }
- 696:	81 e0       	ldi	r24, 0x01	; 1
- 698:	08 95       	ret
+ 68e:	81 e0       	ldi	r24, 0x01	; 1
+ 690:	08 95       	ret
 
-0000069a <OV7670_read>:
+00000692 <OV7670_read>:
 
  char OV7670_read (char regID, char* regData){
- 69a:	0f 93       	push	r16
- 69c:	1f 93       	push	r17
- 69e:	cf 93       	push	r28
- 6a0:	c8 2f       	mov	r28, r24
- 6a2:	8b 01       	movw	r16, r22
+ 692:	0f 93       	push	r16
+ 694:	1f 93       	push	r17
+ 696:	cf 93       	push	r28
+ 698:	c8 2f       	mov	r28, r24
+ 69a:	8b 01       	movw	r16, r22
 	//This function reads the Value of a Register (regID) of the SCCB and writes its Value to the input Byte (regData)
 	//return Value: 0 if everything works, error code >0 if not. 
 
 	 char ErrorCode = 0x00;
 	 
 	 OV_SCCB_Start();
- 6a4:	0e 94 99 02 	call	0x532	; 0x532 <OV_SCCB_Start>
+ 69c:	0e 94 95 02 	call	0x52a	; 0x52a <OV_SCCB_Start>
 	 //2 Write Phasen notwendig: Write the IP Address for the right register
 	 //Phase1: Write Register ansprechen
 	 if(OV_SCCB_Write(OV_SCCB_write_Addr)==0){
- 6a8:	82 e4       	ldi	r24, 0x42	; 66
- 6aa:	0e 94 c7 02 	call	0x58e	; 0x58e <OV_SCCB_Write>
- 6ae:	81 11       	cpse	r24, r1
- 6b0:	04 c0       	rjmp	.+8      	; 0x6ba <OV7670_read+0x20>
+ 6a0:	82 e4       	ldi	r24, 0x42	; 66
+ 6a2:	0e 94 c3 02 	call	0x586	; 0x586 <OV_SCCB_Write>
+ 6a6:	81 11       	cpse	r24, r1
+ 6a8:	04 c0       	rjmp	.+8      	; 0x6b2 <OV7670_read+0x20>
 		 ErrorCode=0x01;
 		 OV_SCCB_Stopp();
- 6b2:	0e 94 b0 02 	call	0x560	; 0x560 <OV_SCCB_Stopp>
+ 6aa:	0e 94 ac 02 	call	0x558	; 0x558 <OV_SCCB_Stopp>
 		 return ErrorCode;
- 6b6:	81 e0       	ldi	r24, 0x01	; 1
- 6b8:	3a c0       	rjmp	.+116    	; 0x72e <OV7670_read+0x94>
- 6ba:	8f e1       	ldi	r24, 0x1F	; 31
- 6bc:	93 e0       	ldi	r25, 0x03	; 3
- 6be:	01 97       	sbiw	r24, 0x01	; 1
- 6c0:	f1 f7       	brne	.-4      	; 0x6be <OV7670_read+0x24>
- 6c2:	00 c0       	rjmp	.+0      	; 0x6c4 <OV7670_read+0x2a>
- 6c4:	00 00       	nop
+ 6ae:	81 e0       	ldi	r24, 0x01	; 1
+ 6b0:	3a c0       	rjmp	.+116    	; 0x726 <OV7670_read+0x94>
+ 6b2:	8f e1       	ldi	r24, 0x1F	; 31
+ 6b4:	93 e0       	ldi	r25, 0x03	; 3
+ 6b6:	01 97       	sbiw	r24, 0x01	; 1
+ 6b8:	f1 f7       	brne	.-4      	; 0x6b6 <OV7670_read+0x24>
+ 6ba:	00 c0       	rjmp	.+0      	; 0x6bc <OV7670_read+0x2a>
+ 6bc:	00 00       	nop
 	 }
 	 _delay_us(OV_SIO_CLKDELAY);
 
 	 //Phase2: Write Adress ansprechen
 	 if(OV_SCCB_Write(regID)==0){
- 6c6:	8c 2f       	mov	r24, r28
- 6c8:	0e 94 c7 02 	call	0x58e	; 0x58e <OV_SCCB_Write>
- 6cc:	81 11       	cpse	r24, r1
- 6ce:	04 c0       	rjmp	.+8      	; 0x6d8 <OV7670_read+0x3e>
+ 6be:	8c 2f       	mov	r24, r28
+ 6c0:	0e 94 c3 02 	call	0x586	; 0x586 <OV_SCCB_Write>
+ 6c4:	81 11       	cpse	r24, r1
+ 6c6:	04 c0       	rjmp	.+8      	; 0x6d0 <OV7670_read+0x3e>
 		 ErrorCode=0x02;
 		 OV_SCCB_Stopp();
- 6d0:	0e 94 b0 02 	call	0x560	; 0x560 <OV_SCCB_Stopp>
+ 6c8:	0e 94 ac 02 	call	0x558	; 0x558 <OV_SCCB_Stopp>
 		 return ErrorCode;
- 6d4:	82 e0       	ldi	r24, 0x02	; 2
- 6d6:	2b c0       	rjmp	.+86     	; 0x72e <OV7670_read+0x94>
- 6d8:	8f e1       	ldi	r24, 0x1F	; 31
- 6da:	93 e0       	ldi	r25, 0x03	; 3
- 6dc:	01 97       	sbiw	r24, 0x01	; 1
- 6de:	f1 f7       	brne	.-4      	; 0x6dc <OV7670_read+0x42>
- 6e0:	00 c0       	rjmp	.+0      	; 0x6e2 <OV7670_read+0x48>
- 6e2:	00 00       	nop
+ 6cc:	82 e0       	ldi	r24, 0x02	; 2
+ 6ce:	2b c0       	rjmp	.+86     	; 0x726 <OV7670_read+0x94>
+ 6d0:	8f e1       	ldi	r24, 0x1F	; 31
+ 6d2:	93 e0       	ldi	r25, 0x03	; 3
+ 6d4:	01 97       	sbiw	r24, 0x01	; 1
+ 6d6:	f1 f7       	brne	.-4      	; 0x6d4 <OV7670_read+0x42>
+ 6d8:	00 c0       	rjmp	.+0      	; 0x6da <OV7670_read+0x48>
+ 6da:	00 00       	nop
 	 }
 	 _delay_us(OV_SIO_CLKDELAY);
 
 
 	 //Finish the First Tarnsmission (2 Phase Write)
 	 OV_SCCB_Stopp();
- 6e4:	0e 94 b0 02 	call	0x560	; 0x560 <OV_SCCB_Stopp>
- 6e8:	8f e1       	ldi	r24, 0x1F	; 31
- 6ea:	93 e0       	ldi	r25, 0x03	; 3
- 6ec:	01 97       	sbiw	r24, 0x01	; 1
- 6ee:	f1 f7       	brne	.-4      	; 0x6ec <OV7670_read+0x52>
- 6f0:	00 c0       	rjmp	.+0      	; 0x6f2 <OV7670_read+0x58>
- 6f2:	00 00       	nop
+ 6dc:	0e 94 ac 02 	call	0x558	; 0x558 <OV_SCCB_Stopp>
+ 6e0:	8f e1       	ldi	r24, 0x1F	; 31
+ 6e2:	93 e0       	ldi	r25, 0x03	; 3
+ 6e4:	01 97       	sbiw	r24, 0x01	; 1
+ 6e6:	f1 f7       	brne	.-4      	; 0x6e4 <OV7670_read+0x52>
+ 6e8:	00 c0       	rjmp	.+0      	; 0x6ea <OV7670_read+0x58>
+ 6ea:	00 00       	nop
 	 _delay_us(OV_SIO_CLKDELAY);
 
 	 //Start the Second Part (2 Phase Read Cycle)
 	 //2 Read Phasen notwendig
 	 //Phase 1: ID des Leseregisters
 	 OV_SCCB_Start();
- 6f4:	0e 94 99 02 	call	0x532	; 0x532 <OV_SCCB_Start>
+ 6ec:	0e 94 95 02 	call	0x52a	; 0x52a <OV_SCCB_Start>
 	 if(OV_SCCB_Write(OV_SCCB_read_Addr)==0){
- 6f8:	83 e4       	ldi	r24, 0x43	; 67
- 6fa:	0e 94 c7 02 	call	0x58e	; 0x58e <OV_SCCB_Write>
- 6fe:	81 11       	cpse	r24, r1
- 700:	04 c0       	rjmp	.+8      	; 0x70a <OV7670_read+0x70>
+ 6f0:	83 e4       	ldi	r24, 0x43	; 67
+ 6f2:	0e 94 c3 02 	call	0x586	; 0x586 <OV_SCCB_Write>
+ 6f6:	81 11       	cpse	r24, r1
+ 6f8:	04 c0       	rjmp	.+8      	; 0x702 <OV7670_read+0x70>
 		 ErrorCode=0x03;
 		 OV_SCCB_Stopp();
- 702:	0e 94 b0 02 	call	0x560	; 0x560 <OV_SCCB_Stopp>
+ 6fa:	0e 94 ac 02 	call	0x558	; 0x558 <OV_SCCB_Stopp>
 		 return ErrorCode;
- 706:	83 e0       	ldi	r24, 0x03	; 3
- 708:	12 c0       	rjmp	.+36     	; 0x72e <OV7670_read+0x94>
- 70a:	8f e1       	ldi	r24, 0x1F	; 31
- 70c:	93 e0       	ldi	r25, 0x03	; 3
- 70e:	01 97       	sbiw	r24, 0x01	; 1
- 710:	f1 f7       	brne	.-4      	; 0x70e <OV7670_read+0x74>
- 712:	00 c0       	rjmp	.+0      	; 0x714 <OV7670_read+0x7a>
- 714:	00 00       	nop
+ 6fe:	83 e0       	ldi	r24, 0x03	; 3
+ 700:	12 c0       	rjmp	.+36     	; 0x726 <OV7670_read+0x94>
+ 702:	8f e1       	ldi	r24, 0x1F	; 31
+ 704:	93 e0       	ldi	r25, 0x03	; 3
+ 706:	01 97       	sbiw	r24, 0x01	; 1
+ 708:	f1 f7       	brne	.-4      	; 0x706 <OV7670_read+0x74>
+ 70a:	00 c0       	rjmp	.+0      	; 0x70c <OV7670_read+0x7a>
+ 70c:	00 00       	nop
 	 }
 	 _delay_us(OV_SIO_CLKDELAY);
 
 	 //Phase 2: Data Einlesen
 	 if(OV_SCCB_Read(regData)==0){
- 716:	c8 01       	movw	r24, r16
- 718:	0e 94 10 03 	call	0x620	; 0x620 <OV_SCCB_Read>
- 71c:	81 11       	cpse	r24, r1
- 71e:	04 c0       	rjmp	.+8      	; 0x728 <OV7670_read+0x8e>
+ 70e:	c8 01       	movw	r24, r16
+ 710:	0e 94 0c 03 	call	0x618	; 0x618 <OV_SCCB_Read>
+ 714:	81 11       	cpse	r24, r1
+ 716:	04 c0       	rjmp	.+8      	; 0x720 <OV7670_read+0x8e>
 		 ErrorCode=0x04;
 		 OV_SCCB_Stopp();
- 720:	0e 94 b0 02 	call	0x560	; 0x560 <OV_SCCB_Stopp>
+ 718:	0e 94 ac 02 	call	0x558	; 0x558 <OV_SCCB_Stopp>
 		 return ErrorCode;
- 724:	84 e0       	ldi	r24, 0x04	; 4
- 726:	03 c0       	rjmp	.+6      	; 0x72e <OV7670_read+0x94>
+ 71c:	84 e0       	ldi	r24, 0x04	; 4
+ 71e:	03 c0       	rjmp	.+6      	; 0x726 <OV7670_read+0x94>
 	 }
 	 //Beenden
 	 OV_SCCB_Stopp();
- 728:	0e 94 b0 02 	call	0x560	; 0x560 <OV_SCCB_Stopp>
+ 720:	0e 94 ac 02 	call	0x558	; 0x558 <OV_SCCB_Stopp>
 	 return ErrorCode;
- 72c:	80 e0       	ldi	r24, 0x00	; 0
+ 724:	80 e0       	ldi	r24, 0x00	; 0
  }
- 72e:	cf 91       	pop	r28
- 730:	1f 91       	pop	r17
- 732:	0f 91       	pop	r16
- 734:	08 95       	ret
+ 726:	cf 91       	pop	r28
+ 728:	1f 91       	pop	r17
+ 72a:	0f 91       	pop	r16
+ 72c:	08 95       	ret
 
-00000736 <OV7670_write>:
+0000072e <OV7670_write>:
 
  char OV7670_write	(char regID, char regData){
- 736:	cf 93       	push	r28
- 738:	df 93       	push	r29
- 73a:	c8 2f       	mov	r28, r24
- 73c:	d6 2f       	mov	r29, r22
+ 72e:	cf 93       	push	r28
+ 730:	df 93       	push	r29
+ 732:	c8 2f       	mov	r28, r24
+ 734:	d6 2f       	mov	r29, r22
 	//return Value: 0 if everything works, error code >0 if not. 
 	
 	
 	char ErrorCode =0x00;
 	
 	OV_SCCB_Start();
- 73e:	0e 94 99 02 	call	0x532	; 0x532 <OV_SCCB_Start>
+ 736:	0e 94 95 02 	call	0x52a	; 0x52a <OV_SCCB_Start>
 
 	//Phase1: Write Register ansprechen
 	if(OV_SCCB_Write(OV_SCCB_write_Addr)==0){
- 742:	82 e4       	ldi	r24, 0x42	; 66
- 744:	0e 94 c7 02 	call	0x58e	; 0x58e <OV_SCCB_Write>
- 748:	81 11       	cpse	r24, r1
- 74a:	04 c0       	rjmp	.+8      	; 0x754 <OV7670_write+0x1e>
+ 73a:	82 e4       	ldi	r24, 0x42	; 66
+ 73c:	0e 94 c3 02 	call	0x586	; 0x586 <OV_SCCB_Write>
+ 740:	81 11       	cpse	r24, r1
+ 742:	04 c0       	rjmp	.+8      	; 0x74c <OV7670_write+0x1e>
 		ErrorCode = 0x05;
 		OV_SCCB_Stopp();
- 74c:	0e 94 b0 02 	call	0x560	; 0x560 <OV_SCCB_Stopp>
+ 744:	0e 94 ac 02 	call	0x558	; 0x558 <OV_SCCB_Stopp>
 		return ErrorCode;
- 750:	85 e0       	ldi	r24, 0x05	; 5
- 752:	21 c0       	rjmp	.+66     	; 0x796 <OV7670_write+0x60>
- 754:	8f e1       	ldi	r24, 0x1F	; 31
- 756:	93 e0       	ldi	r25, 0x03	; 3
- 758:	01 97       	sbiw	r24, 0x01	; 1
- 75a:	f1 f7       	brne	.-4      	; 0x758 <OV7670_write+0x22>
- 75c:	00 c0       	rjmp	.+0      	; 0x75e <OV7670_write+0x28>
- 75e:	00 00       	nop
+ 748:	85 e0       	ldi	r24, 0x05	; 5
+ 74a:	21 c0       	rjmp	.+66     	; 0x78e <OV7670_write+0x60>
+ 74c:	8f e1       	ldi	r24, 0x1F	; 31
+ 74e:	93 e0       	ldi	r25, 0x03	; 3
+ 750:	01 97       	sbiw	r24, 0x01	; 1
+ 752:	f1 f7       	brne	.-4      	; 0x750 <OV7670_write+0x22>
+ 754:	00 c0       	rjmp	.+0      	; 0x756 <OV7670_write+0x28>
+ 756:	00 00       	nop
 	}
 
 	_delay_us(OV_SIO_CLKDELAY);
 
 	//Phase 2: UnterRegister des SCCB ansprechen
 	if(OV_SCCB_Write(regID)==0){
- 760:	8c 2f       	mov	r24, r28
- 762:	0e 94 c7 02 	call	0x58e	; 0x58e <OV_SCCB_Write>
- 766:	81 11       	cpse	r24, r1
- 768:	04 c0       	rjmp	.+8      	; 0x772 <OV7670_write+0x3c>
+ 758:	8c 2f       	mov	r24, r28
+ 75a:	0e 94 c3 02 	call	0x586	; 0x586 <OV_SCCB_Write>
+ 75e:	81 11       	cpse	r24, r1
+ 760:	04 c0       	rjmp	.+8      	; 0x76a <OV7670_write+0x3c>
 		ErrorCode= 0x06;
 		OV_SCCB_Stopp();
- 76a:	0e 94 b0 02 	call	0x560	; 0x560 <OV_SCCB_Stopp>
+ 762:	0e 94 ac 02 	call	0x558	; 0x558 <OV_SCCB_Stopp>
 		return ErrorCode;
- 76e:	86 e0       	ldi	r24, 0x06	; 6
- 770:	12 c0       	rjmp	.+36     	; 0x796 <OV7670_write+0x60>
- 772:	8f e1       	ldi	r24, 0x1F	; 31
- 774:	93 e0       	ldi	r25, 0x03	; 3
- 776:	01 97       	sbiw	r24, 0x01	; 1
- 778:	f1 f7       	brne	.-4      	; 0x776 <OV7670_write+0x40>
- 77a:	00 c0       	rjmp	.+0      	; 0x77c <OV7670_write+0x46>
- 77c:	00 00       	nop
+ 766:	86 e0       	ldi	r24, 0x06	; 6
+ 768:	12 c0       	rjmp	.+36     	; 0x78e <OV7670_write+0x60>
+ 76a:	8f e1       	ldi	r24, 0x1F	; 31
+ 76c:	93 e0       	ldi	r25, 0x03	; 3
+ 76e:	01 97       	sbiw	r24, 0x01	; 1
+ 770:	f1 f7       	brne	.-4      	; 0x76e <OV7670_write+0x40>
+ 772:	00 c0       	rjmp	.+0      	; 0x774 <OV7670_write+0x46>
+ 774:	00 00       	nop
 	}
 
 	_delay_us(OV_SIO_CLKDELAY);
 
 	//Phase 3: Daten in Register schreiben
 	if(OV_SCCB_Write(regData)==0){
- 77e:	8d 2f       	mov	r24, r29
- 780:	0e 94 c7 02 	call	0x58e	; 0x58e <OV_SCCB_Write>
- 784:	81 11       	cpse	r24, r1
- 786:	04 c0       	rjmp	.+8      	; 0x790 <OV7670_write+0x5a>
+ 776:	8d 2f       	mov	r24, r29
+ 778:	0e 94 c3 02 	call	0x586	; 0x586 <OV_SCCB_Write>
+ 77c:	81 11       	cpse	r24, r1
+ 77e:	04 c0       	rjmp	.+8      	; 0x788 <OV7670_write+0x5a>
 		ErrorCode =0x07;
 		OV_SCCB_Stopp();
- 788:	0e 94 b0 02 	call	0x560	; 0x560 <OV_SCCB_Stopp>
+ 780:	0e 94 ac 02 	call	0x558	; 0x558 <OV_SCCB_Stopp>
 		return ErrorCode;
- 78c:	87 e0       	ldi	r24, 0x07	; 7
- 78e:	03 c0       	rjmp	.+6      	; 0x796 <OV7670_write+0x60>
+ 784:	87 e0       	ldi	r24, 0x07	; 7
+ 786:	03 c0       	rjmp	.+6      	; 0x78e <OV7670_write+0x60>
 	}
 
 	OV_SCCB_Stopp();
- 790:	0e 94 b0 02 	call	0x560	; 0x560 <OV_SCCB_Stopp>
+ 788:	0e 94 ac 02 	call	0x558	; 0x558 <OV_SCCB_Stopp>
 	return ErrorCode;
- 794:	80 e0       	ldi	r24, 0x00	; 0
+ 78c:	80 e0       	ldi	r24, 0x00	; 0
 }
- 796:	df 91       	pop	r29
- 798:	cf 91       	pop	r28
- 79a:	08 95       	ret
+ 78e:	df 91       	pop	r29
+ 790:	cf 91       	pop	r28
+ 792:	08 95       	ret
 
-0000079c <OV_SCCB_Init>:
+00000794 <OV_SCCB_Init>:
   * this function initializes the SCCB and returns an error code if something goes wrong
   * \return char
   * 0: success
   * 100+n: Error, n= Errorcode of subfunctions 
   */
  char OV_SCCB_Init (void){
- 79c:	cf 93       	push	r28
- 79e:	df 93       	push	r29
- 7a0:	1f 92       	push	r1
- 7a2:	cd b7       	in	r28, 0x3d	; 61
- 7a4:	de b7       	in	r29, 0x3e	; 62
+ 794:	cf 93       	push	r28
+ 796:	df 93       	push	r29
+ 798:	1f 92       	push	r1
+ 79a:	cd b7       	in	r28, 0x3d	; 61
+ 79c:	de b7       	in	r29, 0x3e	; 62
 	char ErrorCode;
 
 	// Initialisieren der Pins und Festlegung der Datenrichtung
 	OV_SIOD_DDR	|= (1<<OV_SIOD_PinNo);
- 7a6:	3c 9a       	sbi	0x07, 4	; 7
+ 79e:	3c 9a       	sbi	0x07, 4	; 7
 	OV_SIOC_DDR	|= (1<<OV_SIOC_PinNo);
- 7a8:	3d 9a       	sbi	0x07, 5	; 7
+ 7a0:	3d 9a       	sbi	0x07, 5	; 7
 	OV_SIOC_PORT	|= (1<<OV_SIOC_PinNo);
- 7aa:	45 9a       	sbi	0x08, 5	; 8
+ 7a2:	45 9a       	sbi	0x08, 5	; 8
 	OV_SIOD_PORT	|= (1<<OV_SIOD_PinNo);
- 7ac:	44 9a       	sbi	0x08, 4	; 8
+ 7a4:	44 9a       	sbi	0x08, 4	; 8
 
 	//Software Reset
 		//read Register required to prevent errors
 		char temp;
 		OV7670_read(OV_SCCB_COM7,&temp);
- 7ae:	be 01       	movw	r22, r28
- 7b0:	6f 5f       	subi	r22, 0xFF	; 255
- 7b2:	7f 4f       	sbci	r23, 0xFF	; 255
- 7b4:	82 e1       	ldi	r24, 0x12	; 18
- 7b6:	0e 94 4d 03 	call	0x69a	; 0x69a <OV7670_read>
+ 7a6:	be 01       	movw	r22, r28
+ 7a8:	6f 5f       	subi	r22, 0xFF	; 255
+ 7aa:	7f 4f       	sbci	r23, 0xFF	; 255
+ 7ac:	82 e1       	ldi	r24, 0x12	; 18
+ 7ae:	0e 94 49 03 	call	0x692	; 0x692 <OV7670_read>
 		//write the Reset Bit
 	if(!(ErrorCode=OV7670_write(OV_SCCB_COM7,0x80))){
- 7ba:	60 e8       	ldi	r22, 0x80	; 128
- 7bc:	82 e1       	ldi	r24, 0x12	; 18
- 7be:	0e 94 9b 03 	call	0x736	; 0x736 <OV7670_write>
- 7c2:	81 11       	cpse	r24, r1
- 7c4:	0b c0       	rjmp	.+22     	; 0x7dc <OV_SCCB_Init+0x40>
+ 7b2:	60 e8       	ldi	r22, 0x80	; 128
+ 7b4:	82 e1       	ldi	r24, 0x12	; 18
+ 7b6:	0e 94 97 03 	call	0x72e	; 0x72e <OV7670_write>
+ 7ba:	81 11       	cpse	r24, r1
+ 7bc:	0b c0       	rjmp	.+22     	; 0x7d4 <OV_SCCB_Init+0x40>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 7c6:	2f ef       	ldi	r18, 0xFF	; 255
- 7c8:	89 e6       	ldi	r24, 0x69	; 105
- 7ca:	98 e1       	ldi	r25, 0x18	; 24
- 7cc:	21 50       	subi	r18, 0x01	; 1
- 7ce:	80 40       	sbci	r24, 0x00	; 0
- 7d0:	90 40       	sbci	r25, 0x00	; 0
- 7d2:	e1 f7       	brne	.-8      	; 0x7cc <OV_SCCB_Init+0x30>
- 7d4:	00 c0       	rjmp	.+0      	; 0x7d6 <OV_SCCB_Init+0x3a>
- 7d6:	00 00       	nop
+ 7be:	2f ef       	ldi	r18, 0xFF	; 255
+ 7c0:	89 e6       	ldi	r24, 0x69	; 105
+ 7c2:	98 e1       	ldi	r25, 0x18	; 24
+ 7c4:	21 50       	subi	r18, 0x01	; 1
+ 7c6:	80 40       	sbci	r24, 0x00	; 0
+ 7c8:	90 40       	sbci	r25, 0x00	; 0
+ 7ca:	e1 f7       	brne	.-8      	; 0x7c4 <OV_SCCB_Init+0x30>
+ 7cc:	00 c0       	rjmp	.+0      	; 0x7ce <OV_SCCB_Init+0x3a>
+ 7ce:	00 00       	nop
 		//UART0_senden("init SCCB ...done!");
 		//UART0_senden_newLine();
 		_delay_ms(500);	//Delay of 500ms is necessary
 		return ErrorCode;
- 7d8:	80 e0       	ldi	r24, 0x00	; 0
- 7da:	01 c0       	rjmp	.+2      	; 0x7de <OV_SCCB_Init+0x42>
+ 7d0:	80 e0       	ldi	r24, 0x00	; 0
+ 7d2:	01 c0       	rjmp	.+2      	; 0x7d6 <OV_SCCB_Init+0x42>
 	}
 	else{
 		//UART0_senden("Reset SCCB... failed, ErrorCode: ");
 		//UART0_senden_Byte(ErrorCode);
 		//UART0_senden_newLine();
 		return 10+ErrorCode;
- 7dc:	86 5f       	subi	r24, 0xF6	; 246
+ 7d4:	86 5f       	subi	r24, 0xF6	; 246
 	}
 }
- 7de:	0f 90       	pop	r0
- 7e0:	df 91       	pop	r29
- 7e2:	cf 91       	pop	r28
- 7e4:	08 95       	ret
+ 7d6:	0f 90       	pop	r0
+ 7d8:	df 91       	pop	r29
+ 7da:	cf 91       	pop	r28
+ 7dc:	08 95       	ret
 
-000007e6 <OV_SCCB_RegisterToUart>:
+000007de <OV_SCCB_RegisterToUart>:
  * This function read a RegisterValue and send this Value in Hex format to the UART
  * \param RegisterAddress
  * RegisterAddress: Address of the register where the value should be sent 
  * \return void
  */
 void OV_SCCB_RegisterToUart(char RegisterAddress){
- 7e6:	1f 93       	push	r17
- 7e8:	cf 93       	push	r28
- 7ea:	df 93       	push	r29
- 7ec:	1f 92       	push	r1
- 7ee:	cd b7       	in	r28, 0x3d	; 61
- 7f0:	de b7       	in	r29, 0x3e	; 62
+ 7de:	1f 93       	push	r17
+ 7e0:	cf 93       	push	r28
+ 7e2:	df 93       	push	r29
+ 7e4:	1f 92       	push	r1
+ 7e6:	cd b7       	in	r28, 0x3d	; 61
+ 7e8:	de b7       	in	r29, 0x3e	; 62
 	char tempByte = 0x00;
- 7f2:	19 82       	std	Y+1, r1	; 0x01
+ 7ea:	19 82       	std	Y+1, r1	; 0x01
 	char ErrorByte;
 	if(!(ErrorByte=OV7670_read(RegisterAddress,&tempByte)))
- 7f4:	be 01       	movw	r22, r28
- 7f6:	6f 5f       	subi	r22, 0xFF	; 255
- 7f8:	7f 4f       	sbci	r23, 0xFF	; 255
- 7fa:	0e 94 4d 03 	call	0x69a	; 0x69a <OV7670_read>
- 7fe:	18 2f       	mov	r17, r24
- 800:	81 11       	cpse	r24, r1
- 802:	04 c0       	rjmp	.+8      	; 0x80c <OV_SCCB_RegisterToUart+0x26>
+ 7ec:	be 01       	movw	r22, r28
+ 7ee:	6f 5f       	subi	r22, 0xFF	; 255
+ 7f0:	7f 4f       	sbci	r23, 0xFF	; 255
+ 7f2:	0e 94 49 03 	call	0x692	; 0x692 <OV7670_read>
+ 7f6:	18 2f       	mov	r17, r24
+ 7f8:	81 11       	cpse	r24, r1
+ 7fa:	04 c0       	rjmp	.+8      	; 0x804 <OV_SCCB_RegisterToUart+0x26>
 		UART0_senden_Byte(tempByte);
- 804:	89 81       	ldd	r24, Y+1	; 0x01
- 806:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
- 80a:	07 c0       	rjmp	.+14     	; 0x81a <OV_SCCB_RegisterToUart+0x34>
+ 7fc:	89 81       	ldd	r24, Y+1	; 0x01
+ 7fe:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
+ 802:	07 c0       	rjmp	.+14     	; 0x812 <OV_SCCB_RegisterToUart+0x34>
 	else
 	{
 		UART0_senden("Error: ");
- 80c:	8f e1       	ldi	r24, 0x1F	; 31
- 80e:	91 e0       	ldi	r25, 0x01	; 1
- 810:	0e 94 53 04 	call	0x8a6	; 0x8a6 <UART0_senden>
+ 804:	8f e1       	ldi	r24, 0x1F	; 31
+ 806:	91 e0       	ldi	r25, 0x01	; 1
+ 808:	0e 94 4f 04 	call	0x89e	; 0x89e <UART0_senden>
 		UART0_senden_Byte(ErrorByte);
- 814:	81 2f       	mov	r24, r17
- 816:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
+ 80c:	81 2f       	mov	r24, r17
+ 80e:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
 	}
 }
- 81a:	0f 90       	pop	r0
- 81c:	df 91       	pop	r29
- 81e:	cf 91       	pop	r28
- 820:	1f 91       	pop	r17
- 822:	08 95       	ret
+ 812:	0f 90       	pop	r0
+ 814:	df 91       	pop	r29
+ 816:	cf 91       	pop	r28
+ 818:	1f 91       	pop	r17
+ 81a:	08 95       	ret
 
-00000824 <UART0_init>:
+0000081c <UART0_init>:
 	}
 	else
 	{
 		return 0;
 	}
 }
- 824:	51 9a       	sbi	0x0a, 1	; 10
- 826:	50 98       	cbi	0x0a, 0	; 10
- 828:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
- 82c:	80 e1       	ldi	r24, 0x10	; 16
- 82e:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
- 832:	e0 ec       	ldi	r30, 0xC0	; 192
- 834:	f0 e0       	ldi	r31, 0x00	; 0
- 836:	82 e0       	ldi	r24, 0x02	; 2
- 838:	80 83       	st	Z, r24
- 83a:	80 81       	ld	r24, Z
- 83c:	80 83       	st	Z, r24
- 83e:	88 e9       	ldi	r24, 0x98	; 152
- 840:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
- 844:	8e e0       	ldi	r24, 0x0E	; 14
- 846:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
- 84a:	08 95       	ret
+ 81c:	51 9a       	sbi	0x0a, 1	; 10
+ 81e:	50 98       	cbi	0x0a, 0	; 10
+ 820:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
+ 824:	80 e1       	ldi	r24, 0x10	; 16
+ 826:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
+ 82a:	e0 ec       	ldi	r30, 0xC0	; 192
+ 82c:	f0 e0       	ldi	r31, 0x00	; 0
+ 82e:	82 e0       	ldi	r24, 0x02	; 2
+ 830:	80 83       	st	Z, r24
+ 832:	80 81       	ld	r24, Z
+ 834:	80 83       	st	Z, r24
+ 836:	88 e9       	ldi	r24, 0x98	; 152
+ 838:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
+ 83c:	8e e0       	ldi	r24, 0x0E	; 14
+ 83e:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
+ 842:	08 95       	ret
 
-0000084c <UART0_tx_in>:
- 84c:	40 91 41 03 	lds	r20, 0x0341	; 0x800341 <UART0_tx+0x202>
- 850:	50 91 42 03 	lds	r21, 0x0342	; 0x800342 <UART0_tx+0x203>
- 854:	9a 01       	movw	r18, r20
- 856:	2f 5f       	subi	r18, 0xFF	; 255
- 858:	3f 4f       	sbci	r19, 0xFF	; 255
- 85a:	31 70       	andi	r19, 0x01	; 1
- 85c:	60 91 3f 03 	lds	r22, 0x033F	; 0x80033f <UART0_tx+0x200>
- 860:	70 91 40 03 	lds	r23, 0x0340	; 0x800340 <UART0_tx+0x201>
- 864:	26 17       	cp	r18, r22
- 866:	37 07       	cpc	r19, r23
- 868:	59 f0       	breq	.+22     	; 0x880 <UART0_tx_in+0x34>
- 86a:	fa 01       	movw	r30, r20
- 86c:	e1 5c       	subi	r30, 0xC1	; 193
- 86e:	fe 4f       	sbci	r31, 0xFE	; 254
- 870:	80 83       	st	Z, r24
- 872:	30 93 42 03 	sts	0x0342, r19	; 0x800342 <UART0_tx+0x203>
- 876:	20 93 41 03 	sts	0x0341, r18	; 0x800341 <UART0_tx+0x202>
- 87a:	81 e0       	ldi	r24, 0x01	; 1
- 87c:	90 e0       	ldi	r25, 0x00	; 0
- 87e:	08 95       	ret
- 880:	80 e0       	ldi	r24, 0x00	; 0
- 882:	90 e0       	ldi	r25, 0x00	; 0
- 884:	08 95       	ret
+00000844 <UART0_tx_in>:
+ 844:	40 91 41 03 	lds	r20, 0x0341	; 0x800341 <UART0_tx+0x202>
+ 848:	50 91 42 03 	lds	r21, 0x0342	; 0x800342 <UART0_tx+0x203>
+ 84c:	9a 01       	movw	r18, r20
+ 84e:	2f 5f       	subi	r18, 0xFF	; 255
+ 850:	3f 4f       	sbci	r19, 0xFF	; 255
+ 852:	31 70       	andi	r19, 0x01	; 1
+ 854:	60 91 3f 03 	lds	r22, 0x033F	; 0x80033f <UART0_tx+0x200>
+ 858:	70 91 40 03 	lds	r23, 0x0340	; 0x800340 <UART0_tx+0x201>
+ 85c:	26 17       	cp	r18, r22
+ 85e:	37 07       	cpc	r19, r23
+ 860:	59 f0       	breq	.+22     	; 0x878 <UART0_tx_in+0x34>
+ 862:	fa 01       	movw	r30, r20
+ 864:	e1 5c       	subi	r30, 0xC1	; 193
+ 866:	fe 4f       	sbci	r31, 0xFE	; 254
+ 868:	80 83       	st	Z, r24
+ 86a:	30 93 42 03 	sts	0x0342, r19	; 0x800342 <UART0_tx+0x203>
+ 86e:	20 93 41 03 	sts	0x0341, r18	; 0x800341 <UART0_tx+0x202>
+ 872:	81 e0       	ldi	r24, 0x01	; 1
+ 874:	90 e0       	ldi	r25, 0x00	; 0
+ 876:	08 95       	ret
+ 878:	80 e0       	ldi	r24, 0x00	; 0
+ 87a:	90 e0       	ldi	r25, 0x00	; 0
+ 87c:	08 95       	ret
 
-00000886 <UART0_tx_empty>:
- 886:	81 e0       	ldi	r24, 0x01	; 1
- 888:	90 e0       	ldi	r25, 0x00	; 0
- 88a:	40 91 3f 03 	lds	r20, 0x033F	; 0x80033f <UART0_tx+0x200>
- 88e:	50 91 40 03 	lds	r21, 0x0340	; 0x800340 <UART0_tx+0x201>
- 892:	20 91 41 03 	lds	r18, 0x0341	; 0x800341 <UART0_tx+0x202>
- 896:	30 91 42 03 	lds	r19, 0x0342	; 0x800342 <UART0_tx+0x203>
- 89a:	42 17       	cp	r20, r18
- 89c:	53 07       	cpc	r21, r19
- 89e:	11 f0       	breq	.+4      	; 0x8a4 <UART0_tx_empty+0x1e>
- 8a0:	80 e0       	ldi	r24, 0x00	; 0
- 8a2:	90 e0       	ldi	r25, 0x00	; 0
- 8a4:	08 95       	ret
+0000087e <UART0_tx_empty>:
+ 87e:	81 e0       	ldi	r24, 0x01	; 1
+ 880:	90 e0       	ldi	r25, 0x00	; 0
+ 882:	40 91 3f 03 	lds	r20, 0x033F	; 0x80033f <UART0_tx+0x200>
+ 886:	50 91 40 03 	lds	r21, 0x0340	; 0x800340 <UART0_tx+0x201>
+ 88a:	20 91 41 03 	lds	r18, 0x0341	; 0x800341 <UART0_tx+0x202>
+ 88e:	30 91 42 03 	lds	r19, 0x0342	; 0x800342 <UART0_tx+0x203>
+ 892:	42 17       	cp	r20, r18
+ 894:	53 07       	cpc	r21, r19
+ 896:	11 f0       	breq	.+4      	; 0x89c <UART0_tx_empty+0x1e>
+ 898:	80 e0       	ldi	r24, 0x00	; 0
+ 89a:	90 e0       	ldi	r25, 0x00	; 0
+ 89c:	08 95       	ret
 
-000008a6 <UART0_senden>:
- 8a6:	cf 93       	push	r28
- 8a8:	df 93       	push	r29
- 8aa:	ec 01       	movw	r28, r24
- 8ac:	88 81       	ld	r24, Y
- 8ae:	88 23       	and	r24, r24
- 8b0:	31 f0       	breq	.+12     	; 0x8be <UART0_senden+0x18>
- 8b2:	21 96       	adiw	r28, 0x01	; 1
- 8b4:	0e 94 26 04 	call	0x84c	; 0x84c <UART0_tx_in>
- 8b8:	89 91       	ld	r24, Y+
- 8ba:	81 11       	cpse	r24, r1
- 8bc:	fb cf       	rjmp	.-10     	; 0x8b4 <UART0_senden+0xe>
- 8be:	e1 ec       	ldi	r30, 0xC1	; 193
- 8c0:	f0 e0       	ldi	r31, 0x00	; 0
- 8c2:	80 81       	ld	r24, Z
- 8c4:	80 62       	ori	r24, 0x20	; 32
- 8c6:	80 83       	st	Z, r24
- 8c8:	df 91       	pop	r29
- 8ca:	cf 91       	pop	r28
- 8cc:	08 95       	ret
+0000089e <UART0_senden>:
+ 89e:	cf 93       	push	r28
+ 8a0:	df 93       	push	r29
+ 8a2:	ec 01       	movw	r28, r24
+ 8a4:	88 81       	ld	r24, Y
+ 8a6:	88 23       	and	r24, r24
+ 8a8:	31 f0       	breq	.+12     	; 0x8b6 <UART0_senden+0x18>
+ 8aa:	21 96       	adiw	r28, 0x01	; 1
+ 8ac:	0e 94 22 04 	call	0x844	; 0x844 <UART0_tx_in>
+ 8b0:	89 91       	ld	r24, Y+
+ 8b2:	81 11       	cpse	r24, r1
+ 8b4:	fb cf       	rjmp	.-10     	; 0x8ac <UART0_senden+0xe>
+ 8b6:	e1 ec       	ldi	r30, 0xC1	; 193
+ 8b8:	f0 e0       	ldi	r31, 0x00	; 0
+ 8ba:	80 81       	ld	r24, Z
+ 8bc:	80 62       	ori	r24, 0x20	; 32
+ 8be:	80 83       	st	Z, r24
+ 8c0:	df 91       	pop	r29
+ 8c2:	cf 91       	pop	r28
+ 8c4:	08 95       	ret
 
-000008ce <UART0_senden_Byte>:
- 8ce:	cf 93       	push	r28
- 8d0:	c8 2f       	mov	r28, r24
- 8d2:	8c 2f       	mov	r24, r28
- 8d4:	0e 94 26 04 	call	0x84c	; 0x84c <UART0_tx_in>
- 8d8:	89 2b       	or	r24, r25
- 8da:	d9 f3       	breq	.-10     	; 0x8d2 <UART0_senden_Byte+0x4>
- 8dc:	e1 ec       	ldi	r30, 0xC1	; 193
- 8de:	f0 e0       	ldi	r31, 0x00	; 0
- 8e0:	80 81       	ld	r24, Z
- 8e2:	80 62       	ori	r24, 0x20	; 32
- 8e4:	80 83       	st	Z, r24
- 8e6:	cf 91       	pop	r28
- 8e8:	08 95       	ret
+000008c6 <UART0_senden_Byte>:
+ 8c6:	cf 93       	push	r28
+ 8c8:	c8 2f       	mov	r28, r24
+ 8ca:	8c 2f       	mov	r24, r28
+ 8cc:	0e 94 22 04 	call	0x844	; 0x844 <UART0_tx_in>
+ 8d0:	89 2b       	or	r24, r25
+ 8d2:	d9 f3       	breq	.-10     	; 0x8ca <UART0_senden_Byte+0x4>
+ 8d4:	e1 ec       	ldi	r30, 0xC1	; 193
+ 8d6:	f0 e0       	ldi	r31, 0x00	; 0
+ 8d8:	80 81       	ld	r24, Z
+ 8da:	80 62       	ori	r24, 0x20	; 32
+ 8dc:	80 83       	st	Z, r24
+ 8de:	cf 91       	pop	r28
+ 8e0:	08 95       	ret
 
-000008ea <UART0_senden_newLine>:
- 8ea:	8d e0       	ldi	r24, 0x0D	; 13
- 8ec:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
- 8f0:	8a e0       	ldi	r24, 0x0A	; 10
- 8f2:	0e 94 67 04 	call	0x8ce	; 0x8ce <UART0_senden_Byte>
- 8f6:	08 95       	ret
+000008e2 <UART0_senden_newLine>:
+ 8e2:	8d e0       	ldi	r24, 0x0D	; 13
+ 8e4:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
+ 8e8:	8a e0       	ldi	r24, 0x0A	; 10
+ 8ea:	0e 94 63 04 	call	0x8c6	; 0x8c6 <UART0_senden_Byte>
+ 8ee:	08 95       	ret
 
-000008f8 <UART0_rx_in>:
- 8f8:	40 91 45 05 	lds	r20, 0x0545	; 0x800545 <UART0_rx+0x202>
- 8fc:	50 91 46 05 	lds	r21, 0x0546	; 0x800546 <UART0_rx+0x203>
- 900:	9a 01       	movw	r18, r20
- 902:	2f 5f       	subi	r18, 0xFF	; 255
- 904:	3f 4f       	sbci	r19, 0xFF	; 255
- 906:	31 70       	andi	r19, 0x01	; 1
- 908:	60 91 43 05 	lds	r22, 0x0543	; 0x800543 <UART0_rx+0x200>
- 90c:	70 91 44 05 	lds	r23, 0x0544	; 0x800544 <UART0_rx+0x201>
- 910:	26 17       	cp	r18, r22
- 912:	37 07       	cpc	r19, r23
- 914:	59 f0       	breq	.+22     	; 0x92c <__stack+0x2d>
- 916:	fa 01       	movw	r30, r20
- 918:	ed 5b       	subi	r30, 0xBD	; 189
- 91a:	fc 4f       	sbci	r31, 0xFC	; 252
- 91c:	80 83       	st	Z, r24
- 91e:	30 93 46 05 	sts	0x0546, r19	; 0x800546 <UART0_rx+0x203>
- 922:	20 93 45 05 	sts	0x0545, r18	; 0x800545 <UART0_rx+0x202>
- 926:	81 e0       	ldi	r24, 0x01	; 1
- 928:	90 e0       	ldi	r25, 0x00	; 0
- 92a:	08 95       	ret
- 92c:	80 e0       	ldi	r24, 0x00	; 0
- 92e:	90 e0       	ldi	r25, 0x00	; 0
- 930:	08 95       	ret
+000008f0 <UART0_rx_in>:
+ 8f0:	40 91 45 05 	lds	r20, 0x0545	; 0x800545 <UART0_rx+0x202>
+ 8f4:	50 91 46 05 	lds	r21, 0x0546	; 0x800546 <UART0_rx+0x203>
+ 8f8:	9a 01       	movw	r18, r20
+ 8fa:	2f 5f       	subi	r18, 0xFF	; 255
+ 8fc:	3f 4f       	sbci	r19, 0xFF	; 255
+ 8fe:	31 70       	andi	r19, 0x01	; 1
+ 900:	60 91 43 05 	lds	r22, 0x0543	; 0x800543 <UART0_rx+0x200>
+ 904:	70 91 44 05 	lds	r23, 0x0544	; 0x800544 <UART0_rx+0x201>
+ 908:	26 17       	cp	r18, r22
+ 90a:	37 07       	cpc	r19, r23
+ 90c:	59 f0       	breq	.+22     	; 0x924 <__stack+0x25>
+ 90e:	fa 01       	movw	r30, r20
+ 910:	ed 5b       	subi	r30, 0xBD	; 189
+ 912:	fc 4f       	sbci	r31, 0xFC	; 252
+ 914:	80 83       	st	Z, r24
+ 916:	30 93 46 05 	sts	0x0546, r19	; 0x800546 <UART0_rx+0x203>
+ 91a:	20 93 45 05 	sts	0x0545, r18	; 0x800545 <UART0_rx+0x202>
+ 91e:	81 e0       	ldi	r24, 0x01	; 1
+ 920:	90 e0       	ldi	r25, 0x00	; 0
+ 922:	08 95       	ret
+ 924:	80 e0       	ldi	r24, 0x00	; 0
+ 926:	90 e0       	ldi	r25, 0x00	; 0
+ 928:	08 95       	ret
 
-00000932 <__vector_18>:
- 932:	1f 92       	push	r1
- 934:	0f 92       	push	r0
- 936:	0f b6       	in	r0, 0x3f	; 63
- 938:	0f 92       	push	r0
- 93a:	11 24       	eor	r1, r1
- 93c:	2f 93       	push	r18
- 93e:	3f 93       	push	r19
- 940:	4f 93       	push	r20
- 942:	5f 93       	push	r21
- 944:	6f 93       	push	r22
- 946:	7f 93       	push	r23
- 948:	8f 93       	push	r24
- 94a:	9f 93       	push	r25
- 94c:	af 93       	push	r26
- 94e:	bf 93       	push	r27
- 950:	ef 93       	push	r30
- 952:	ff 93       	push	r31
- 954:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
- 958:	0e 94 7c 04 	call	0x8f8	; 0x8f8 <UART0_rx_in>
- 95c:	ff 91       	pop	r31
- 95e:	ef 91       	pop	r30
- 960:	bf 91       	pop	r27
- 962:	af 91       	pop	r26
- 964:	9f 91       	pop	r25
- 966:	8f 91       	pop	r24
- 968:	7f 91       	pop	r23
- 96a:	6f 91       	pop	r22
- 96c:	5f 91       	pop	r21
- 96e:	4f 91       	pop	r20
- 970:	3f 91       	pop	r19
- 972:	2f 91       	pop	r18
- 974:	0f 90       	pop	r0
- 976:	0f be       	out	0x3f, r0	; 63
- 978:	0f 90       	pop	r0
- 97a:	1f 90       	pop	r1
- 97c:	18 95       	reti
+0000092a <__vector_18>:
+ 92a:	1f 92       	push	r1
+ 92c:	0f 92       	push	r0
+ 92e:	0f b6       	in	r0, 0x3f	; 63
+ 930:	0f 92       	push	r0
+ 932:	11 24       	eor	r1, r1
+ 934:	2f 93       	push	r18
+ 936:	3f 93       	push	r19
+ 938:	4f 93       	push	r20
+ 93a:	5f 93       	push	r21
+ 93c:	6f 93       	push	r22
+ 93e:	7f 93       	push	r23
+ 940:	8f 93       	push	r24
+ 942:	9f 93       	push	r25
+ 944:	af 93       	push	r26
+ 946:	bf 93       	push	r27
+ 948:	ef 93       	push	r30
+ 94a:	ff 93       	push	r31
+ 94c:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
+ 950:	0e 94 78 04 	call	0x8f0	; 0x8f0 <UART0_rx_in>
+ 954:	ff 91       	pop	r31
+ 956:	ef 91       	pop	r30
+ 958:	bf 91       	pop	r27
+ 95a:	af 91       	pop	r26
+ 95c:	9f 91       	pop	r25
+ 95e:	8f 91       	pop	r24
+ 960:	7f 91       	pop	r23
+ 962:	6f 91       	pop	r22
+ 964:	5f 91       	pop	r21
+ 966:	4f 91       	pop	r20
+ 968:	3f 91       	pop	r19
+ 96a:	2f 91       	pop	r18
+ 96c:	0f 90       	pop	r0
+ 96e:	0f be       	out	0x3f, r0	; 63
+ 970:	0f 90       	pop	r0
+ 972:	1f 90       	pop	r1
+ 974:	18 95       	reti
 
-0000097e <UART0_rx_out>:
- 97e:	20 91 43 05 	lds	r18, 0x0543	; 0x800543 <UART0_rx+0x200>
- 982:	30 91 44 05 	lds	r19, 0x0544	; 0x800544 <UART0_rx+0x201>
- 986:	80 91 45 05 	lds	r24, 0x0545	; 0x800545 <UART0_rx+0x202>
- 98a:	90 91 46 05 	lds	r25, 0x0546	; 0x800546 <UART0_rx+0x203>
- 98e:	28 17       	cp	r18, r24
- 990:	39 07       	cpc	r19, r25
- 992:	61 f0       	breq	.+24     	; 0x9ac <UART0_rx_out+0x2e>
- 994:	f9 01       	movw	r30, r18
- 996:	ed 5b       	subi	r30, 0xBD	; 189
- 998:	fc 4f       	sbci	r31, 0xFC	; 252
- 99a:	80 81       	ld	r24, Z
- 99c:	2f 5f       	subi	r18, 0xFF	; 255
- 99e:	3f 4f       	sbci	r19, 0xFF	; 255
- 9a0:	31 70       	andi	r19, 0x01	; 1
- 9a2:	30 93 44 05 	sts	0x0544, r19	; 0x800544 <UART0_rx+0x201>
- 9a6:	20 93 43 05 	sts	0x0543, r18	; 0x800543 <UART0_rx+0x200>
- 9aa:	08 95       	ret
- 9ac:	80 e0       	ldi	r24, 0x00	; 0
- 9ae:	08 95       	ret
+00000976 <UART0_rx_out>:
+ 976:	20 91 43 05 	lds	r18, 0x0543	; 0x800543 <UART0_rx+0x200>
+ 97a:	30 91 44 05 	lds	r19, 0x0544	; 0x800544 <UART0_rx+0x201>
+ 97e:	80 91 45 05 	lds	r24, 0x0545	; 0x800545 <UART0_rx+0x202>
+ 982:	90 91 46 05 	lds	r25, 0x0546	; 0x800546 <UART0_rx+0x203>
+ 986:	28 17       	cp	r18, r24
+ 988:	39 07       	cpc	r19, r25
+ 98a:	61 f0       	breq	.+24     	; 0x9a4 <UART0_rx_out+0x2e>
+ 98c:	f9 01       	movw	r30, r18
+ 98e:	ed 5b       	subi	r30, 0xBD	; 189
+ 990:	fc 4f       	sbci	r31, 0xFC	; 252
+ 992:	80 81       	ld	r24, Z
+ 994:	2f 5f       	subi	r18, 0xFF	; 255
+ 996:	3f 4f       	sbci	r19, 0xFF	; 255
+ 998:	31 70       	andi	r19, 0x01	; 1
+ 99a:	30 93 44 05 	sts	0x0544, r19	; 0x800544 <UART0_rx+0x201>
+ 99e:	20 93 43 05 	sts	0x0543, r18	; 0x800543 <UART0_rx+0x200>
+ 9a2:	08 95       	ret
+ 9a4:	80 e0       	ldi	r24, 0x00	; 0
+ 9a6:	08 95       	ret
 
-000009b0 <UART0_rx_complete>:
+000009a8 <UART0_rx_complete>:
 
 int UART0_rx_complete(void)
 {
 	//Wenn CR+LF empfangen wird, ist der Befehl vollständig
 	if(UART0_rx.data[(UART0_rx.write -2)&UART0_rx_mask] == 0x0D && UART0_rx.data[(UART0_rx.write-1)&UART0_rx_mask]==0x0A)
- 9b0:	80 91 45 05 	lds	r24, 0x0545	; 0x800545 <UART0_rx+0x202>
- 9b4:	90 91 46 05 	lds	r25, 0x0546	; 0x800546 <UART0_rx+0x203>
- 9b8:	fc 01       	movw	r30, r24
- 9ba:	32 97       	sbiw	r30, 0x02	; 2
- 9bc:	f1 70       	andi	r31, 0x01	; 1
- 9be:	ed 5b       	subi	r30, 0xBD	; 189
- 9c0:	fc 4f       	sbci	r31, 0xFC	; 252
- 9c2:	20 81       	ld	r18, Z
- 9c4:	2d 30       	cpi	r18, 0x0D	; 13
- 9c6:	61 f4       	brne	.+24     	; 0x9e0 <UART0_rx_complete+0x30>
- 9c8:	fc 01       	movw	r30, r24
- 9ca:	31 97       	sbiw	r30, 0x01	; 1
- 9cc:	f1 70       	andi	r31, 0x01	; 1
- 9ce:	ed 5b       	subi	r30, 0xBD	; 189
- 9d0:	fc 4f       	sbci	r31, 0xFC	; 252
+ 9a8:	80 91 45 05 	lds	r24, 0x0545	; 0x800545 <UART0_rx+0x202>
+ 9ac:	90 91 46 05 	lds	r25, 0x0546	; 0x800546 <UART0_rx+0x203>
+ 9b0:	fc 01       	movw	r30, r24
+ 9b2:	32 97       	sbiw	r30, 0x02	; 2
+ 9b4:	f1 70       	andi	r31, 0x01	; 1
+ 9b6:	ed 5b       	subi	r30, 0xBD	; 189
+ 9b8:	fc 4f       	sbci	r31, 0xFC	; 252
+ 9ba:	20 81       	ld	r18, Z
+ 9bc:	2d 30       	cpi	r18, 0x0D	; 13
+ 9be:	61 f4       	brne	.+24     	; 0x9d8 <UART0_rx_complete+0x30>
+ 9c0:	fc 01       	movw	r30, r24
+ 9c2:	31 97       	sbiw	r30, 0x01	; 1
+ 9c4:	f1 70       	andi	r31, 0x01	; 1
+ 9c6:	ed 5b       	subi	r30, 0xBD	; 189
+ 9c8:	fc 4f       	sbci	r31, 0xFC	; 252
 	{
 		return 1;
- 9d2:	81 e0       	ldi	r24, 0x01	; 1
- 9d4:	90 e0       	ldi	r25, 0x00	; 0
- 9d6:	20 81       	ld	r18, Z
- 9d8:	2a 30       	cpi	r18, 0x0A	; 10
- 9da:	21 f0       	breq	.+8      	; 0x9e4 <UART0_rx_complete+0x34>
- 9dc:	80 e0       	ldi	r24, 0x00	; 0
- 9de:	08 95       	ret
+ 9ca:	81 e0       	ldi	r24, 0x01	; 1
+ 9cc:	90 e0       	ldi	r25, 0x00	; 0
+ 9ce:	20 81       	ld	r18, Z
+ 9d0:	2a 30       	cpi	r18, 0x0A	; 10
+ 9d2:	21 f0       	breq	.+8      	; 0x9dc <UART0_rx_complete+0x34>
+ 9d4:	80 e0       	ldi	r24, 0x00	; 0
+ 9d6:	08 95       	ret
 	}
 	else
 	{
 		return 0;
- 9e0:	80 e0       	ldi	r24, 0x00	; 0
- 9e2:	90 e0       	ldi	r25, 0x00	; 0
+ 9d8:	80 e0       	ldi	r24, 0x00	; 0
+ 9da:	90 e0       	ldi	r25, 0x00	; 0
 	}
 }
- 9e4:	08 95       	ret
+ 9dc:	08 95       	ret
 
-000009e6 <UART0_rx_work>:
+000009de <UART0_rx_work>:
 
 //-------------------------------------------------------- FiFo Arbeiten--------------------------------
 
 int UART0_rx_work(int* Programmstatus)
 {
- 9e6:	ef 92       	push	r14
- 9e8:	ff 92       	push	r15
- 9ea:	0f 93       	push	r16
- 9ec:	1f 93       	push	r17
- 9ee:	cf 93       	push	r28
- 9f0:	df 93       	push	r29
- 9f2:	cd b7       	in	r28, 0x3d	; 61
- 9f4:	de b7       	in	r29, 0x3e	; 62
- 9f6:	2e 97       	sbiw	r28, 0x0e	; 14
- 9f8:	0f b6       	in	r0, 0x3f	; 63
- 9fa:	f8 94       	cli
- 9fc:	de bf       	out	0x3e, r29	; 62
- 9fe:	0f be       	out	0x3f, r0	; 63
- a00:	cd bf       	out	0x3d, r28	; 61
- a02:	7c 01       	movw	r14, r24
+ 9de:	ef 92       	push	r14
+ 9e0:	ff 92       	push	r15
+ 9e2:	0f 93       	push	r16
+ 9e4:	1f 93       	push	r17
+ 9e6:	cf 93       	push	r28
+ 9e8:	df 93       	push	r29
+ 9ea:	cd b7       	in	r28, 0x3d	; 61
+ 9ec:	de b7       	in	r29, 0x3e	; 62
+ 9ee:	2e 97       	sbiw	r28, 0x0e	; 14
+ 9f0:	0f b6       	in	r0, 0x3f	; 63
+ 9f2:	f8 94       	cli
+ 9f4:	de bf       	out	0x3e, r29	; 62
+ 9f6:	0f be       	out	0x3f, r0	; 63
+ 9f8:	cd bf       	out	0x3d, r28	; 61
+ 9fa:	7c 01       	movw	r14, r24
 	if(UART0_rx_complete())
- a04:	0e 94 d8 04 	call	0x9b0	; 0x9b0 <UART0_rx_complete>
- a08:	00 97       	sbiw	r24, 0x00	; 0
- a0a:	09 f4       	brne	.+2      	; 0xa0e <UART0_rx_work+0x28>
- a0c:	ab c0       	rjmp	.+342    	; 0xb64 <UART0_rx_work+0x17e>
+ 9fc:	0e 94 d4 04 	call	0x9a8	; 0x9a8 <UART0_rx_complete>
+ a00:	00 97       	sbiw	r24, 0x00	; 0
+ a02:	09 f4       	brne	.+2      	; 0xa06 <UART0_rx_work+0x28>
+ a04:	ab c0       	rjmp	.+342    	; 0xb5c <UART0_rx_work+0x17e>
 	{
 
 	char Befehl[UART0_Befehl_FiFo] = {};			// Hier steht der Befehl
- a0e:	fe 01       	movw	r30, r28
- a10:	31 96       	adiw	r30, 0x01	; 1
- a12:	8a e0       	ldi	r24, 0x0A	; 10
- a14:	df 01       	movw	r26, r30
- a16:	1d 92       	st	X+, r1
- a18:	8a 95       	dec	r24
- a1a:	e9 f7       	brne	.-6      	; 0xa16 <UART0_rx_work+0x30>
+ a06:	fe 01       	movw	r30, r28
+ a08:	31 96       	adiw	r30, 0x01	; 1
+ a0a:	8a e0       	ldi	r24, 0x0A	; 10
+ a0c:	df 01       	movw	r26, r30
+ a0e:	1d 92       	st	X+, r1
+ a10:	8a 95       	dec	r24
+ a12:	e9 f7       	brne	.-6      	; 0xa0e <UART0_rx_work+0x30>
 	volatile int j = 0;
- a1c:	1e 86       	std	Y+14, r1	; 0x0e
- a1e:	1d 86       	std	Y+13, r1	; 0x0d
+ a14:	1e 86       	std	Y+14, r1	; 0x0e
+ a16:	1d 86       	std	Y+13, r1	; 0x0d
 	volatile int i = 0;
- a20:	1c 86       	std	Y+12, r1	; 0x0c
- a22:	1b 86       	std	Y+11, r1	; 0x0b
+ a18:	1c 86       	std	Y+12, r1	; 0x0c
+ a1a:	1b 86       	std	Y+11, r1	; 0x0b
 		Befehl[i] = temp;
 		i++;
 
 		//Künstlicher Zähler, um das Abfragen der beiden Bits auch beim ersten zu ermöglichen
 		if(i<2)
 		j=1;
- a24:	01 e0       	ldi	r16, 0x01	; 1
- a26:	10 e0       	ldi	r17, 0x00	; 0
+ a1c:	01 e0       	ldi	r16, 0x01	; 1
+ a1e:	10 e0       	ldi	r17, 0x00	; 0
 	char Befehl[UART0_Befehl_FiFo] = {};			// Hier steht der Befehl
 	volatile int j = 0;
 	volatile int i = 0;
 	do
 	{
 		char temp = UART0_rx_out();
- a28:	0e 94 bf 04 	call	0x97e	; 0x97e <UART0_rx_out>
+ a20:	0e 94 bb 04 	call	0x976	; 0x976 <UART0_rx_out>
 			
 		Befehl[i] = temp;
- a2c:	eb 85       	ldd	r30, Y+11	; 0x0b
- a2e:	fc 85       	ldd	r31, Y+12	; 0x0c
- a30:	21 e0       	ldi	r18, 0x01	; 1
- a32:	30 e0       	ldi	r19, 0x00	; 0
- a34:	2c 0f       	add	r18, r28
- a36:	3d 1f       	adc	r19, r29
- a38:	e2 0f       	add	r30, r18
- a3a:	f3 1f       	adc	r31, r19
- a3c:	80 83       	st	Z, r24
+ a24:	eb 85       	ldd	r30, Y+11	; 0x0b
+ a26:	fc 85       	ldd	r31, Y+12	; 0x0c
+ a28:	21 e0       	ldi	r18, 0x01	; 1
+ a2a:	30 e0       	ldi	r19, 0x00	; 0
+ a2c:	2c 0f       	add	r18, r28
+ a2e:	3d 1f       	adc	r19, r29
+ a30:	e2 0f       	add	r30, r18
+ a32:	f3 1f       	adc	r31, r19
+ a34:	80 83       	st	Z, r24
 		i++;
- a3e:	8b 85       	ldd	r24, Y+11	; 0x0b
- a40:	9c 85       	ldd	r25, Y+12	; 0x0c
- a42:	01 96       	adiw	r24, 0x01	; 1
- a44:	9c 87       	std	Y+12, r25	; 0x0c
- a46:	8b 87       	std	Y+11, r24	; 0x0b
+ a36:	8b 85       	ldd	r24, Y+11	; 0x0b
+ a38:	9c 85       	ldd	r25, Y+12	; 0x0c
+ a3a:	01 96       	adiw	r24, 0x01	; 1
+ a3c:	9c 87       	std	Y+12, r25	; 0x0c
+ a3e:	8b 87       	std	Y+11, r24	; 0x0b
 
 		//Künstlicher Zähler, um das Abfragen der beiden Bits auch beim ersten zu ermöglichen
 		if(i<2)
- a48:	8b 85       	ldd	r24, Y+11	; 0x0b
- a4a:	9c 85       	ldd	r25, Y+12	; 0x0c
- a4c:	02 97       	sbiw	r24, 0x02	; 2
- a4e:	1c f4       	brge	.+6      	; 0xa56 <UART0_rx_work+0x70>
+ a40:	8b 85       	ldd	r24, Y+11	; 0x0b
+ a42:	9c 85       	ldd	r25, Y+12	; 0x0c
+ a44:	02 97       	sbiw	r24, 0x02	; 2
+ a46:	1c f4       	brge	.+6      	; 0xa4e <UART0_rx_work+0x70>
 		j=1;
- a50:	1e 87       	std	Y+14, r17	; 0x0e
- a52:	0d 87       	std	Y+13, r16	; 0x0d
- a54:	02 c0       	rjmp	.+4      	; 0xa5a <UART0_rx_work+0x74>
+ a48:	1e 87       	std	Y+14, r17	; 0x0e
+ a4a:	0d 87       	std	Y+13, r16	; 0x0d
+ a4c:	02 c0       	rjmp	.+4      	; 0xa52 <UART0_rx_work+0x74>
 		else
 		j=0;
- a56:	1e 86       	std	Y+14, r1	; 0x0e
- a58:	1d 86       	std	Y+13, r1	; 0x0d
+ a4e:	1e 86       	std	Y+14, r1	; 0x0e
+ a50:	1d 86       	std	Y+13, r1	; 0x0d
 	}while(((Befehl[i+j-2] != (char)0x0D) || (Befehl[i-1] != (char)0x0A))&&(i<UART0_Befehl_FiFo));				// solange kein CR+LF erkannt wird
- a5a:	eb 85       	ldd	r30, Y+11	; 0x0b
- a5c:	fc 85       	ldd	r31, Y+12	; 0x0c
- a5e:	8d 85       	ldd	r24, Y+13	; 0x0d
- a60:	9e 85       	ldd	r25, Y+14	; 0x0e
- a62:	a1 e0       	ldi	r26, 0x01	; 1
- a64:	b0 e0       	ldi	r27, 0x00	; 0
- a66:	ac 0f       	add	r26, r28
- a68:	bd 1f       	adc	r27, r29
- a6a:	ea 0f       	add	r30, r26
- a6c:	fb 1f       	adc	r31, r27
- a6e:	e8 0f       	add	r30, r24
- a70:	f9 1f       	adc	r31, r25
- a72:	32 97       	sbiw	r30, 0x02	; 2
- a74:	80 81       	ld	r24, Z
- a76:	8d 30       	cpi	r24, 0x0D	; 13
- a78:	39 f4       	brne	.+14     	; 0xa88 <UART0_rx_work+0xa2>
- a7a:	eb 85       	ldd	r30, Y+11	; 0x0b
- a7c:	fc 85       	ldd	r31, Y+12	; 0x0c
- a7e:	ec 0f       	add	r30, r28
- a80:	fd 1f       	adc	r31, r29
- a82:	80 81       	ld	r24, Z
- a84:	8a 30       	cpi	r24, 0x0A	; 10
- a86:	21 f0       	breq	.+8      	; 0xa90 <UART0_rx_work+0xaa>
- a88:	8b 85       	ldd	r24, Y+11	; 0x0b
- a8a:	9c 85       	ldd	r25, Y+12	; 0x0c
- a8c:	0a 97       	sbiw	r24, 0x0a	; 10
- a8e:	64 f2       	brlt	.-104    	; 0xa28 <UART0_rx_work+0x42>
+ a52:	eb 85       	ldd	r30, Y+11	; 0x0b
+ a54:	fc 85       	ldd	r31, Y+12	; 0x0c
+ a56:	8d 85       	ldd	r24, Y+13	; 0x0d
+ a58:	9e 85       	ldd	r25, Y+14	; 0x0e
+ a5a:	a1 e0       	ldi	r26, 0x01	; 1
+ a5c:	b0 e0       	ldi	r27, 0x00	; 0
+ a5e:	ac 0f       	add	r26, r28
+ a60:	bd 1f       	adc	r27, r29
+ a62:	ea 0f       	add	r30, r26
+ a64:	fb 1f       	adc	r31, r27
+ a66:	e8 0f       	add	r30, r24
+ a68:	f9 1f       	adc	r31, r25
+ a6a:	32 97       	sbiw	r30, 0x02	; 2
+ a6c:	80 81       	ld	r24, Z
+ a6e:	8d 30       	cpi	r24, 0x0D	; 13
+ a70:	39 f4       	brne	.+14     	; 0xa80 <UART0_rx_work+0xa2>
+ a72:	eb 85       	ldd	r30, Y+11	; 0x0b
+ a74:	fc 85       	ldd	r31, Y+12	; 0x0c
+ a76:	ec 0f       	add	r30, r28
+ a78:	fd 1f       	adc	r31, r29
+ a7a:	80 81       	ld	r24, Z
+ a7c:	8a 30       	cpi	r24, 0x0A	; 10
+ a7e:	21 f0       	breq	.+8      	; 0xa88 <UART0_rx_work+0xaa>
+ a80:	8b 85       	ldd	r24, Y+11	; 0x0b
+ a82:	9c 85       	ldd	r25, Y+12	; 0x0c
+ a84:	0a 97       	sbiw	r24, 0x0a	; 10
+ a86:	64 f2       	brlt	.-104    	; 0xa20 <UART0_rx_work+0x42>
 	
 	///////////////-------------------------------------------------------Hier stimmt etwas mit der Befehlsverarbeitung nicht! Der erste Befehl funktioniert nie
 	//Beginn der Befehlsauswertung
 	if(Befehl[0]==0x01)	//Read Register
- a90:	89 81       	ldd	r24, Y+1	; 0x01
- a92:	81 30       	cpi	r24, 0x01	; 1
- a94:	49 f4       	brne	.+18     	; 0xaa8 <UART0_rx_work+0xc2>
+ a88:	89 81       	ldd	r24, Y+1	; 0x01
+ a8a:	81 30       	cpi	r24, 0x01	; 1
+ a8c:	49 f4       	brne	.+18     	; 0xaa0 <UART0_rx_work+0xc2>
 	{
 		receivedAddress = Befehl[1];
- a96:	9a 81       	ldd	r25, Y+2	; 0x02
- a98:	90 93 3e 01 	sts	0x013E, r25	; 0x80013e <receivedAddress>
+ a8e:	9a 81       	ldd	r25, Y+2	; 0x02
+ a90:	90 93 3e 01 	sts	0x013E, r25	; 0x80013e <receivedAddress>
 		*Programmstatus = 0x01;
- a9c:	21 e0       	ldi	r18, 0x01	; 1
- a9e:	30 e0       	ldi	r19, 0x00	; 0
- aa0:	f7 01       	movw	r30, r14
- aa2:	31 83       	std	Z+1, r19	; 0x01
- aa4:	20 83       	st	Z, r18
- aa6:	16 c0       	rjmp	.+44     	; 0xad4 <UART0_rx_work+0xee>
+ a94:	21 e0       	ldi	r18, 0x01	; 1
+ a96:	30 e0       	ldi	r19, 0x00	; 0
+ a98:	f7 01       	movw	r30, r14
+ a9a:	31 83       	std	Z+1, r19	; 0x01
+ a9c:	20 83       	st	Z, r18
+ a9e:	16 c0       	rjmp	.+44     	; 0xacc <UART0_rx_work+0xee>
 	}
 	if(Befehl[0]==0x02){	//Write Register
- aa8:	82 30       	cpi	r24, 0x02	; 2
- aaa:	61 f4       	brne	.+24     	; 0xac4 <UART0_rx_work+0xde>
+ aa0:	82 30       	cpi	r24, 0x02	; 2
+ aa2:	61 f4       	brne	.+24     	; 0xabc <UART0_rx_work+0xde>
 		receivedAddress = Befehl[1];
- aac:	9a 81       	ldd	r25, Y+2	; 0x02
- aae:	90 93 3e 01 	sts	0x013E, r25	; 0x80013e <receivedAddress>
+ aa4:	9a 81       	ldd	r25, Y+2	; 0x02
+ aa6:	90 93 3e 01 	sts	0x013E, r25	; 0x80013e <receivedAddress>
 		receivedData1 = Befehl[2];
- ab2:	9b 81       	ldd	r25, Y+3	; 0x03
- ab4:	90 93 3d 01 	sts	0x013D, r25	; 0x80013d <receivedData1>
+ aaa:	9b 81       	ldd	r25, Y+3	; 0x03
+ aac:	90 93 3d 01 	sts	0x013D, r25	; 0x80013d <receivedData1>
 		*Programmstatus = 0x02;
- ab8:	22 e0       	ldi	r18, 0x02	; 2
- aba:	30 e0       	ldi	r19, 0x00	; 0
- abc:	d7 01       	movw	r26, r14
- abe:	2d 93       	st	X+, r18
- ac0:	3c 93       	st	X, r19
- ac2:	16 c0       	rjmp	.+44     	; 0xaf0 <UART0_rx_work+0x10a>
+ ab0:	22 e0       	ldi	r18, 0x02	; 2
+ ab2:	30 e0       	ldi	r19, 0x00	; 0
+ ab4:	d7 01       	movw	r26, r14
+ ab6:	2d 93       	st	X+, r18
+ ab8:	3c 93       	st	X, r19
+ aba:	16 c0       	rjmp	.+44     	; 0xae8 <UART0_rx_work+0x10a>
 	}
 	if(Befehl[0]==0x03){		//Capture Photo
- ac4:	83 30       	cpi	r24, 0x03	; 3
- ac6:	31 f4       	brne	.+12     	; 0xad4 <UART0_rx_work+0xee>
+ abc:	83 30       	cpi	r24, 0x03	; 3
+ abe:	31 f4       	brne	.+12     	; 0xacc <UART0_rx_work+0xee>
 		*Programmstatus = 0x03;
- ac8:	23 e0       	ldi	r18, 0x03	; 3
- aca:	30 e0       	ldi	r19, 0x00	; 0
- acc:	f7 01       	movw	r30, r14
- ace:	31 83       	std	Z+1, r19	; 0x01
- ad0:	20 83       	st	Z, r18
- ad2:	1c c0       	rjmp	.+56     	; 0xb0c <UART0_rx_work+0x126>
+ ac0:	23 e0       	ldi	r18, 0x03	; 3
+ ac2:	30 e0       	ldi	r19, 0x00	; 0
+ ac4:	f7 01       	movw	r30, r14
+ ac6:	31 83       	std	Z+1, r19	; 0x01
+ ac8:	20 83       	st	Z, r18
+ aca:	1c c0       	rjmp	.+56     	; 0xb04 <UART0_rx_work+0x126>
 	}
 	if(Befehl[0]==0x04){		//set x Resolution
- ad4:	84 30       	cpi	r24, 0x04	; 4
- ad6:	61 f4       	brne	.+24     	; 0xaf0 <UART0_rx_work+0x10a>
+ acc:	84 30       	cpi	r24, 0x04	; 4
+ ace:	61 f4       	brne	.+24     	; 0xae8 <UART0_rx_work+0x10a>
 		receivedData1 = Befehl[1];
- ad8:	9a 81       	ldd	r25, Y+2	; 0x02
- ada:	90 93 3d 01 	sts	0x013D, r25	; 0x80013d <receivedData1>
+ ad0:	9a 81       	ldd	r25, Y+2	; 0x02
+ ad2:	90 93 3d 01 	sts	0x013D, r25	; 0x80013d <receivedData1>
 		receivedData2 = Befehl[2];
- ade:	9b 81       	ldd	r25, Y+3	; 0x03
- ae0:	90 93 3c 01 	sts	0x013C, r25	; 0x80013c <__data_end>
+ ad6:	9b 81       	ldd	r25, Y+3	; 0x03
+ ad8:	90 93 3c 01 	sts	0x013C, r25	; 0x80013c <__data_end>
 		*Programmstatus = 0x04;
- ae4:	24 e0       	ldi	r18, 0x04	; 4
- ae6:	30 e0       	ldi	r19, 0x00	; 0
- ae8:	d7 01       	movw	r26, r14
- aea:	2d 93       	st	X+, r18
- aec:	3c 93       	st	X, r19
- aee:	19 c0       	rjmp	.+50     	; 0xb22 <UART0_rx_work+0x13c>
+ adc:	24 e0       	ldi	r18, 0x04	; 4
+ ade:	30 e0       	ldi	r19, 0x00	; 0
+ ae0:	d7 01       	movw	r26, r14
+ ae2:	2d 93       	st	X+, r18
+ ae4:	3c 93       	st	X, r19
+ ae6:	19 c0       	rjmp	.+50     	; 0xb1a <UART0_rx_work+0x13c>
 	}
 	if(Befehl[0]==0x05){		//set y resolution
- af0:	85 30       	cpi	r24, 0x05	; 5
- af2:	61 f4       	brne	.+24     	; 0xb0c <UART0_rx_work+0x126>
+ ae8:	85 30       	cpi	r24, 0x05	; 5
+ aea:	61 f4       	brne	.+24     	; 0xb04 <UART0_rx_work+0x126>
 		receivedData1 = Befehl[1];
- af4:	9a 81       	ldd	r25, Y+2	; 0x02
- af6:	90 93 3d 01 	sts	0x013D, r25	; 0x80013d <receivedData1>
+ aec:	9a 81       	ldd	r25, Y+2	; 0x02
+ aee:	90 93 3d 01 	sts	0x013D, r25	; 0x80013d <receivedData1>
 		receivedData2 = Befehl[2];
- afa:	9b 81       	ldd	r25, Y+3	; 0x03
- afc:	90 93 3c 01 	sts	0x013C, r25	; 0x80013c <__data_end>
+ af2:	9b 81       	ldd	r25, Y+3	; 0x03
+ af4:	90 93 3c 01 	sts	0x013C, r25	; 0x80013c <__data_end>
 		*Programmstatus = 0x05;
- b00:	25 e0       	ldi	r18, 0x05	; 5
- b02:	30 e0       	ldi	r19, 0x00	; 0
- b04:	f7 01       	movw	r30, r14
- b06:	31 83       	std	Z+1, r19	; 0x01
- b08:	20 83       	st	Z, r18
- b0a:	13 c0       	rjmp	.+38     	; 0xb32 <UART0_rx_work+0x14c>
+ af8:	25 e0       	ldi	r18, 0x05	; 5
+ afa:	30 e0       	ldi	r19, 0x00	; 0
+ afc:	f7 01       	movw	r30, r14
+ afe:	31 83       	std	Z+1, r19	; 0x01
+ b00:	20 83       	st	Z, r18
+ b02:	13 c0       	rjmp	.+38     	; 0xb2a <UART0_rx_work+0x14c>
 	}
 	if(Befehl[0]==0x06){		//set Bytes per Pixel
- b0c:	86 30       	cpi	r24, 0x06	; 6
- b0e:	49 f4       	brne	.+18     	; 0xb22 <UART0_rx_work+0x13c>
+ b04:	86 30       	cpi	r24, 0x06	; 6
+ b06:	49 f4       	brne	.+18     	; 0xb1a <UART0_rx_work+0x13c>
 		receivedData1 = Befehl[1];
- b10:	9a 81       	ldd	r25, Y+2	; 0x02
- b12:	90 93 3d 01 	sts	0x013D, r25	; 0x80013d <receivedData1>
+ b08:	9a 81       	ldd	r25, Y+2	; 0x02
+ b0a:	90 93 3d 01 	sts	0x013D, r25	; 0x80013d <receivedData1>
 		*Programmstatus = 0x06;
- b16:	26 e0       	ldi	r18, 0x06	; 6
- b18:	30 e0       	ldi	r19, 0x00	; 0
- b1a:	d7 01       	movw	r26, r14
- b1c:	2d 93       	st	X+, r18
- b1e:	3c 93       	st	X, r19
- b20:	10 c0       	rjmp	.+32     	; 0xb42 <UART0_rx_work+0x15c>
+ b0e:	26 e0       	ldi	r18, 0x06	; 6
+ b10:	30 e0       	ldi	r19, 0x00	; 0
+ b12:	d7 01       	movw	r26, r14
+ b14:	2d 93       	st	X+, r18
+ b16:	3c 93       	st	X, r19
+ b18:	10 c0       	rjmp	.+32     	; 0xb3a <UART0_rx_work+0x15c>
 	}
 	if(Befehl[0]==0x08){
- b22:	88 30       	cpi	r24, 0x08	; 8
- b24:	31 f4       	brne	.+12     	; 0xb32 <UART0_rx_work+0x14c>
+ b1a:	88 30       	cpi	r24, 0x08	; 8
+ b1c:	31 f4       	brne	.+12     	; 0xb2a <UART0_rx_work+0x14c>
 		*Programmstatus = 0x08;
- b26:	28 e0       	ldi	r18, 0x08	; 8
- b28:	30 e0       	ldi	r19, 0x00	; 0
- b2a:	f7 01       	movw	r30, r14
- b2c:	31 83       	std	Z+1, r19	; 0x01
- b2e:	20 83       	st	Z, r18
- b30:	10 c0       	rjmp	.+32     	; 0xb52 <UART0_rx_work+0x16c>
+ b1e:	28 e0       	ldi	r18, 0x08	; 8
+ b20:	30 e0       	ldi	r19, 0x00	; 0
+ b22:	f7 01       	movw	r30, r14
+ b24:	31 83       	std	Z+1, r19	; 0x01
+ b26:	20 83       	st	Z, r18
+ b28:	10 c0       	rjmp	.+32     	; 0xb4a <UART0_rx_work+0x16c>
 	}
 	
 	if(Befehl[0]==0x0A)		//new Line from Buffer requested by the Terminal
- b32:	8a 30       	cpi	r24, 0x0A	; 10
- b34:	31 f4       	brne	.+12     	; 0xb42 <UART0_rx_work+0x15c>
+ b2a:	8a 30       	cpi	r24, 0x0A	; 10
+ b2c:	31 f4       	brne	.+12     	; 0xb3a <UART0_rx_work+0x15c>
 	{
 		*Programmstatus = 0x0A ;
- b36:	8a e0       	ldi	r24, 0x0A	; 10
- b38:	90 e0       	ldi	r25, 0x00	; 0
- b3a:	d7 01       	movw	r26, r14
- b3c:	8d 93       	st	X+, r24
- b3e:	9c 93       	st	X, r25
- b40:	0f c0       	rjmp	.+30     	; 0xb60 <UART0_rx_work+0x17a>
+ b2e:	8a e0       	ldi	r24, 0x0A	; 10
+ b30:	90 e0       	ldi	r25, 0x00	; 0
+ b32:	d7 01       	movw	r26, r14
+ b34:	8d 93       	st	X+, r24
+ b36:	9c 93       	st	X, r25
+ b38:	0f c0       	rjmp	.+30     	; 0xb58 <UART0_rx_work+0x17a>
 	}
 	if(Befehl[0]==0x0B)	//Line repeat from Buffer requeseted by the Terminal
- b42:	8b 30       	cpi	r24, 0x0B	; 11
- b44:	31 f4       	brne	.+12     	; 0xb52 <UART0_rx_work+0x16c>
+ b3a:	8b 30       	cpi	r24, 0x0B	; 11
+ b3c:	31 f4       	brne	.+12     	; 0xb4a <UART0_rx_work+0x16c>
 	{
 		*Programmstatus = 0x0B;
- b46:	8b e0       	ldi	r24, 0x0B	; 11
- b48:	90 e0       	ldi	r25, 0x00	; 0
- b4a:	f7 01       	movw	r30, r14
- b4c:	91 83       	std	Z+1, r25	; 0x01
- b4e:	80 83       	st	Z, r24
- b50:	07 c0       	rjmp	.+14     	; 0xb60 <UART0_rx_work+0x17a>
+ b3e:	8b e0       	ldi	r24, 0x0B	; 11
+ b40:	90 e0       	ldi	r25, 0x00	; 0
+ b42:	f7 01       	movw	r30, r14
+ b44:	91 83       	std	Z+1, r25	; 0x01
+ b46:	80 83       	st	Z, r24
+ b48:	07 c0       	rjmp	.+14     	; 0xb58 <UART0_rx_work+0x17a>
 	}
 	if(Befehl[0]==0x0C) //send complete Picture to terminal
- b52:	8c 30       	cpi	r24, 0x0C	; 12
- b54:	29 f4       	brne	.+10     	; 0xb60 <UART0_rx_work+0x17a>
+ b4a:	8c 30       	cpi	r24, 0x0C	; 12
+ b4c:	29 f4       	brne	.+10     	; 0xb58 <UART0_rx_work+0x17a>
 	{
 		*Programmstatus = 0x0C;
- b56:	8c e0       	ldi	r24, 0x0C	; 12
- b58:	90 e0       	ldi	r25, 0x00	; 0
- b5a:	d7 01       	movw	r26, r14
- b5c:	8d 93       	st	X+, r24
- b5e:	9c 93       	st	X, r25
+ b4e:	8c e0       	ldi	r24, 0x0C	; 12
+ b50:	90 e0       	ldi	r25, 0x00	; 0
+ b52:	d7 01       	movw	r26, r14
+ b54:	8d 93       	st	X+, r24
+ b56:	9c 93       	st	X, r25
 	}
 
 	return 1;
- b60:	81 e0       	ldi	r24, 0x01	; 1
- b62:	90 e0       	ldi	r25, 0x00	; 0
+ b58:	81 e0       	ldi	r24, 0x01	; 1
+ b5a:	90 e0       	ldi	r25, 0x00	; 0
 	}
 	return 0;
 }
- b64:	2e 96       	adiw	r28, 0x0e	; 14
- b66:	0f b6       	in	r0, 0x3f	; 63
- b68:	f8 94       	cli
- b6a:	de bf       	out	0x3e, r29	; 62
- b6c:	0f be       	out	0x3f, r0	; 63
- b6e:	cd bf       	out	0x3d, r28	; 61
- b70:	df 91       	pop	r29
- b72:	cf 91       	pop	r28
- b74:	1f 91       	pop	r17
- b76:	0f 91       	pop	r16
- b78:	ff 90       	pop	r15
- b7a:	ef 90       	pop	r14
- b7c:	08 95       	ret
+ b5c:	2e 96       	adiw	r28, 0x0e	; 14
+ b5e:	0f b6       	in	r0, 0x3f	; 63
+ b60:	f8 94       	cli
+ b62:	de bf       	out	0x3e, r29	; 62
+ b64:	0f be       	out	0x3f, r0	; 63
+ b66:	cd bf       	out	0x3d, r28	; 61
+ b68:	df 91       	pop	r29
+ b6a:	cf 91       	pop	r28
+ b6c:	1f 91       	pop	r17
+ b6e:	0f 91       	pop	r16
+ b70:	ff 90       	pop	r15
+ b72:	ef 90       	pop	r14
+ b74:	08 95       	ret
 
-00000b7e <UART0_tx_out>:
+00000b76 <UART0_tx_out>:
 
 
 
 char UART0_tx_out (void)
 {
 	if(UART0_tx.read==UART0_tx.write)
- b7e:	20 91 3f 03 	lds	r18, 0x033F	; 0x80033f <UART0_tx+0x200>
- b82:	30 91 40 03 	lds	r19, 0x0340	; 0x800340 <UART0_tx+0x201>
- b86:	80 91 41 03 	lds	r24, 0x0341	; 0x800341 <UART0_tx+0x202>
- b8a:	90 91 42 03 	lds	r25, 0x0342	; 0x800342 <UART0_tx+0x203>
- b8e:	28 17       	cp	r18, r24
- b90:	39 07       	cpc	r19, r25
- b92:	61 f0       	breq	.+24     	; 0xbac <UART0_tx_out+0x2e>
+ b76:	20 91 3f 03 	lds	r18, 0x033F	; 0x80033f <UART0_tx+0x200>
+ b7a:	30 91 40 03 	lds	r19, 0x0340	; 0x800340 <UART0_tx+0x201>
+ b7e:	80 91 41 03 	lds	r24, 0x0341	; 0x800341 <UART0_tx+0x202>
+ b82:	90 91 42 03 	lds	r25, 0x0342	; 0x800342 <UART0_tx+0x203>
+ b86:	28 17       	cp	r18, r24
+ b88:	39 07       	cpc	r19, r25
+ b8a:	61 f0       	breq	.+24     	; 0xba4 <UART0_tx_out+0x2e>
 		{
 		 return 0;
 		}
 	char temp=UART0_tx.data[UART0_tx.read];
- b94:	f9 01       	movw	r30, r18
- b96:	e1 5c       	subi	r30, 0xC1	; 193
- b98:	fe 4f       	sbci	r31, 0xFE	; 254
- b9a:	80 81       	ld	r24, Z
+ b8c:	f9 01       	movw	r30, r18
+ b8e:	e1 5c       	subi	r30, 0xC1	; 193
+ b90:	fe 4f       	sbci	r31, 0xFE	; 254
+ b92:	80 81       	ld	r24, Z
 	UART0_tx.read = (UART0_tx.read +1) & UART0_tx_mask;
- b9c:	2f 5f       	subi	r18, 0xFF	; 255
- b9e:	3f 4f       	sbci	r19, 0xFF	; 255
- ba0:	31 70       	andi	r19, 0x01	; 1
- ba2:	30 93 40 03 	sts	0x0340, r19	; 0x800340 <UART0_tx+0x201>
- ba6:	20 93 3f 03 	sts	0x033F, r18	; 0x80033f <UART0_tx+0x200>
+ b94:	2f 5f       	subi	r18, 0xFF	; 255
+ b96:	3f 4f       	sbci	r19, 0xFF	; 255
+ b98:	31 70       	andi	r19, 0x01	; 1
+ b9a:	30 93 40 03 	sts	0x0340, r19	; 0x800340 <UART0_tx+0x201>
+ b9e:	20 93 3f 03 	sts	0x033F, r18	; 0x80033f <UART0_tx+0x200>
 	return temp;
- baa:	08 95       	ret
+ ba2:	08 95       	ret
 
 char UART0_tx_out (void)
 {
 	if(UART0_tx.read==UART0_tx.write)
 		{
 		 return 0;
- bac:	80 e0       	ldi	r24, 0x00	; 0
+ ba4:	80 e0       	ldi	r24, 0x00	; 0
 		}
 	char temp=UART0_tx.data[UART0_tx.read];
 	UART0_tx.read = (UART0_tx.read +1) & UART0_tx_mask;
 	return temp;
 }
- bae:	08 95       	ret
+ ba6:	08 95       	ret
 
-00000bb0 <__vector_19>:
+00000ba8 <__vector_19>:
 { 
 	UART0_rx_in(UDR0);					// Empfangene Daten ins FiFO speichern
 }
 
 ISR(USART_UDRE_vect)					// Data Register Empty Interupt
 {   
- bb0:	1f 92       	push	r1
- bb2:	0f 92       	push	r0
- bb4:	0f b6       	in	r0, 0x3f	; 63
- bb6:	0f 92       	push	r0
- bb8:	11 24       	eor	r1, r1
- bba:	2f 93       	push	r18
- bbc:	3f 93       	push	r19
- bbe:	4f 93       	push	r20
- bc0:	5f 93       	push	r21
- bc2:	6f 93       	push	r22
- bc4:	7f 93       	push	r23
- bc6:	8f 93       	push	r24
- bc8:	9f 93       	push	r25
- bca:	af 93       	push	r26
- bcc:	bf 93       	push	r27
- bce:	ef 93       	push	r30
- bd0:	ff 93       	push	r31
+ ba8:	1f 92       	push	r1
+ baa:	0f 92       	push	r0
+ bac:	0f b6       	in	r0, 0x3f	; 63
+ bae:	0f 92       	push	r0
+ bb0:	11 24       	eor	r1, r1
+ bb2:	2f 93       	push	r18
+ bb4:	3f 93       	push	r19
+ bb6:	4f 93       	push	r20
+ bb8:	5f 93       	push	r21
+ bba:	6f 93       	push	r22
+ bbc:	7f 93       	push	r23
+ bbe:	8f 93       	push	r24
+ bc0:	9f 93       	push	r25
+ bc2:	af 93       	push	r26
+ bc4:	bf 93       	push	r27
+ bc6:	ef 93       	push	r30
+ bc8:	ff 93       	push	r31
 	if(UART0_tx_empty())				// FiFo TX leer ?
- bd2:	0e 94 43 04 	call	0x886	; 0x886 <UART0_tx_empty>
- bd6:	89 2b       	or	r24, r25
- bd8:	31 f0       	breq	.+12     	; 0xbe6 <__vector_19+0x36>
+ bca:	0e 94 3f 04 	call	0x87e	; 0x87e <UART0_tx_empty>
+ bce:	89 2b       	or	r24, r25
+ bd0:	31 f0       	breq	.+12     	; 0xbde <__vector_19+0x36>
 	{
 		UCSR0B &= ~0b00100000;			// Data Register empty Interrupt ausschalten
- bda:	e1 ec       	ldi	r30, 0xC1	; 193
- bdc:	f0 e0       	ldi	r31, 0x00	; 0
- bde:	80 81       	ld	r24, Z
- be0:	8f 7d       	andi	r24, 0xDF	; 223
- be2:	80 83       	st	Z, r24
- be4:	04 c0       	rjmp	.+8      	; 0xbee <__vector_19+0x3e>
+ bd2:	e1 ec       	ldi	r30, 0xC1	; 193
+ bd4:	f0 e0       	ldi	r31, 0x00	; 0
+ bd6:	80 81       	ld	r24, Z
+ bd8:	8f 7d       	andi	r24, 0xDF	; 223
+ bda:	80 83       	st	Z, r24
+ bdc:	04 c0       	rjmp	.+8      	; 0xbe6 <__vector_19+0x3e>
 	}
 	else								// Wenn FiFo nicht leer 
 	{
 		UDR0 = UART0_tx_out();			// Daten ausgeben
- be6:	0e 94 bf 05 	call	0xb7e	; 0xb7e <UART0_tx_out>
- bea:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
+ bde:	0e 94 bb 05 	call	0xb76	; 0xb76 <UART0_tx_out>
+ be2:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
 	}	
 }
- bee:	ff 91       	pop	r31
- bf0:	ef 91       	pop	r30
- bf2:	bf 91       	pop	r27
- bf4:	af 91       	pop	r26
- bf6:	9f 91       	pop	r25
- bf8:	8f 91       	pop	r24
- bfa:	7f 91       	pop	r23
- bfc:	6f 91       	pop	r22
- bfe:	5f 91       	pop	r21
- c00:	4f 91       	pop	r20
- c02:	3f 91       	pop	r19
- c04:	2f 91       	pop	r18
- c06:	0f 90       	pop	r0
- c08:	0f be       	out	0x3f, r0	; 63
- c0a:	0f 90       	pop	r0
- c0c:	1f 90       	pop	r1
- c0e:	18 95       	reti
+ be6:	ff 91       	pop	r31
+ be8:	ef 91       	pop	r30
+ bea:	bf 91       	pop	r27
+ bec:	af 91       	pop	r26
+ bee:	9f 91       	pop	r25
+ bf0:	8f 91       	pop	r24
+ bf2:	7f 91       	pop	r23
+ bf4:	6f 91       	pop	r22
+ bf6:	5f 91       	pop	r21
+ bf8:	4f 91       	pop	r20
+ bfa:	3f 91       	pop	r19
+ bfc:	2f 91       	pop	r18
+ bfe:	0f 90       	pop	r0
+ c00:	0f be       	out	0x3f, r0	; 63
+ c02:	0f 90       	pop	r0
+ c04:	1f 90       	pop	r1
+ c06:	18 95       	reti
 
-00000c10 <__tablejump2__>:
- c10:	ee 0f       	add	r30, r30
- c12:	ff 1f       	adc	r31, r31
- c14:	05 90       	lpm	r0, Z+
- c16:	f4 91       	lpm	r31, Z
- c18:	e0 2d       	mov	r30, r0
- c1a:	09 94       	ijmp
+00000c08 <__tablejump2__>:
+ c08:	ee 0f       	add	r30, r30
+ c0a:	ff 1f       	adc	r31, r31
+ c0c:	05 90       	lpm	r0, Z+
+ c0e:	f4 91       	lpm	r31, Z
+ c10:	e0 2d       	mov	r30, r0
+ c12:	09 94       	ijmp
 
-00000c1c <_exit>:
- c1c:	f8 94       	cli
+00000c14 <_exit>:
+ c14:	f8 94       	cli
 
-00000c1e <__stop_program>:
- c1e:	ff cf       	rjmp	.-2      	; 0xc1e <__stop_program>
+00000c16 <__stop_program>:
+ c16:	ff cf       	rjmp	.-2      	; 0xc16 <__stop_program>
