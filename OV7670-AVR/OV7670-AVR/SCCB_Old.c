@@ -77,7 +77,7 @@
  }
 
  char OV_SCCB_Write (char Data){
-	 unsigned char	erf;
+	 char Errorcode
 
 	 //Alle 8 Bit des Data Byte ?bermitteln, MSB zuerst
 	 for(int j=7; j>=0;j--){
@@ -106,19 +106,17 @@
 
 	 //Auslesen ob die ?bertragung erfolgreich war
 	 if(OV_SIOD_PIN & (1<<OV_SIOD_PinNo)){
-		 UART0_senden("SCCB: Schreiben fehlgeschlagen");
-		 UART0_senden_newLine();
-		 erf=0;
+		 Errorcode=0x15;
 	 }
 	 else{
-		 erf=1;
+		 Errorcode=0;
 	 }
 
 	 OV_SIOC_PORT	&=	~(1<<OV_SIOC_PinNo);
 	 _delay_us(OV_SIO_CLKDELAY);
 	 OV_SIOD_DDR		|=	(1<<OV_SIOD_PinNo);
 
-	 return erf;
+	 return Errorcode;
  }
 
  char OV_SCCB_Read	(char* Data){

@@ -276,7 +276,7 @@ int UART0_rx_work(int* Programmstatus)
 		receivedData1 = Befehl[1];
 		*Programmstatus = 0x06;
 	}
-	if(Befehl[0]==0x08){
+	if(Befehl[0]==0x08){ //initialisierung
 		*Programmstatus = 0x08;
 	}
 	
